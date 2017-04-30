@@ -1,8 +1,8 @@
 package ch.wisv.toornament.concepts;
 
-import ch.wisv.toornament.ToornamentClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import okhttp3.OkHttpClient;
+
+import ch.wisv.toornament.ToornamentClient;
 
 abstract class Concept {
     ToornamentClient client;

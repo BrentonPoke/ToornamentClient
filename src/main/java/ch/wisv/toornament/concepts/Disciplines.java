@@ -1,11 +1,11 @@
 package ch.wisv.toornament.concepts;
 
+import java.util.Collections;
+import java.util.List;
+
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.model.Discipline;
 import ch.wisv.toornament.model.DisciplineDetails;
-
-import java.util.Collections;
-import java.util.List;
 
 public class Disciplines extends Concept {
 

@@ -1,9 +1,6 @@
 package ch.wisv.toornament.model;
 
-import ch.wisv.toornament.ToornamentClient;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.Date;
 
 public class TournamentDetails extends Tournament {
 

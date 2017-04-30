@@ -1,9 +1,9 @@
 package ch.wisv.toornament.model.request;
 
+import java.util.Date;
+
 import ch.wisv.toornament.model.Sort;
 import ch.wisv.toornament.model.Status;
-
-import java.util.Date;
 
 public class TournamentQuery {
     String discipline;

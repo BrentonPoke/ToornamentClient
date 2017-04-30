@@ -1,29 +1,27 @@
 package ch.wisv.toornament;
 
-import ch.wisv.toornament.concepts.Tournaments;
-import ch.wisv.toornament.model.request.ApiTokenRequest;
-import ch.wisv.toornament.model.response.ApiTokenResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Getter;
-import okhttp3.*;
 
 import java.io.IOException;
 
-public class ToornamentClient {
-    @Getter
-    private OkHttpClient httpClient;
+import ch.wisv.toornament.concepts.Tournaments;
+import ch.wisv.toornament.model.request.ApiTokenRequest;
+import ch.wisv.toornament.model.response.ApiTokenResponse;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
+public class ToornamentClient {
+    public static final MediaType JSON
+        = MediaType.parse("application/json; charset=utf-8");
+    private OkHttpClient httpClient;
     private String apiKey;
     private String clientId;
     private String clientSecret;
-
     private String oAuthToken;
-
-    @Getter
     private ObjectMapper mapper;
-
-    public static final MediaType JSON
-            = MediaType.parse("application/json; charset=utf-8");
 
     public ToornamentClient(String apiKey, String clientId, String clientSecret) {
         this.apiKey = apiKey;
@@ -34,19 +32,29 @@ public class ToornamentClient {
         authorize();
     }
 
+    public OkHttpClient getHttpClient() {
+        return httpClient;
+    }
+
+    public ObjectMapper getMapper() {
+        return mapper;
+    }
+
     public Tournaments tournaments() {
         return new Tournaments(this);
     }
 
     public void authorize() {
-        ApiTokenRequest tokenRequest = new ApiTokenRequest("client_credentials", clientId, clientSecret);
+        ApiTokenRequest tokenRequest =
+            new ApiTokenRequest("client_credentials", clientId, clientSecret);
         Request.Builder requestBuilder = new Request.Builder();
         try {
             RequestBody body = RequestBody.create(JSON, mapper.writeValueAsString(tokenRequest));
             requestBuilder.url("https://api.toornament.com/oauth/v2/token").post(body);
             Request request = requestBuilder.build();
             Response response = executeRequest(request);
-            this.oAuthToken = mapper.readValue(response.body().string(), ApiTokenResponse.class).getAccessToken();
+            this.oAuthToken =
+                mapper.readValue(response.body().string(), ApiTokenResponse.class).getAccessToken();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,7 +65,7 @@ public class ToornamentClient {
             authorize();
         }
         return getRequestBuilder()
-                .addHeader("Authorization", "Bearer " + oAuthToken);
+            .addHeader("Authorization", "Bearer " + oAuthToken);
     }
 
     public Request.Builder getRequestBuilder() {
