@@ -1,8 +1,7 @@
 package ch.wisv.toornament.concepts;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import ch.wisv.toornament.ToornamentClient;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 abstract class Concept {
     ToornamentClient client;
@@ -10,6 +9,6 @@ abstract class Concept {
 
     public Concept(ToornamentClient client) {
         this.client = client;
-        mapper = new ObjectMapper();
+        mapper = client.getMapper();
     }
 }

@@ -1,5 +1,23 @@
 package ch.wisv.toornament.model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum MatchType {
-    DUEL, FFA
+    DUEL("duel"), FFA("ffa");
+
+    private String name;
+
+    MatchType(String name) {
+        this.name = name;
+    }
+
+    @JsonValue
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

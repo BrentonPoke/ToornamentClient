@@ -6,23 +6,23 @@ import java.util.Date;
 
 public class Tournament {
 
-    String id;
-    String discipline;
-    String name;
+    private String id;
+    private String discipline;
+    private String name;
     @JsonProperty("full_name")
-    String fullName;
-    Status status;
+    private String fullName;
+    private Status status;
     @JsonProperty("date_start")
-    Date dateStart;
+    private Date dateStart;
     @JsonProperty("date_end")
-    Date dateEnd;
-    Boolean online;
+    private Date dateEnd;
+    private Boolean online;
     @JsonProperty("public")
-    Boolean isPublic;
-    Boolean archived;
-    String location;
-    String country;
-    Integer size;
+    private Boolean isPublic;
+    private Boolean archived;
+    private String location;
+    private String country;
+    private Integer size;
 
     public Tournament() {
     }

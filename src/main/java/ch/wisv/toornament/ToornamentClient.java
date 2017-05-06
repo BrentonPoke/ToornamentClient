@@ -3,6 +3,7 @@ package ch.wisv.toornament;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 import ch.wisv.toornament.concepts.Tournaments;
 import ch.wisv.toornament.model.request.ApiTokenRequest;
@@ -22,6 +23,7 @@ public class ToornamentClient {
     private String clientSecret;
     private String oAuthToken;
     private ObjectMapper mapper;
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
     public ToornamentClient(String apiKey, String clientId, String clientSecret) {
         this.apiKey = apiKey;
@@ -29,6 +31,7 @@ public class ToornamentClient {
         this.clientSecret = clientSecret;
         httpClient = new OkHttpClient();
         mapper = new ObjectMapper();
+        mapper.setDateFormat(df);
         authorize();
     }
 
