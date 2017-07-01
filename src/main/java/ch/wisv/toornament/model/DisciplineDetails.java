@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class DisciplineDetails extends Discipline {
-
+    
     @JsonProperty("team_size")
     TeamSize teamSize;
     @JsonProperty("additional_fields")
-    List<Map<String, Object>> additionalFields;
+    Map<String, Map<String, String>> additionalFields;
 
     private class TeamSize {
         int min;

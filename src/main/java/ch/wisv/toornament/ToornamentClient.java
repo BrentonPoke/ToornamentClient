@@ -1,13 +1,15 @@
 package ch.wisv.toornament;
 
+import ch.wisv.toornament.concepts.Disciplines;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 
 import ch.wisv.toornament.concepts.Tournaments;
+import ch.wisv.toornament.model.DisciplineDetails;
 import ch.wisv.toornament.model.request.ApiTokenRequest;
 import ch.wisv.toornament.model.response.ApiTokenResponse;
+import java.text.SimpleDateFormat;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -31,7 +33,6 @@ public class ToornamentClient {
         this.clientSecret = clientSecret;
         httpClient = new OkHttpClient();
         mapper = new ObjectMapper();
-        mapper.setDateFormat(df);
         authorize();
     }
 
@@ -45,6 +46,10 @@ public class ToornamentClient {
 
     public Tournaments tournaments() {
         return new Tournaments(this);
+    }
+    
+    public Disciplines disciplines() {
+        return new Disciplines(this);
     }
 
     public void authorize() {
