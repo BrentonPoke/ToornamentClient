@@ -21,34 +21,50 @@ public class Tournaments extends Concept {
         super(client);
     }
 
-    public List<Tournament> getAllTournaments() throws IOException {
+    public List<Tournament> getAllTournaments() {
         Request request = client.getRequestBuilder()
             .get()
             .url("https://api.toornament.com/v1/tournaments")
             .build();
-        String responseBody = client.executeRequest(request).body().string();
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
+                Tournament.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ToornamentException("Couldn't retrieve tournaments");
+        }
 
-        return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Tournament.class));
     }
 
-    public List<Tournament> getMyTournaments() throws IOException {
+    public List<Tournament> getMyTournaments() {
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
             .url("https://api.toornament.com/v1/me/tournaments")
             .build();
-        String responseBody = client.executeRequest(request).body().string();
-        return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Tournament.class));
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
+                Tournament.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ToornamentException("Couldn't retrieve tournaments");
+        }
 
     }
 
-    public TournamentDetails getTournament(String id) throws IOException {
+    public TournamentDetails getTournament(String id) {
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
             .url("https://api.toornament.com/v1/tournaments/" + id)
             .build();
-        String responseBody = client.executeRequest(request).body().string();
-
-        return mapper.readValue(responseBody, TournamentDetails.class);
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody, TournamentDetails.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ToornamentException("Couldn't get tournament with id: " + id);
+        }
     }
 
     public TournamentDetails createTournament(TournamentRequest tournamentRequest) {
