@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static ch.wisv.toornament.ToornamentClient.JSON;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 
 public class Tournaments extends Concept {
 
@@ -50,6 +51,25 @@ public class Tournaments extends Concept {
             e.printStackTrace();
             throw new ToornamentException("Couldn't retrieve tournaments");
         }
+
+
+    }
+    
+    public List<Tournament> getTournamentByDiscipline(String discipline) {
+        Request request = client.getAuthenticatedRequestBuilder()
+            .get()
+            .url("https://api.toornament.com/v1/tournaments" + "?discipline=" + discipline)
+            .build();
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
+                Tournament.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ToornamentException("Couldn't retrieve any tournaments under that discipline");
+        }
+
 
     }
 

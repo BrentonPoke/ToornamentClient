@@ -22,7 +22,9 @@ public class Disciplines extends Concept {
 
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
-            .url("https://api.toornament.com/v1/disciplines/")
+
+            .url("https://api.toornament.com/v1/disciplines")
+
             .build();
         String responseBody = null;
         try {

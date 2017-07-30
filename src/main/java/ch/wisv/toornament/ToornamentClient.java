@@ -19,6 +19,7 @@ import okhttp3.Response;
 public class ToornamentClient {
     public static final MediaType JSON
         = MediaType.parse("application/json; charset=utf-8");
+  
     private OkHttpClient httpClient;
     private String apiKey;
     private String clientId;
@@ -57,8 +58,12 @@ public class ToornamentClient {
             new ApiTokenRequest("client_credentials", clientId, clientSecret);
         Request.Builder requestBuilder = new Request.Builder();
         try {
-            RequestBody body = RequestBody.create(JSON, mapper.writeValueAsString(tokenRequest));
-            requestBuilder.url("https://api.toornament.com/oauth/v2/token").post(body);
+            
+            
+            requestBuilder.url("https://api.toornament.com/oauth/v2/token" 
+                     + "?grant_type=" + tokenRequest.getGrantType()
+                     + "&" + "client_id=" + tokenRequest.getClientId()
+                     + "&" + "client_secret=" + tokenRequest.getClientSecret());
             Request request = requestBuilder.build();
             Response response = executeRequest(request);
             this.oAuthToken =
