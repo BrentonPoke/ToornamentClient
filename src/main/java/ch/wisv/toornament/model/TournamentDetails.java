@@ -2,6 +2,7 @@ package ch.wisv.toornament.model;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.HashMap;
@@ -18,9 +19,9 @@ public class TournamentDetails extends Tournament {
     private String description;
     private String rules;
     private String prize;
-    @JsonProperty("team_size_min")
+    @JsonProperty("team_min_size")
     private Integer teamSizeMin;
-    @JsonProperty("team_size_max")
+    @JsonProperty("team_max_size")
     private Integer teamSizeMax;
     // TODO: Stream model
     private Object[] streams;
@@ -32,7 +33,7 @@ public class TournamentDetails extends Tournament {
     private MatchFormat matchFormat;
     private String timezone;
 
-    private Map<String, String> disciplineFields = new HashMap<>();
+    private Map<String, Object[]> disciplineFields = new HashMap<>();
 
     public ParticipantType getParticipantType() {
         return participantType;
@@ -138,22 +139,23 @@ public class TournamentDetails extends Tournament {
         this.matchFormat = matchFormat;
     }
 
-    public Map<String, String> getDisciplineFields() {
+    public Map<String, Object[]> getDisciplineFields() {
         return disciplineFields;
     }
 
-    public void setDisciplineFields(Map<String, String> disciplineFields) {
+    public void setDisciplineFields(Map<String, Object[]> disciplineFields) {
         this.disciplineFields = disciplineFields;
     }
 
     // Capture all other fields that Jackson do not match other members
     @JsonAnyGetter
-    public Map<String, String> otherFields() {
+    public Map<String, Object[]> otherFields() {
         return disciplineFields;
     }
 
     @JsonAnySetter
-    public void setOtherField(String name, String value) {
+    @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
+    public void setOtherField(String name, Object[] value) {
         disciplineFields.put(name, value);
     }
 
