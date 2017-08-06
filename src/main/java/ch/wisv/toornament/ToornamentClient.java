@@ -1,25 +1,22 @@
 package ch.wisv.toornament;
 
 import ch.wisv.toornament.concepts.Disciplines;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import java.io.IOException;
-
 import ch.wisv.toornament.concepts.Tournaments;
-import ch.wisv.toornament.model.DisciplineDetails;
 import ch.wisv.toornament.model.request.ApiTokenRequest;
 import ch.wisv.toornament.model.response.ApiTokenResponse;
-import java.text.SimpleDateFormat;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 public class ToornamentClient {
     public static final MediaType JSON
         = MediaType.parse("application/json; charset=utf-8");
-  
+
     private OkHttpClient httpClient;
     private String apiKey;
     private String clientId;
@@ -48,7 +45,7 @@ public class ToornamentClient {
     public Tournaments tournaments() {
         return new Tournaments(this);
     }
-    
+
     public Disciplines disciplines() {
         return new Disciplines(this);
     }
@@ -58,12 +55,10 @@ public class ToornamentClient {
             new ApiTokenRequest("client_credentials", clientId, clientSecret);
         Request.Builder requestBuilder = new Request.Builder();
         try {
-            
-            
-            requestBuilder.url("https://api.toornament.com/oauth/v2/token" 
-                     + "?grant_type=" + tokenRequest.getGrantType()
-                     + "&" + "client_id=" + tokenRequest.getClientId()
-                     + "&" + "client_secret=" + tokenRequest.getClientSecret());
+            requestBuilder.url("https://api.toornament.com/oauth/v2/token"
+                + "?grant_type=" + tokenRequest.getGrantType()
+                + "&" + "client_id=" + tokenRequest.getClientId()
+                + "&" + "client_secret=" + tokenRequest.getClientSecret());
             Request request = requestBuilder.build();
             Response response = executeRequest(request);
             this.oAuthToken =
