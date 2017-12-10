@@ -1,8 +1,8 @@
-package ch.wisv.toornament.model;
+package ch.wisv.toornament.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public enum Status {
+public enum TournamentStatus {
     @JsonProperty("setup")
     SETUP,
     @JsonProperty("running")
