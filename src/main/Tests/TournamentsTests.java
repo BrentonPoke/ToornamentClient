@@ -10,12 +10,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 public class TournamentsTests {
     private ToornamentClient client;
-    private Response response;
 
     @Before
     public void Setup(){
@@ -27,15 +27,12 @@ public class TournamentsTests {
 
     @Test
     public void getAllTournamentsTest() {
-        try {
-            List<Tournament> details = client.tournaments().getAllTournaments();
 
-            Iterator<Tournament> iterator = details.iterator();
-            while (iterator.hasNext()) {
-                System.out.println(iterator.next().getName());
-            }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+            HashMap<String,String> headers = new HashMap<>();
+            HashMap<String,String> params = new HashMap<>();
+            params.put("disciplines","counterstrike_go");
+            headers.put("range","tournaments=0-49");
+            List<Tournament> details = client.tournaments().getFeaturedTournaments(params,headers);
+                assertTrue(!details.isEmpty());
     }
 }

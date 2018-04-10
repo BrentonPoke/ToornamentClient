@@ -17,6 +17,7 @@ import static ch.wisv.toornament.ToornamentClient.JSON;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import java.util.Map;
 import okhttp3.HttpUrl;
+import okhttp3.internal.http.HttpHeaders;
 
 public class Tournaments extends Concept {
 
@@ -24,12 +25,7 @@ public class Tournaments extends Concept {
         super(client);
     }
 
-    public List<Tournament> getAllTournaments() {
-        Request request = client.getRequestBuilder()
-            .get()
-            .url("https://api.toornament.com/viewer/v2/tournaments/featured")
-            .addHeader("Range","tournaments=0-5")
-            .build();
+    private List<Tournament> requestHelper(Request request){
         try {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
@@ -38,6 +34,25 @@ public class Tournaments extends Concept {
             e.printStackTrace();
             throw new ToornamentException("Couldn't retrieve tournaments");
         }
+    }
+
+    public List<Tournament> getFeaturedTournaments(Map<String, String> paramsMap, Map<String,String> header) {
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        url.scheme("https")
+            .host("api.toornament.com")
+            .addEncodedPathSegment("viewer")
+            .addEncodedPathSegment("v2")
+            .addEncodedPathSegment("tournaments")
+            .addEncodedPathSegment("featured");
+        for (Map.Entry<String, String> params : paramsMap.entrySet()) {
+            url.addQueryParameter(params.getKey(), params.getValue());
+        }
+        Request request = client.getRequestBuilder()
+            .get()
+            .url(url.build())
+            .addHeader("range",header.get("range"))
+            .build();
+        return requestHelper(request);
 
     }
 
@@ -46,14 +61,7 @@ public class Tournaments extends Concept {
             .get()
             .url("https://api.toornament.com/viewer/v2/me/tournaments")
             .build();
-        try {
-            String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
-                Tournament.class));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new ToornamentException("Couldn't retrieve tournaments");
-        }
+        return requestHelper(request);
 
 
     }
@@ -91,14 +99,7 @@ public class Tournaments extends Concept {
             .get()
             .url(url.build())
             .build();
-        try {
-            String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
-                Tournament.class));
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new ToornamentException("Couldn't retrieve tournaments");
-        }
+        return requestHelper(request);
 
     }
     public TournamentDetails getTournament(String id) {

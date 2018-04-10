@@ -5,6 +5,15 @@ public class Logo {
     private String logo_small;
     private String logo_medium;
     private String logo_large;
+    private String original;
+
+    public String getOriginal() {
+        return original;
+    }
+
+    public void setOriginal(String original) {
+        this.original = original;
+    }
 
     public String getLogo_small() {
         return logo_small;

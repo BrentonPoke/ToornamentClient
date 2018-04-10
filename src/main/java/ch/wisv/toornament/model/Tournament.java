@@ -15,10 +15,6 @@ public class Tournament {
     private Status status;
     private Date scheduled_date_start;
     private Date scheduled_date_end;
-    @JsonProperty("date_start")
-    private Date dateStart;
-    @JsonProperty("date_end")
-    private Date dateEnd;
     private Boolean online;
     @JsonProperty("public")
     private Boolean isPublic;
@@ -28,8 +24,45 @@ public class Tournament {
     private Integer size;
     private Logo logo;
     private ArrayList<String> platforms;
+    private String registration_enabled;
+    private Date registration_opening_datetime;
+    private Date registration_closing_datetime;
+    @JsonProperty("public")
+    private boolean public_event;
 
     public Tournament() {
+    }
+
+    public String getRegistration_enabled() {
+        return registration_enabled;
+    }
+
+    public void setRegistration_enabled(String registration_enabled) {
+        this.registration_enabled = registration_enabled;
+    }
+
+    public Date getRegistration_opening_datetime() {
+        return registration_opening_datetime;
+    }
+
+    public void setRegistration_opening_datetime(Date registration_opening_datetime) {
+        this.registration_opening_datetime = registration_opening_datetime;
+    }
+
+    public Date getRegistration_closing_datetime() {
+        return registration_closing_datetime;
+    }
+
+    public void setRegistration_closing_datetime(Date registration_closing_datetime) {
+        this.registration_closing_datetime = registration_closing_datetime;
+    }
+
+    public boolean isPublic_event() {
+        return public_event;
+    }
+
+    public void setPublic_event(boolean public_event) {
+        this.public_event = public_event;
     }
 
     public Logo getLogo() {
@@ -104,22 +137,6 @@ public class Tournament {
         this.status = status;
     }
 
-    public Date getDateStart() {
-        return this.dateStart;
-    }
-
-    public void setDateStart(Date dateStart) {
-        this.dateStart = dateStart;
-    }
-
-    public Date getDateEnd() {
-        return this.dateEnd;
-    }
-
-    public void setDateEnd(Date dateEnd) {
-        this.dateEnd = dateEnd;
-    }
-
     public Boolean getOnline() {
         return this.online;
     }
@@ -171,8 +188,7 @@ public class Tournament {
     public String toString() {
         return "ch.wisv.toornament.model.Tournament(id=" + this.getId() + ", discipline=" + this
             .getDiscipline() + ", name=" + this.getName() + ", fullName=" + this.getFullName()
-            + ", status=" + this.getStatus() + ", dateStart=" + this.getDateStart() + ", dateEnd="
-            + this.getDateEnd() + ", online=" + this.getOnline() + ", isPublic=" + this
+            + ", status=" + this.getStatus() + ", online=" + this.getOnline() + ", isPublic=" + this
             .getIsPublic()
             + ", archived=" + this.getArchived() + ", location=" + this.getLocation() + ", country="
             + this.getCountry() + ", size=" + this.getSize() + ")";
