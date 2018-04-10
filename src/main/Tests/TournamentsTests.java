@@ -19,9 +19,7 @@ public class TournamentsTests {
 
     @Before
     public void Setup(){
-        client = new ToornamentClient("yEF4GKOHO6MDYWh4q_6u0mHO5KfEVu1gAN20Dr76GtI",
-            "58ff4401140ba08e7f8b4567269ltppwn480ggw08gc4ggkcccwsgsog4cssc80c8swgkwg0so",
-            "nyfrwu8nsfko8cwckgwco840csc0k4wcog0gw84gwo440gggg");
+        client = new ToornamentClient();
         client.authorize();
     }
 
