@@ -27,7 +27,8 @@ public class Tournaments extends Concept {
     public List<Tournament> getAllTournaments() {
         Request request = client.getRequestBuilder()
             .get()
-            .url("https://api.toornament.com/v1/tournaments")
+            .url("https://api.toornament.com/viewer/v2/tournaments/featured")
+            .addHeader("Range","tournaments=0-5")
             .build();
         try {
             String responseBody = client.executeRequest(request).body().string();
@@ -43,7 +44,7 @@ public class Tournaments extends Concept {
     public List<Tournament> getMyTournaments() {
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
-            .url("https://api.toornament.com/v1/me/tournaments")
+            .url("https://api.toornament.com/viewer/v2/me/tournaments")
             .build();
         try {
             String responseBody = client.executeRequest(request).body().string();
@@ -56,11 +57,11 @@ public class Tournaments extends Concept {
 
 
     }
-    
+
     public List<Tournament> getTournamentByDiscipline(String discipline) {
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
-            .url("https://api.toornament.com/v1/tournaments" + "?discipline=" + discipline)
+            .url("https://api.toornament.com/viewer/v2/tournaments" + "?discipline=" + discipline)
             .build();
         try {
             String responseBody = client.executeRequest(request).body().string();
@@ -74,12 +75,13 @@ public class Tournaments extends Concept {
 
 
     }
-    
+
     public List<Tournament> getTournamentsWithParams(Map<String, String> paramsMap ) {
         HttpUrl.Builder url = new HttpUrl.Builder();
        url.scheme("https")
                .host("api.toornament.com")
-               .addEncodedPathSegment("v1")
+           .addEncodedPathSegment("viewer")
+               .addEncodedPathSegment("v2")
                .addEncodedPathSegment("tournaments");
 
         for (Map.Entry<String, String> params : paramsMap.entrySet()) {
@@ -102,7 +104,7 @@ public class Tournaments extends Concept {
     public TournamentDetails getTournament(String id) {
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
-            .url("https://api.toornament.com/v1/tournaments/" + id)
+            .url("https://api.toornament.com/viewer/v2/tournaments/" + id)
             .build();
         try {
             String responseBody = client.executeRequest(request).body().string();
@@ -117,7 +119,7 @@ public class Tournaments extends Concept {
         try {
             Request request = client.getAuthenticatedRequestBuilder()
                 .post(RequestBody.create(JSON, mapper.writeValueAsString(tournamentRequest)))
-                .url("https://api.toornament.com/v1/tournaments")
+                .url("https://api.toornament.com/viewer/v2/tournaments")
                 .build();
             Response response = client.executeRequest(request);
             if (response.isSuccessful()) {
@@ -140,7 +142,7 @@ public class Tournaments extends Concept {
         try {
             Request request = client.getAuthenticatedRequestBuilder()
                 .patch(RequestBody.create(JSON, mapper.writeValueAsString(tournamentRequest)))
-                .url("https://api.toornament.com/v1/tournaments/" + id)
+                .url("https://api.toornament.com/v2/tournaments/" + id)
                 .build();
             Response response = client.executeRequest(request);
             if (response.isSuccessful()) {
@@ -157,7 +159,7 @@ public class Tournaments extends Concept {
     public void deleteTournament(String id) {
         Request request = client.getAuthenticatedRequestBuilder()
             .delete()
-            .url("https://api.toornament.com/v1/tournaments/" + id)
+            .url("https://api.toornament.com/v2/tournaments/" + id)
             .build();
 
         Response response = client.executeRequest(request);

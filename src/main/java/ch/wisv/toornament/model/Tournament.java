@@ -2,6 +2,7 @@ package ch.wisv.toornament.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Tournament {
@@ -12,6 +13,8 @@ public class Tournament {
     @JsonProperty("full_name")
     private String fullName;
     private Status status;
+    private Date scheduled_date_start;
+    private Date scheduled_date_end;
     @JsonProperty("date_start")
     private Date dateStart;
     @JsonProperty("date_end")
@@ -23,8 +26,42 @@ public class Tournament {
     private String location;
     private String country;
     private Integer size;
+    private Logo logo;
+    private ArrayList<String> platforms;
 
     public Tournament() {
+    }
+
+    public Logo getLogo() {
+        return logo;
+    }
+
+    public void setLogo(Logo logo) {
+        this.logo = logo;
+    }
+
+    public ArrayList<String> getPlatforms() {
+        return platforms;
+    }
+
+    public void setPlatforms(ArrayList<String> platforms) {
+        this.platforms = platforms;
+    }
+
+    public Date getScheduled_date_end() {
+        return scheduled_date_end;
+    }
+
+    public void setScheduled_date_end(Date scheduled_date_end) {
+        this.scheduled_date_end = scheduled_date_end;
+    }
+
+    public Date getScheduled_date_start() {
+        return scheduled_date_start;
+    }
+
+    public void setScheduled_date_start(Date scheduled_date_start) {
+        this.scheduled_date_start = scheduled_date_start;
     }
 
     public String getId() {
