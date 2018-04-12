@@ -20,8 +20,8 @@ import java.util.stream.Stream;
 
 public class TournamentsTests {
     private ToornamentClient client;
-    HashMap<String,String> params;
-    HashMap<String,String> headers;
+    private HashMap<String,String> params;
+    private HashMap<String,String> headers;
 
     @Before
     public void Setup() throws IOException {
