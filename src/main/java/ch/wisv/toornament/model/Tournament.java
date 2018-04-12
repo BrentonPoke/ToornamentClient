@@ -1,6 +1,7 @@
 package ch.wisv.toornament.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,16 +86,31 @@ public class Tournament {
         return scheduled_date_end;
     }
 
-    public void setScheduled_date_end(Date scheduled_date_end) {
+    @JsonSetter("date_end") //v1 api setter
+    public void setDate_end(Date scheduled_date_end) {
         this.scheduled_date_end = scheduled_date_end;
+    }
+
+    @JsonSetter("scheduled_date_end") //v2 api setter
+    private void setScheduled_date_end(Date scheduled_date_end){
+        if(this.scheduled_date_end == null){
+            setDate_end(scheduled_date_end);
+        }
     }
 
     public Date getScheduled_date_start() {
         return scheduled_date_start;
     }
-
-    public void setScheduled_date_start(Date scheduled_date_start) {
+    @JsonSetter("date_start") //v1 api setter
+    public void setDate_start(Date scheduled_date_start) {
         this.scheduled_date_start = scheduled_date_start;
+    }
+
+    @JsonSetter("scheduled_date_start") //v2 api setter
+    private void setScheduled_date_start(Date scheduled_date_start){
+        if(this.scheduled_date_start == null){
+            setDate_start(scheduled_date_start);
+        }
     }
 
     public String getId() {
