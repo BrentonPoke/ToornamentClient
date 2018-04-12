@@ -1,13 +1,13 @@
-package ch.wisv.toornament.model;
+package ch.wisv.toornament.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 
-public enum MatchType {
-    DUEL("duel"), FFA("ffa");
+public enum ParticipantType {
+    TEAM("team"), SINGLE("single");
 
     private String name;
 
-    MatchType(String name) {
+    ParticipantType(String name) {
         this.name = name;
     }
 

@@ -1,5 +1,6 @@
 package ch.wisv.toornament.model;
 
+import ch.wisv.toornament.model.enums.TournamentStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;
@@ -11,7 +12,7 @@ public class Tournament {
     private String name;
     @JsonProperty("full_name")
     private String fullName;
-    private Status status;
+    private TournamentStatus status;
     @JsonProperty("date_start")
     private Date dateStart;
     @JsonProperty("date_end")
@@ -59,12 +60,12 @@ public class Tournament {
         this.fullName = fullName;
     }
 
-    public Status getStatus() {
+    public TournamentStatus getStatus() {
         return this.status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(TournamentStatus tournamentStatus) {
+        this.status = tournamentStatus;
     }
 
     public Date getDateStart() {

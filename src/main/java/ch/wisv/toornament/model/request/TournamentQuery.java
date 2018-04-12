@@ -1,13 +1,13 @@
 package ch.wisv.toornament.model.request;
 
-import java.util.Date;
+import ch.wisv.toornament.model.enums.DateSort;
+import ch.wisv.toornament.model.enums.TournamentStatus;
 
-import ch.wisv.toornament.model.Sort;
-import ch.wisv.toornament.model.Status;
+import java.util.Date;
 
 public class TournamentQuery {
     String discipline;
-    Status status;
+    TournamentStatus status;
     Boolean featured;
     Boolean online;
     String country;
@@ -15,6 +15,6 @@ public class TournamentQuery {
     Date beforeStart;
     Date afterEnd;
     Date beforeEnd;
-    Sort sort = Sort.DATE_DESC;
+    DateSort dateSort = DateSort.DATE_DESC;
     String name;
 }

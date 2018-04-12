@@ -1,7 +1,9 @@
 package ch.wisv.toornament;
 
 import ch.wisv.toornament.concepts.Disciplines;
+import ch.wisv.toornament.concepts.Matches;
 import ch.wisv.toornament.concepts.Tournaments;
+import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.request.ApiTokenRequest;
 import ch.wisv.toornament.model.response.ApiTokenResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -48,6 +50,14 @@ public class ToornamentClient {
 
     public Disciplines disciplines() {
         return new Disciplines(this);
+    }
+
+    public Matches matches(TournamentDetails tournament) {
+        return new Matches(this, tournament);
+    }
+
+    public Matches matches(String tournamentId) {
+        return new Matches(this, tournaments().getTournament(tournamentId));
     }
 
     public void authorize() {

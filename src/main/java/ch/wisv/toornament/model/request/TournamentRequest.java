@@ -1,7 +1,7 @@
 package ch.wisv.toornament.model.request;
 
-import ch.wisv.toornament.model.MatchFormat;
-import ch.wisv.toornament.model.ParticipantType;
+import ch.wisv.toornament.model.enums.MatchFormat;
+import ch.wisv.toornament.model.enums.ParticipantType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Date;

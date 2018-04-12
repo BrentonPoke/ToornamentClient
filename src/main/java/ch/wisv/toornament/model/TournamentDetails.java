@@ -1,5 +1,8 @@
 package ch.wisv.toornament.model;
 
+import ch.wisv.toornament.model.enums.MatchFormat;
+import ch.wisv.toornament.model.enums.MatchType;
+import ch.wisv.toornament.model.enums.ParticipantType;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
