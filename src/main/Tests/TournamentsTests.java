@@ -3,19 +3,15 @@ import static org.junit.Assert.*;
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
-import org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class TournamentsTests {
@@ -25,12 +21,12 @@ public class TournamentsTests {
 
     @Before
     public void Setup() throws IOException {
-        Path path = Paths.get("src/main/Tests/keys.txt");
-        Stream<String> streamOfStrings = Files.lines(path);
-        Stream<String> streamWithCharset =
-            Files.lines(path, Charset.forName("UTF-8"));
-        Object[] keys = streamWithCharset.toArray();
-        client = new ToornamentClient(keys[0].toString(),keys[1].toString(),keys[2].toString());
+//        Path path = Paths.get("src/main/Tests/keys.txt");
+//        Stream<String> streamWithCharset =
+//            Files.lines(path, Charset.forName("UTF-8"));
+//        Object[] keys = streamWithCharset.toArray();
+//        client = new ToornamentClient(keys[0].toString(),keys[1].toString(),keys[2].toString());
+        client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
         client.authorize();
         headers = new HashMap<>();
         params = new HashMap<>();
@@ -45,10 +41,8 @@ public class TournamentsTests {
     public void getFeaturedTournamentsTest() {
             headers.put("range","tournaments=0-49");
             List<Tournament> details = client.tournaments().getFeaturedTournaments(params,headers);
-        //    for (Tournament t : details)
-       // System.out.println(t.getName());
 
-        ArrayList<Tournament> list = new ArrayList<>(details);
+            ArrayList<Tournament> list = new ArrayList<>(details);
 
                 assertTrue(!list.isEmpty());
     }
@@ -61,6 +55,8 @@ public class TournamentsTests {
 
     @Test
     public void getTournamentTest(){
+        System.out.println(System.getenv("CLIENT"));
+        System.getenv("secret");
         TournamentDetails tournament = client.tournaments().getTournament("1257784630743515136");
 
             System.out.println(tournament.toString());
