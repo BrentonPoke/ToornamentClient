@@ -2,7 +2,7 @@ package ch.wisv.toornament.concepts;
 
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
-import ch.wisv.toornament.model.ParticipantType;
+import ch.wisv.toornament.model.enums.ParticipantType;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.request.TournamentRequest;

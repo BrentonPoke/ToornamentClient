@@ -1,5 +1,6 @@
 package ch.wisv.toornament.model;
 
+import ch.wisv.toornament.model.enums.TournamentStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 
@@ -13,9 +14,13 @@ public class Tournament {
     private String name;
     @JsonProperty("full_name")
     private String fullName;
-    private Status status;
     private Date scheduled_date_start;
     private Date scheduled_date_end;
+    private TournamentStatus status;
+    @JsonProperty("date_start")
+    private Date dateStart;
+    @JsonProperty("date_end")
+    private Date dateEnd;
     private Boolean online;
     @JsonProperty("public")
     private Boolean isPublic;
@@ -145,12 +150,12 @@ public class Tournament {
         this.fullName = fullName;
     }
 
-    public Status getStatus() {
+    public TournamentStatus getStatus() {
         return this.status;
     }
 
-    public void setStatus(Status status) {
-        this.status = status;
+    public void setStatus(TournamentStatus tournamentStatus) {
+        this.status = tournamentStatus;
     }
 
     public Boolean getOnline() {
