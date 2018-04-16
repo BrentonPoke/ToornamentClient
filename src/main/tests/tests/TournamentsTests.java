@@ -1,36 +1,55 @@
+package tests;
+
 import static org.junit.Assert.*;
 
 import ch.wisv.toornament.ToornamentClient;
+import ch.wisv.toornament.concepts.Tournaments;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
+import ch.wisv.toornament.model.enums.MatchFormat;
+import ch.wisv.toornament.model.enums.MatchType;
+import ch.wisv.toornament.model.enums.ParticipantType;
+import ch.wisv.toornament.model.request.TournamentRequest;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.stream.Stream;
 
 public class TournamentsTests {
     private ToornamentClient client;
+
+    Tournaments caller = Mockito.mock(Tournaments.class);
     private HashMap<String,String> params;
     private HashMap<String,String> headers;
 
+    private TournamentRequest tournamentRequest = new TournamentRequest();
+    private TournamentDetails tournamentDetails = new TournamentDetails();
     @Before
     public void Setup() throws IOException {
-//        Path path = Paths.get("src/main/Tests/keys.txt");
-//        Stream<String> streamWithCharset =
-//            Files.lines(path, Charset.forName("UTF-8"));
-//        Object[] keys = streamWithCharset.toArray();
-//        client = new ToornamentClient(keys[0].toString(),keys[1].toString(),keys[2].toString());
         client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
         client.authorize();
+
         headers = new HashMap<>();
         params = new HashMap<>();
         params.put("disciplines","overwatch");
+
+        tournamentDetails.setParticipantType(ParticipantType.TEAM);
+        tournamentDetails.setName("OWL Season 1");
+        tournamentDetails.setSize(144);
+        tournamentDetails.setDiscipline("overwatch");
+
+        tournamentRequest.setDiscipline("overwatch");
+        tournamentRequest.setOrganization("Blizzard Entertainment");
+        tournamentRequest.setWebsite("http://www.overwatchleague.com");
+        tournamentRequest.setMatchFormat(MatchFormat.BO3);
+        tournamentRequest.setPrize("$500,000-$1,000,000");
+        tournamentRequest.setSize(144);
+        tournamentRequest.setName("OWL Season 1");
+        tournamentRequest.setParticipantType(ParticipantType.TEAM);
+
     }
     @AfterEach
     public void CleanUp(){
@@ -67,6 +86,12 @@ public class TournamentsTests {
     public void getAllTournamentsTest(){
         List<Tournament> list = client.tournaments().getAllTournaments();
         assertTrue(!list.isEmpty());
+    }
+
+    @Test
+    public void createTournamentTest(){
+       Mockito.when(caller.createTournament(tournamentRequest)).thenReturn(tournamentDetails);
+
     }
 
 }

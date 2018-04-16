@@ -37,6 +37,9 @@ public class TournamentRequest {
     @JsonProperty("match_format")
     private MatchFormat matchFormat;
 
+    public TournamentRequest() {
+    }
+
     public TournamentRequest(String discipline, String name, Integer size, ParticipantType participantType) {
         this(discipline, name, size, participantType, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
