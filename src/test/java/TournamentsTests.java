@@ -9,7 +9,6 @@ import ch.wisv.toornament.model.enums.ParticipantType;
 import ch.wisv.toornament.model.request.TournamentRequest;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import java.io.IOException;
 import java.util.*;
@@ -66,7 +65,7 @@ public class TournamentsTests {
 
     @Test
     public void getTournamentTest(){
-        
+
         TournamentDetails tournament = client.tournaments().getTournament("1257784630743515136");
         assertEquals("overwatch",tournament.getDiscipline());
     }
