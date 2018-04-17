@@ -1,5 +1,3 @@
-package tests;
-
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.Matches;
 import ch.wisv.toornament.model.Match;

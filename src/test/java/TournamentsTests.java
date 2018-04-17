@@ -1,5 +1,3 @@
-package tests;
-
 import static org.junit.Assert.*;
 
 import ch.wisv.toornament.ToornamentClient;
@@ -7,12 +5,10 @@ import ch.wisv.toornament.concepts.Tournaments;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.enums.MatchFormat;
-import ch.wisv.toornament.model.enums.MatchType;
 import ch.wisv.toornament.model.enums.ParticipantType;
 import ch.wisv.toornament.model.request.TournamentRequest;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import java.io.IOException;
@@ -51,10 +47,6 @@ public class TournamentsTests {
         tournamentRequest.setParticipantType(ParticipantType.TEAM);
 
     }
-    @AfterEach
-    public void CleanUp(){
-        headers.clear();
-    }
 
     @Test
     public void getFeaturedTournamentsTest() {
@@ -74,11 +66,8 @@ public class TournamentsTests {
 
     @Test
     public void getTournamentTest(){
-        System.out.println(System.getenv("CLIENT"));
-        System.getenv("secret");
+        
         TournamentDetails tournament = client.tournaments().getTournament("1257784630743515136");
-
-            System.out.println(tournament.toString());
         assertEquals("overwatch",tournament.getDiscipline());
     }
 
