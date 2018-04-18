@@ -1,6 +1,8 @@
 package ch.wisv.toornament.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
@@ -10,6 +12,22 @@ public class DisciplineDetails extends Discipline {
     TeamSize teamSize;
     @JsonProperty("additional_fields")
     Map<String, Map<String, String>> additionalFields;
+
+    public TeamSize getTeamSize() {
+        return teamSize;
+    }
+
+    public void setTeamSize(TeamSize teamSize) {
+        this.teamSize = teamSize;
+    }
+
+    public Map<String, Map<String, String>> getAdditionalFields() {
+        return additionalFields;
+    }
+
+    public void setAdditionalFields(Map<String, Map<String, String>> additionalFields) {
+        this.additionalFields = additionalFields;
+    }
 
     private class TeamSize {
         int min;
@@ -33,5 +51,30 @@ public class DisciplineDetails extends Discipline {
         public void setMax(int max) {
             this.max = max;
         }
+
+        @Override
+        public String toString() {
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            String json = null;
+            try {
+                json = objectMapper.writeValueAsString(this);
+            } catch (JsonProcessingException e) {
+                e.getMessage();
+            }
+            return json;
+        }
+    }
+
+    @Override
+    public String toString() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            e.getMessage();
+        }
+        return json;
     }
 }
