@@ -1,14 +1,29 @@
 package ch.wisv.toornament.model;
 
+import ch.wisv.toornament.model.Custom.CustomFields;
 import ch.wisv.toornament.model.enums.Result;
+import ch.wisv.toornament.model.enums.ResultV2;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 class Opponent {
     private int number;
     private Participant participant;
-    private Result result;
+    private Object result;
     private Integer rank;
     private Integer score;
     private boolean forfeit;
+    private CustomFields custom_fields;
+
+    public CustomFields getCustom_fields() {
+        return custom_fields;
+    }
+
+    public void setCustom_fields(CustomFields custom_fields) {
+        this.custom_fields = custom_fields;
+    }
+
 
     public int getNumber() {
         return number;
@@ -26,11 +41,11 @@ class Opponent {
         this.participant = participant;
     }
 
-    public Result getResult() {
+    public Object getResult() {
         return result;
     }
 
-    public void setResult(Result result) {
+    public void setResult(Object result) {
         this.result = result;
     }
 
@@ -56,5 +71,14 @@ class Opponent {
 
     public void setRank(Integer rank) {
         this.rank = rank;
+    }
+    @Override
+    public String toString() {
+        try {
+            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

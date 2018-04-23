@@ -10,6 +10,6 @@ public enum Result {
 
     @JsonValue
     public int toValue() {
-        return ordinal();
+        return this.ordinal();
     }
 }

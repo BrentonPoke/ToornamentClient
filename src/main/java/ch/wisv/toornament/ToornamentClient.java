@@ -1,8 +1,6 @@
 package ch.wisv.toornament;
 
-import ch.wisv.toornament.concepts.Disciplines;
-import ch.wisv.toornament.concepts.Matches;
-import ch.wisv.toornament.concepts.Tournaments;
+import ch.wisv.toornament.concepts.*;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.request.ApiTokenRequest;
 import ch.wisv.toornament.model.response.ApiTokenResponse;
@@ -48,6 +46,10 @@ public class ToornamentClient {
         return new Tournaments(this);
     }
 
+    public TournamentsV2 tournamentsV2(){
+        return new TournamentsV2(this);
+    }
+
     public Disciplines disciplines() {
         return new Disciplines(this);
     }
@@ -55,9 +57,12 @@ public class ToornamentClient {
     public Matches matches(TournamentDetails tournament) {
         return new Matches(this, tournament);
     }
+    public MatchesV2 matchesV2(TournamentDetails tournament){
+        return new MatchesV2(this,tournament);
+    }
 
     public Matches matches(String tournamentId) {
-        return new Matches(this, tournaments().getTournament(tournamentId));
+        return new Matches(this, this.tournaments().getTournament(tournamentId));
     }
 
     public void authorize() {

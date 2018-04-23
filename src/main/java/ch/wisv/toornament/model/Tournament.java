@@ -3,6 +3,8 @@ package ch.wisv.toornament.model;
 import ch.wisv.toornament.model.enums.TournamentStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -205,13 +207,14 @@ public class Tournament {
     public void setSize(Integer size) {
         this.size = size;
     }
-
+    @Override
     public String toString() {
-        return "ch.wisv.toornament.model.Tournament(id=" + this.getId() + ", discipline=" + this
-            .getDiscipline() + ", name=" + this.getName() + ", fullName=" + this.getFullName()
-            + ", status=" + this.getStatus() + ", online=" + this.getOnline() + ", isPublic=" + this
-            .getIsPublic()
-            + ", archived=" + this.getArchived() + ", location=" + this.getLocation() + ", country="
-            + this.getCountry() + ", size=" + this.getSize() + ")";
+        try {
+            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
+
 }

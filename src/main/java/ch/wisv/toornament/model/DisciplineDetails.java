@@ -52,29 +52,5 @@ public class DisciplineDetails extends Discipline {
             this.max = max;
         }
 
-        @Override
-        public String toString() {
-            ObjectMapper objectMapper = new ObjectMapper();
-
-            String json = null;
-            try {
-                json = objectMapper.writeValueAsString(this);
-            } catch (JsonProcessingException e) {
-                e.getMessage();
-            }
-            return json;
-        }
-    }
-
-    @Override
-    public String toString() {
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = null;
-        try {
-            json = objectMapper.writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.getMessage();
-        }
-        return json;
     }
 }

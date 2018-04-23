@@ -2,6 +2,7 @@ package ch.wisv.toornament.model.Custom;
 
 import java.util.ArrayList;
 import ch.wisv.toornament.model.Custom.Address;
+import ch.wisv.toornament.model.Logo;
 
 public class CustomFields {
     /*social*/
@@ -37,6 +38,15 @@ public class CustomFields {
     private String custom;
     private boolean optin;
     private String website;
+    private Logo logo;
+
+    public Logo getLogo() {
+        return logo;
+    }
+
+    public void setLogo(Logo logo) {
+        this.logo = logo;
+    }
 
     public String getTwitter() {
         return twitter;

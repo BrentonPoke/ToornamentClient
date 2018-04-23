@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.Tournaments;
+import ch.wisv.toornament.concepts.TournamentsV2;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.enums.MatchFormat;
@@ -15,6 +16,7 @@ import java.util.*;
 
 public class TournamentsTests {
     private ToornamentClient client;
+    private ToornamentClient client1;
 
     Tournaments caller = Mockito.mock(Tournaments.class);
     private HashMap<String,String> params;
@@ -26,6 +28,8 @@ public class TournamentsTests {
     public void Setup() throws IOException {
         client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
         client.authorize();
+        client1 = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
+        client1.authorize();
 
         headers = new HashMap<>();
         params = new HashMap<>();
@@ -50,7 +54,7 @@ public class TournamentsTests {
     @Test
     public void getFeaturedTournamentsTest() {
             headers.put("range","tournaments=0-49");
-            List<Tournament> details = client.tournaments().getFeaturedTournaments(params,headers);
+            List<Tournament> details = client1.tournamentsV2().getFeaturedTournaments(params,headers);
 
             ArrayList<Tournament> list = new ArrayList<>(details);
 
@@ -66,7 +70,7 @@ public class TournamentsTests {
     @Test
     public void getTournamentTest(){
 
-        TournamentDetails tournament = client.tournaments().getTournament("1257784630743515136");
+        TournamentDetails tournament = client.tournamentsV2().getTournament("1257784630743515136");
         assertEquals("overwatch",tournament.getDiscipline());
     }
 
