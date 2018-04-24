@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -24,9 +25,9 @@ public class Tournament {
     private Date scheduled_date_end;
     private TournamentStatus status;
     @JsonProperty("date_start")
-    private Date dateStart;
+    private LocalDate dateStart;
     @JsonProperty("date_end")
-    private Date dateEnd;
+    private LocalDate dateEnd;
     private Boolean online;
     @JsonProperty("public")
     private Boolean isPublic;
@@ -44,7 +45,6 @@ public class Tournament {
 
     public Tournament() {
     }
-
 
     @Override
     public String toString() {

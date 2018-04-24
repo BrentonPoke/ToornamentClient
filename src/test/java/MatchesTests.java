@@ -30,8 +30,6 @@ public class MatchesTests {
     @Test
     public void getMatchesTest(){
         List<Match> result = matches.getMatches(new MatchQueryBuilder().participant("906379665349820416"));
-        for(Match m : result)
-            System.out.println(m.getDate());
         assertFalse(result.isEmpty());
 
     }
