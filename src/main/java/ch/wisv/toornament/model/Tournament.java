@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +50,7 @@ public class Tournament {
     @Override
     public String toString() {
         try {
-            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
+            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-mm-dd")).withDefaultPrettyPrinter().writeValueAsString(this);
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
         }

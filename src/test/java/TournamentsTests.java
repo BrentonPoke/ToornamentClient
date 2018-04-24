@@ -2,7 +2,6 @@ import static org.junit.Assert.*;
 
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.Tournaments;
-import ch.wisv.toornament.concepts.TournamentsV2;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.enums.MatchFormat;
@@ -10,15 +9,10 @@ import ch.wisv.toornament.model.enums.ParticipantType;
 import ch.wisv.toornament.model.request.TournamentRequest;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import java.io.IOException;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.*;
 
 public class TournamentsTests {
@@ -35,8 +29,6 @@ public class TournamentsTests {
     public void Setup() throws IOException {
         client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
         client.authorize();
-        client1 = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
-        client1.authorize();
 
         headers = new HashMap<>();
         params = new HashMap<>();
@@ -52,6 +44,7 @@ public class TournamentsTests {
         tournamentRequest.setOrganization("Blizzard Entertainment");
         tournamentRequest.setWebsite("http://www.overwatchleague.com");
         tournamentRequest.setMatchFormat(MatchFormat.BO3);
+        tournamentRequest.setIsPublic(false);
         tournamentRequest.setPrize("1 - $10,000 \n 2 - $5,000");
         tournamentRequest.setSize(144);
         tournamentRequest.setParticipantType(ParticipantType.TEAM);
@@ -66,7 +59,7 @@ public class TournamentsTests {
     @Test
     public void getFeaturedTournamentsTest() {
             headers.put("range","tournaments=0-49");
-            List<Tournament> details = client1.tournamentsV2().getFeaturedTournaments(params,headers);
+            List<Tournament> details = client.tournamentsV2().getFeaturedTournaments(params,headers);
 
             ArrayList<Tournament> list = new ArrayList<>(details);
 
@@ -94,8 +87,7 @@ public class TournamentsTests {
 
     @Test
     public void createTournamentTest(){
-        System.out.println(client.tournaments().createTournament(tournamentRequest));
-
+    client.tournaments().createTournament(tournamentRequest);
     }
 
     @Test
