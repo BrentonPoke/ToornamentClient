@@ -3,7 +3,14 @@ package ch.wisv.toornament.model.request;
 import ch.wisv.toornament.model.enums.MatchFormat;
 import ch.wisv.toornament.model.enums.ParticipantType;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class TournamentRequest {
@@ -18,9 +25,9 @@ public class TournamentRequest {
     private String organization;
     private String website;
     @JsonProperty("date_start")
-    private Date dateStart;
+    private LocalDate dateStart;
     @JsonProperty("date_end")
-    private Date dateEnd;
+    private LocalDate dateEnd;
     private String timezone;
     private Boolean online;
     @JsonProperty("public")
@@ -44,7 +51,7 @@ public class TournamentRequest {
         this(discipline, name, size, participantType, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
     }
 
-    public TournamentRequest(String discipline, String name, Integer size, ParticipantType participantType, String fullName, String organization, String website, Date dateStart, Date dateEnd, String timezone, Boolean online, Boolean isPublic, String location, String country, String description, String rules, String prize, Boolean checkIn, Boolean participantNationality, MatchFormat matchFormat) {
+    public TournamentRequest(String discipline, String name, Integer size, ParticipantType participantType, String fullName, String organization, String website, LocalDate dateStart, LocalDate dateEnd, String timezone, Boolean online, Boolean isPublic, String location, String country, String description, String rules, String prize, Boolean checkIn, Boolean participantNationality, MatchFormat matchFormat) {
         this.discipline = discipline;
         this.name = name;
         this.size = size;
@@ -65,6 +72,22 @@ public class TournamentRequest {
         this.checkIn = checkIn;
         this.participantNationality = participantNationality;
         this.matchFormat = matchFormat;
+    }
+
+    public LocalDate getDateStart() {
+        return dateStart;
+    }
+
+    public void setDateStart(LocalDate dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public LocalDate getDateEnd() {
+        return dateEnd;
+    }
+
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public String getDiscipline() {
@@ -121,22 +144,6 @@ public class TournamentRequest {
 
     public void setWebsite(String website) {
         this.website = website;
-    }
-
-    public Date getDateStart() {
-        return dateStart;
-    }
-
-    public void setDateStart(Date dateStart) {
-        this.dateStart = dateStart;
-    }
-
-    public Date getDateEnd() {
-        return dateEnd;
-    }
-
-    public void setDateEnd(Date dateEnd) {
-        this.dateEnd = dateEnd;
     }
 
     public String getTimezone() {
@@ -225,5 +232,15 @@ public class TournamentRequest {
 
     public void setMatchFormat(MatchFormat matchFormat) {
         this.matchFormat = matchFormat;
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-mm-dd")).writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 }

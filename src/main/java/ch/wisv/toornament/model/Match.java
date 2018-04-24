@@ -4,12 +4,15 @@ import ch.wisv.toornament.model.Custom.CustomFields;
 import ch.wisv.toornament.model.enums.MatchFormat;
 import ch.wisv.toornament.model.enums.MatchStatus;
 import ch.wisv.toornament.model.enums.MatchType;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -21,13 +24,13 @@ public class Match {
     private MatchStatus status;
     @JsonProperty("tournament_id")
     private String tournamentId;
-    private BigInteger number;
-    @JsonProperty("stage_number")
-    private BigInteger stageNumber;
-    @JsonProperty("group_number")
-    private BigInteger groupNumber;
-    @JsonProperty("round_number")
-    private BigInteger roundNumber;
+    private long number;
+    @JsonAlias({"stage_number","stage_id"})
+    private long stageNumber;
+    @JsonAlias({"group_number","group_id"})
+    private long groupNumber;
+    @JsonAlias({"round_number","round_id"})
+    private long roundNumber;
     private Date date;
     private String timezone;
     @JsonProperty("match_format")
@@ -84,50 +87,35 @@ public class Match {
         this.tournamentId = tournamentId;
     }
 
-    public BigInteger getNumber() {
+    public long getNumber() {
         return number;
     }
 
-    public void setNumber(BigInteger number) {
+    public void setNumber(long number) {
         this.number = number;
     }
 
-    public BigInteger getStageNumber() {
+    public long getStageNumber() {
         return stageNumber;
     }
 
-    public void setStageNumber(BigInteger stageNumber) {
+    public void setStageNumber(long stageNumber) {
         this.stageNumber = stageNumber;
     }
 
-    @JsonSetter("stage_id")
-    public void setStageId(BigInteger stageNumber) {
-        this.stageNumber = stageNumber;
-    }
-
-    public BigInteger getGroupNumber() {
+    public long getGroupNumber() {
         return groupNumber;
     }
 
-    public void setGroupNumber(BigInteger groupNumber) {
+    public void setGroupNumber(long groupNumber) {
         this.groupNumber = groupNumber;
     }
 
-    @JsonSetter("group_id")
-    public void setGroupId(BigInteger groupNumber) {
-        this.groupNumber = groupNumber;
-    }
-
-    public BigInteger getRoundNumber() {
+    public long getRoundNumber() {
         return roundNumber;
     }
 
-    public void setRoundNumber(BigInteger roundNumber) {
-        this.roundNumber = roundNumber;
-    }
-
-    @JsonSetter("round_id")
-    public void setRoundId(BigInteger roundNumber) {
+    public void setRoundNumber(long roundNumber) {
         this.roundNumber = roundNumber;
     }
 
@@ -177,7 +165,7 @@ public class Match {
     @Override
     public String toString() {
         try {
-            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
+            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-mm-dd")).writeValueAsString(this);
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
         }

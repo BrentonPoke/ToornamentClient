@@ -1,6 +1,5 @@
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.Matches;
-import ch.wisv.toornament.concepts.MatchesV2;
 import ch.wisv.toornament.model.Match;
 import ch.wisv.toornament.model.MatchDetails;
 import ch.wisv.toornament.model.MatchResult;
@@ -12,14 +11,12 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MatchesTests {
     private ToornamentClient client;
     private Matches matches;
     private TournamentDetails details = new TournamentDetails();
-    private MatchesV2 matchesV2;
 
     @Before
     public void Setup() throws IOException {
@@ -33,7 +30,8 @@ public class MatchesTests {
     @Test
     public void getMatchesTest(){
         List<Match> result = matches.getMatches(new MatchQueryBuilder().participant("906379665349820416"));
-
+        for(Match m : result)
+            System.out.println(m.getDate());
         assertFalse(result.isEmpty());
 
     }

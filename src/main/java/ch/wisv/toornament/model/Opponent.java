@@ -1,9 +1,6 @@
 package ch.wisv.toornament.model;
 
 import ch.wisv.toornament.model.Custom.CustomFields;
-import ch.wisv.toornament.model.enums.Result;
-import ch.wisv.toornament.model.enums.ResultV2;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

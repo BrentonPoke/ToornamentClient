@@ -6,6 +6,8 @@ import ch.wisv.toornament.model.enums.ParticipantType;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.request.TournamentRequest;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
@@ -112,6 +114,8 @@ public class Tournaments extends Concept {
 
 
     public TournamentDetails createTournament(TournamentRequest tournamentRequest) {
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         try {
             Request request = client.getAuthenticatedRequestBuilder()
                 .post(RequestBody.create(JSON, mapper.writeValueAsString(tournamentRequest)))
@@ -119,15 +123,17 @@ public class Tournaments extends Concept {
                 .build();
             Response response = client.executeRequest(request);
             if (response.isSuccessful()) {
+                //mapper.enable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
                 return mapper.readValue(response.body().string(), TournamentDetails.class);
             } else {
                 throw new ToornamentException("Couldn't create tournament" + response.body().string());
             }
 
-        } catch (IOException e) {
+        } catch (IOException | ToornamentException e) {
             e.printStackTrace();
             throw new ToornamentException("IOException occurred");
         }
+
     }
 
     public TournamentDetails createTournament(String discipline, String name, Integer size, ParticipantType participantType) {
