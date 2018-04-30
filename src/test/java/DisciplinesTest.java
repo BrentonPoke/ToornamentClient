@@ -31,6 +31,6 @@ public class DisciplinesTest {
     @Test
     public void getDiscipline() {
         DisciplineDetails details = disciplines.getDiscipline("overwatch");
-        assertTrue(details.getID().matches("overwatch"));
+        assertTrue(details.getId().matches("overwatch"));
     }
 }

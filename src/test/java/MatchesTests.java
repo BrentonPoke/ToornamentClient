@@ -12,14 +12,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class MatchesTests {
     private ToornamentClient client;
     private Matches matches;
-    private TournamentDetails details = new TournamentDetails();
     private MatchesV2 matchesV2;
+    private TournamentDetails details = new TournamentDetails();
 
     @Before
     public void Setup() throws IOException {
@@ -28,12 +27,12 @@ public class MatchesTests {
 
         details.setId("906278647555784704");
         matches = new Matches(client,details);
+        matchesV2 = new MatchesV2(client,details);
     }
 
     @Test
     public void getMatchesTest(){
         List<Match> result = matches.getMatches(new MatchQueryBuilder().participant("906379665349820416"));
-
         assertFalse(result.isEmpty());
 
     }
@@ -59,5 +58,13 @@ public class MatchesTests {
         MatchResult result = matches.getResult("989807940598333464");
         assertEquals(result.getStatus(),MatchStatus.COMPLETED);
         assertEquals(result.getOpponents().size(), 2);
+    }
+
+    @Test
+    public void getMatchV2Test(){
+        Match match = matchesV2.getMatch("906278647555784704","989807940598333454");
+        assertEquals(987313091175768089L,match.getGroupNumber());
+        assertEquals(989807940564779021L,match.getRoundNumber());
+        assertEquals(987313089934254080L,match.getStageNumber());
     }
 }

@@ -5,6 +5,8 @@ import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.request.ApiTokenRequest;
 import ch.wisv.toornament.model.response.ApiTokenResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -31,6 +33,8 @@ public class ToornamentClient {
         this.clientSecret = clientSecret;
         httpClient = new OkHttpClient();
         mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         authorize();
     }
 

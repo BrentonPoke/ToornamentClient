@@ -2,7 +2,7 @@ import static org.junit.Assert.*;
 
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.Tournaments;
-import ch.wisv.toornament.concepts.TournamentsV2;
+import ch.wisv.toornament.model.Stage;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.enums.MatchFormat;
@@ -12,12 +12,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class TournamentsTests {
     private ToornamentClient client;
     private ToornamentClient client1;
-
+    //@Mock
     Tournaments caller = Mockito.mock(Tournaments.class);
     private HashMap<String,String> params;
     private HashMap<String,String> headers;
@@ -28,33 +30,37 @@ public class TournamentsTests {
     public void Setup() throws IOException {
         client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
         client.authorize();
-        client1 = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
-        client1.authorize();
 
         headers = new HashMap<>();
         params = new HashMap<>();
         params.put("disciplines","overwatch");
 
         tournamentDetails.setParticipantType(ParticipantType.TEAM);
-        tournamentDetails.setName("OWL Season 1");
+        tournamentDetails.setName("OWL Season 1 TEST");
         tournamentDetails.setSize(144);
         tournamentDetails.setDiscipline("overwatch");
 
+        tournamentRequest.setName("OWL Season 1 TEST");
         tournamentRequest.setDiscipline("overwatch");
         tournamentRequest.setOrganization("Blizzard Entertainment");
         tournamentRequest.setWebsite("http://www.overwatchleague.com");
         tournamentRequest.setMatchFormat(MatchFormat.BO3);
-        tournamentRequest.setPrize("$500,000-$1,000,000");
+        tournamentRequest.setIsPublic(false);
+        tournamentRequest.setPrize("1 - $10,000 \n 2 - $5,000");
         tournamentRequest.setSize(144);
-        tournamentRequest.setName("OWL Season 1");
         tournamentRequest.setParticipantType(ParticipantType.TEAM);
+        tournamentRequest.setTimezone("America/Los_Angeles");
+        tournamentRequest.setCountry("US");
+        tournamentRequest.setDateStart(LocalDate.parse("2018-09-05",DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        tournamentRequest.setDateEnd(LocalDate.parse("2019-04-05",DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
 
     }
 
     @Test
     public void getFeaturedTournamentsTest() {
             headers.put("range","tournaments=0-49");
-            List<Tournament> details = client1.tournamentsV2().getFeaturedTournaments(params,headers);
+            List<Tournament> details = client.tournamentsV2().getFeaturedTournaments(params,headers);
 
             ArrayList<Tournament> list = new ArrayList<>(details);
 
@@ -82,7 +88,23 @@ public class TournamentsTests {
 
     @Test
     public void createTournamentTest(){
-       Mockito.when(caller.createTournament(tournamentRequest)).thenReturn(tournamentDetails);
+    client.tournaments().createTournament(tournamentRequest);
+    }
+
+    @Test
+    public void deleteTournamentTest(){
+       List<Tournament> list = client.tournaments().getMyTournaments();
+        for(Tournament t : list)
+       client.tournaments().deleteTournament(t.getId());
+
+       assertTrue(client.tournaments().getMyTournaments().isEmpty());
+    }
+
+    @Test
+    public void StagesTest(){
+        List<Stage> list = client.tournaments().getStages("906278647555784704");
+        assertFalse(list.isEmpty());
+        assertEquals(6,list.size());
 
     }
 
