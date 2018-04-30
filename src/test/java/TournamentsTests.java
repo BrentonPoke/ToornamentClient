@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.Tournaments;
+import ch.wisv.toornament.model.Stage;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.enums.MatchFormat;
@@ -97,6 +98,14 @@ public class TournamentsTests {
        client.tournaments().deleteTournament(t.getId());
 
        assertTrue(client.tournaments().getMyTournaments().isEmpty());
+    }
+
+    @Test
+    public void StagesTest(){
+        List<Stage> list = client.tournaments().getStages("906278647555784704");
+        assertFalse(list.isEmpty());
+        assertEquals(6,list.size());
+
     }
 
 }

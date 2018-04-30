@@ -1,5 +1,6 @@
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.Matches;
+import ch.wisv.toornament.concepts.MatchesV2;
 import ch.wisv.toornament.model.Match;
 import ch.wisv.toornament.model.MatchDetails;
 import ch.wisv.toornament.model.MatchResult;
@@ -16,6 +17,7 @@ import java.util.List;
 public class MatchesTests {
     private ToornamentClient client;
     private Matches matches;
+    private MatchesV2 matchesV2;
     private TournamentDetails details = new TournamentDetails();
 
     @Before
@@ -25,6 +27,7 @@ public class MatchesTests {
 
         details.setId("906278647555784704");
         matches = new Matches(client,details);
+        matchesV2 = new MatchesV2(client,details);
     }
 
     @Test
@@ -55,5 +58,13 @@ public class MatchesTests {
         MatchResult result = matches.getResult("989807940598333464");
         assertEquals(result.getStatus(),MatchStatus.COMPLETED);
         assertEquals(result.getOpponents().size(), 2);
+    }
+
+    @Test
+    public void getMatchV2Test(){
+        Match match = matchesV2.getMatch("906278647555784704","989807940598333454");
+        assertEquals(987313091175768089L,match.getGroupNumber());
+        assertEquals(989807940564779021L,match.getRoundNumber());
+        assertEquals(987313089934254080L,match.getStageNumber());
     }
 }

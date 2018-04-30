@@ -2,6 +2,7 @@ package ch.wisv.toornament.concepts;
 
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
+import ch.wisv.toornament.model.Stage;
 import ch.wisv.toornament.model.enums.ParticipantType;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
@@ -71,7 +72,7 @@ public class Tournaments extends Concept {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, TournamentDetails.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.getMessage();
             throw new ToornamentException("Couldn't get tournament with id: " + id);
         }
     }
@@ -109,6 +110,31 @@ public class Tournaments extends Concept {
             .url(url.build())
             .build();
         return requestHelper(request);
+
+    }
+
+    public List<Stage> getStages(String id){
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        url.scheme("https")
+            .host("api.toornament.com")
+            .addEncodedPathSegment("v1")
+            .addEncodedPathSegment("tournaments")
+            .addEncodedPathSegment(id)
+            .addEncodedPathSegment("stages");
+        Request request = client.getRequestBuilder()
+            .get()
+            .url(url.build())
+            .build();
+
+
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
+                Stage.class));
+        } catch (IOException e) {
+            e.getMessage();
+        }
+        return null;
 
     }
 
