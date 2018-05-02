@@ -49,14 +49,14 @@ public class MatchesV2 extends Concept {
         }
     }
 
-    public Match getMatch(String tournamentId, String matchId){
+    public Match getMatch(String matchId){
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
             .addPathSegment("viewer")
             .addPathSegment("v2")
             .addPathSegment("tournaments")
-            .addPathSegment(tournamentId)
+            .addPathSegment(tournament.getId())
             .addPathSegment("matches")
             .addPathSegment(matchId);
         Request request = client.getRequestBuilder().get().url(urlBuilder.toString()).build();
