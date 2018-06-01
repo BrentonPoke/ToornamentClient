@@ -1,9 +1,12 @@
 package ch.wisv.toornament.model;
 
 import ch.wisv.toornament.model.enums.VodCategory;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.math.BigInteger;
-
+@Setter
+@Getter
 public class Vod extends Video {
 
     private VodCategory category;
@@ -11,17 +14,5 @@ public class Vod extends Video {
 
     public BigInteger getMatch_id() {
         return match_id;
-    }
-
-    public void setMatch_id(BigInteger match_id) {
-        this.match_id = match_id;
-    }
-
-    public VodCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(VodCategory category) {
-        this.category = category;
     }
 }

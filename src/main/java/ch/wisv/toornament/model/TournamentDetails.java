@@ -37,7 +37,6 @@ public class TournamentDetails extends Tournament {
     @JsonProperty("match_format")
     private MatchFormat matchFormat;
     private String timezone;
-    //private Discipline disciplines;
     private Map<String, Object[]> disciplineFields = new HashMap<>();
 
 //    public ParticipantType getParticipantType() {
