@@ -2,6 +2,7 @@ package ch.wisv.toornament.concepts;
 
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
+import ch.wisv.toornament.model.Stream;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
 import okhttp3.HttpUrl;
@@ -67,6 +68,31 @@ public class TournamentsV2 extends Concept {
             e.printStackTrace();
             throw new ToornamentException("Couldn't get tournament with id: " + id);
         }
+    }
+
+    public List<Stream> getStreams(String id, Map<String,String> range){
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        url.scheme("https")
+            .host("api.toornament.com")
+            .addEncodedPathSegment("viewer")
+            .addEncodedPathSegment("v2")
+            .addEncodedPathSegment("tournaments")
+            .addEncodedPathSegment(id)
+            .addEncodedPathSegment("streams");
+        Request request = client.getAuthenticatedRequestBuilder()
+            .get()
+            .url(url.build())
+            .addHeader("range",range.get("range"))
+            .build();
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
+                Stream.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ToornamentException("Couldn't retrieve streams from tournament with id "+ id);
+        }
+
     }
 
 }

@@ -7,10 +7,14 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-
+@Getter
+@Setter
 public class TournamentDetails extends Tournament {
 
     @JsonProperty("participant_type")
@@ -26,8 +30,6 @@ public class TournamentDetails extends Tournament {
     private Integer teamSizeMin;
     @JsonProperty("team_max_size")
     private Integer teamSizeMax;
-    // TODO: Stream model
-    private Object[] streams;
     @JsonProperty("check_in")
     private Boolean checkIn;
     @JsonProperty("participant_nationality")
@@ -35,120 +37,120 @@ public class TournamentDetails extends Tournament {
     @JsonProperty("match_format")
     private MatchFormat matchFormat;
     private String timezone;
-
+    //private Discipline disciplines;
     private Map<String, Object[]> disciplineFields = new HashMap<>();
 
-    public ParticipantType getParticipantType() {
-        return participantType;
-    }
-
-    public void setParticipantType(ParticipantType participantType) {
-        this.participantType = participantType;
-    }
-
-    public MatchType getMatchType() {
-        return matchType;
-    }
-
-    public void setMatchType(MatchType matchType) {
-        this.matchType = matchType;
-    }
-
-    public String getOrganization() {
-        return organization;
-    }
-
-    public void setOrganization(String organization) {
-        this.organization = organization;
-    }
-
-    public String getWebsite() {
-        return website;
-    }
-
-    public void setWebsite(String website) {
-        this.website = website;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getRules() {
-        return rules;
-    }
-
-    public void setRules(String rules) {
-        this.rules = rules;
-    }
-
-    public String getPrize() {
-        return prize;
-    }
-
-    public void setPrize(String prize) {
-        this.prize = prize;
-    }
-
-    public Integer getTeamSizeMin() {
-        return teamSizeMin;
-    }
-
-    public void setTeamSizeMin(Integer teamSizeMin) {
-        this.teamSizeMin = teamSizeMin;
-    }
-
-    public Integer getTeamSizeMax() {
-        return teamSizeMax;
-    }
-
-    public void setTeamSizeMax(Integer teamSizeMax) {
-        this.teamSizeMax = teamSizeMax;
-    }
-
-    public Object[] getStreams() {
-        return streams;
-    }
-
-    public void setStreams(Object[] streams) {
-        this.streams = streams;
-    }
-
-    public Boolean getCheckIn() {
-        return checkIn;
-    }
-
-    public void setCheckIn(Boolean checkIn) {
-        this.checkIn = checkIn;
-    }
-
-    public Boolean getParticipantNationality() {
-        return participantNationality;
-    }
-
-    public void setParticipantNationality(Boolean participantNationality) {
-        this.participantNationality = participantNationality;
-    }
-
-    public MatchFormat getMatchFormat() {
-        return matchFormat;
-    }
-
-    public void setMatchFormat(MatchFormat matchFormat) {
-        this.matchFormat = matchFormat;
-    }
-
-    public Map<String, Object[]> getDisciplineFields() {
-        return disciplineFields;
-    }
-
-    public void setDisciplineFields(Map<String, Object[]> disciplineFields) {
-        this.disciplineFields = disciplineFields;
-    }
+//    public ParticipantType getParticipantType() {
+//        return participantType;
+//    }
+//
+//    public void setParticipantType(ParticipantType participantType) {
+//        this.participantType = participantType;
+//    }
+//
+//    public MatchType getMatchType() {
+//        return matchType;
+//    }
+//
+//    public void setMatchType(MatchType matchType) {
+//        this.matchType = matchType;
+//    }
+//
+//    public String getOrganization() {
+//        return organization;
+//    }
+//
+//    public void setOrganization(String organization) {
+//        this.organization = organization;
+//    }
+//
+//    public String getWebsite() {
+//        return website;
+//    }
+//
+//    public void setWebsite(String website) {
+//        this.website = website;
+//    }
+//
+//    public String getDescription() {
+//        return description;
+//    }
+//
+//    public void setDescription(String description) {
+//        this.description = description;
+//    }
+//
+//    public String getRules() {
+//        return rules;
+//    }
+//
+//    public void setRules(String rules) {
+//        this.rules = rules;
+//    }
+//
+//    public String getPrize() {
+//        return prize;
+//    }
+//
+//    public void setPrize(String prize) {
+//        this.prize = prize;
+//    }
+//
+//    public Integer getTeamSizeMin() {
+//        return teamSizeMin;
+//    }
+//
+//    public void setTeamSizeMin(Integer teamSizeMin) {
+//        this.teamSizeMin = teamSizeMin;
+//    }
+//
+//    public Integer getTeamSizeMax() {
+//        return teamSizeMax;
+//    }
+//
+//    public void setTeamSizeMax(Integer teamSizeMax) {
+//        this.teamSizeMax = teamSizeMax;
+//    }
+//
+//    public Object[] getStreams() {
+//        return streams;
+//    }
+//
+//    public void setStreams(Object[] streams) {
+//        this.streams = streams;
+//    }
+//
+//    public Boolean getCheckIn() {
+//        return checkIn;
+//    }
+//
+//    public void setCheckIn(Boolean checkIn) {
+//        this.checkIn = checkIn;
+//    }
+//
+//    public Boolean getParticipantNationality() {
+//        return participantNationality;
+//    }
+//
+//    public void setParticipantNationality(Boolean participantNationality) {
+//        this.participantNationality = participantNationality;
+//    }
+//
+//    public MatchFormat getMatchFormat() {
+//        return matchFormat;
+//    }
+//
+//    public void setMatchFormat(MatchFormat matchFormat) {
+//        this.matchFormat = matchFormat;
+//    }
+//
+//    public Map<String, Object[]> getDisciplineFields() {
+//        return disciplineFields;
+//    }
+//
+//    public void setDisciplineFields(Map<String, Object[]> disciplineFields) {
+//        this.disciplineFields = disciplineFields;
+//    }
 
     // Capture all other fields that Jackson do not match other members
     @JsonAnyGetter
@@ -162,11 +164,4 @@ public class TournamentDetails extends Tournament {
         disciplineFields.put(name, value);
     }
 
-    public String getTimezone() {
-        return timezone;
-    }
-
-    public void setTimezone(String timezone) {
-        this.timezone = timezone;
-    }
 }

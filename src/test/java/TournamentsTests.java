@@ -2,9 +2,7 @@ import static org.junit.Assert.*;
 
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.Tournaments;
-import ch.wisv.toornament.model.Stage;
-import ch.wisv.toornament.model.Tournament;
-import ch.wisv.toornament.model.TournamentDetails;
+import ch.wisv.toornament.model.*;
 import ch.wisv.toornament.model.enums.MatchFormat;
 import ch.wisv.toornament.model.enums.ParticipantType;
 import ch.wisv.toornament.model.request.TournamentRequest;
@@ -76,14 +74,37 @@ public class TournamentsTests {
     @Test
     public void getTournamentTest(){
 
-        TournamentDetails tournament = client.tournamentsV2().getTournament("1257784630743515136");
+        Tournament tournament = client.tournamentsV2().getTournament("906278647555784704");
         assertEquals("overwatch",tournament.getDiscipline());
+    }
+
+    @Test //need new tournament id with streams
+    public void getStreamsTest(){
+        Map<String,String> range = new HashMap<>();
+        range.put("range","streams=0-5");
+        List<Stream> streams = client.tournamentsV2().getStreams("906278647555784704", range);
+        System.out.println(streams);
+        assertEquals(4,streams.size());
+    }
+
+    @Test
+    public void getVodsTest(){
+        List<Vod> vods = client.tournaments().getVods("906278647555784704");
+        System.out.println(vods);
+        assertNotNull(vods);
+        assertFalse(vods.isEmpty());
     }
 
     @Test
     public void getAllTournamentsTest(){
         List<Tournament> list = client.tournaments().getAllTournaments();
         assertTrue(!list.isEmpty());
+    }
+
+    @Test
+    public void getTournamentByDisciplineTest(){
+        List<Tournament> list = client.tournaments().getTournamentByDiscipline("overwatch");
+        assertFalse(list.isEmpty());
     }
 
     @Test

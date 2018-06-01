@@ -15,6 +15,7 @@ class Opponent {
     private Integer rank;
     private Integer score;
     private boolean forfeit;
+    private Integer position;
     private CustomFields custom_fields;
 
 

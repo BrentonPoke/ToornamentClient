@@ -3,6 +3,7 @@ package ch.wisv.toornament.concepts;
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Stage;
+import ch.wisv.toornament.model.Vod;
 import ch.wisv.toornament.model.enums.ParticipantType;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
@@ -14,6 +15,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import static ch.wisv.toornament.ToornamentClient.JSON;
@@ -110,6 +112,40 @@ public class Tournaments extends Concept {
             .url(url.build())
             .build();
         return requestHelper(request);
+
+    }
+
+    public List<Vod> getVods(String id){
+        Map<String, String> paramsMap = new HashMap<>();
+        paramsMap.put("category","replay");
+        paramsMap.put("page","1");
+        return getVods(id, paramsMap);
+    }
+
+    public List<Vod> getVods(String id, Map<String, String> paramsMap){
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        url.scheme("https")
+            .host("api.toornament.com")
+            .addEncodedPathSegment("v1")
+            .addEncodedPathSegment("tournaments")
+            .addEncodedPathSegment(id)
+            .addEncodedPathSegment("videos");
+
+        for (Map.Entry<String, String> params : paramsMap.entrySet()) {
+            url.addQueryParameter(params.getKey(), params.getValue());
+        }
+        Request request = client.getRequestBuilder()
+            .get()
+            .url(url.build())
+            .build();
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
+                Vod.class));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new ToornamentException("Couldn't retrieve vods for tournament with id "+ id);
+        }
 
     }
 
