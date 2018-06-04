@@ -8,7 +8,6 @@ import ch.wisv.toornament.model.enums.ParticipantType;
 import ch.wisv.toornament.model.request.TournamentRequest;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -16,9 +15,6 @@ import java.util.*;
 
 public class TournamentsTests {
     private ToornamentClient client;
-    private ToornamentClient client1;
-    //@Mock
-    Tournaments caller = Mockito.mock(Tournaments.class);
     private HashMap<String,String> params;
     private HashMap<String,String> headers;
 

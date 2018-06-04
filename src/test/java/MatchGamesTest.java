@@ -1,6 +1,5 @@
-package ch.wisv.toornament.concepts;
-
 import ch.wisv.toornament.ToornamentClient;
+import ch.wisv.toornament.concepts.MatchGamesV2;
 import ch.wisv.toornament.model.Game;
 import ch.wisv.toornament.model.Match;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +8,6 @@ import org.junit.Test;
 import ch.wisv.toornament.model.Opponent;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,6 +31,7 @@ public class MatchGamesTest {
     @Test
     public void getGames() throws IOException {
         Game game = gamesV2.getGames("3");
+        //Just thought i'd try it
         List<Opponent> opponents = mapper.readValue("[\n" +
             "        {\n" +
             "            \"number\": 1,\n" +
@@ -51,6 +50,6 @@ public class MatchGamesTest {
             "    ]",mapper.getTypeFactory().constructCollectionType(List.class, Opponent.class));
         System.out.println(opponents);
         System.out.println(game.getOpponents());
-        assertTrue(game.getOpponents().equals(opponents));
+        assertEquals(game.getOpponents(),opponents);
     }
 }
