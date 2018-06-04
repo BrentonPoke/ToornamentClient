@@ -68,6 +68,9 @@ public class ToornamentClient {
     public Matches matches(String tournamentId) {
         return new Matches(this, this.tournaments().getTournament(tournamentId));
     }
+    public RoundsV2 roundsV2(String tournamentID){
+        return new RoundsV2(this,tournamentID);
+    }
 
     public void authorize() {
         ApiTokenRequest tokenRequest =
