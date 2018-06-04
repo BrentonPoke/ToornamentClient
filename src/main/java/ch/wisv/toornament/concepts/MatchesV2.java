@@ -3,7 +3,6 @@ package ch.wisv.toornament.concepts;
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Match;
-import ch.wisv.toornament.model.MatchDetails;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.request.MatchQueryBuilder;
 import okhttp3.HttpUrl;

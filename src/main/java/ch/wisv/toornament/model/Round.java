@@ -17,7 +17,15 @@ public class Round {
     private Integer number;
     private String name;
     private Boolean closed;
-    private Object settings;
+    private Settings settings;
+
+    @Setter
+    @Getter
+    private class Settings{
+        String size;
+        public Settings(){}
+
+    }
     @Override
     public String toString() {
         try {

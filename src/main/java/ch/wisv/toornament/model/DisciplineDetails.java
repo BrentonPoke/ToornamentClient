@@ -5,7 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Map;
-
+@Getter
+@Setter
 public class DisciplineDetails extends Discipline {
 
     @JsonProperty("team_size")
@@ -13,43 +14,13 @@ public class DisciplineDetails extends Discipline {
     @JsonProperty("additional_fields")
     Map<String, Map<String, String>> additionalFields;
 
-    public TeamSize getTeamSize() {
-        return teamSize;
-    }
-
-    public void setTeamSize(TeamSize teamSize) {
-        this.teamSize = teamSize;
-    }
-
-    public Map<String, Map<String, String>> getAdditionalFields() {
-        return additionalFields;
-    }
-
-    public void setAdditionalFields(Map<String, Map<String, String>> additionalFields) {
-        this.additionalFields = additionalFields;
-    }
-
+    @Getter
+    @Setter
     private class TeamSize {
         int min;
         int max;
 
         public TeamSize() {
-        }
-
-        public int getMin() {
-            return min;
-        }
-
-        public void setMin(int min) {
-            this.min = min;
-        }
-
-        public int getMax() {
-            return max;
-        }
-
-        public void setMax(int max) {
-            this.max = max;
         }
 
     }
