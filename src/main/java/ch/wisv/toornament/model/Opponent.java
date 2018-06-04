@@ -1,20 +1,24 @@
 package ch.wisv.toornament.model;
 
 import ch.wisv.toornament.model.Custom.CustomFields;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-class Opponent {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode
+public class Opponent {
     private int number;
     private Participant participant;
     private Object result;
     private Integer rank;
     private Integer score;
-    private boolean forfeit;
+    private Boolean forfeit;
     private Integer position;
     private CustomFields custom_fields;
 

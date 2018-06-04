@@ -1,10 +1,12 @@
 package ch.wisv.toornament.model;
 
 import ch.wisv.toornament.model.enums.TournamentStatus;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +17,8 @@ import java.util.Date;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@EqualsAndHashCode
 public class Tournament {
 
     private String id;

@@ -20,7 +20,7 @@ To use the current master branch in your project, add this to your pom.xml
 	    <version>-SNAPSHOT</version>
 	</dependency>
 ```
-This will add a snapshot of the current master to your classpath. Note that this will update very regularly, and can break. Once we reached a somewhat significant amount of features, we'll change to release based releases. Use with caution, not recommended for production systems quite yet!
+This will add a snapshot of the current master to your classpath. Note that this will update very regularly, and can break. Use with caution, not recommended for production systems quite yet!
 
 ## Terms and Guidelines
 
