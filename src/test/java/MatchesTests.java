@@ -48,6 +48,7 @@ public class MatchesTests {
     @Test
     public void getMatchTest() {
         MatchDetails details = matches.getMatch("989807940598333464",true);
+        System.out.println(details);
         assertFalse(details.getGames().isEmpty());
         assertTrue(details.getId().matches("989807940598333464"));
         assertFalse(details.getVods().isEmpty());
