@@ -14,7 +14,7 @@ import static org.junit.Assert.*;
 public class GroupsV2Tests {
     private ToornamentClient client;
     private GroupsV2 groups;
-    private Map<String,String> params =new HashMap<>();
+    private Map<String,String> params = new HashMap<>();
     private Map<String,String> header = new HashMap<>();
 
     @Before

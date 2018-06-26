@@ -5,6 +5,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -20,7 +22,7 @@ public class Group {
     private class Settings{
         String size;
         //The model for this entity is ridiculous and I hope they change it.
-        Object pairing_values;
+        ArrayList<ArrayList<ArrayList<Integer>>> pairing_values;
         public Settings(){}
 
     }
