@@ -4,10 +4,13 @@ import ch.wisv.toornament.model.enums.MatchFormat;
 import ch.wisv.toornament.model.enums.MatchType;
 import ch.wisv.toornament.model.enums.ParticipantType;
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 @Getter
@@ -48,6 +51,16 @@ public class TournamentDetails extends Tournament {
     @JsonFormat(with = JsonFormat.Feature.ACCEPT_SINGLE_VALUE_AS_ARRAY)
     public void setOtherField(String name, Object[] value) {
         disciplineFields.put(name, value);
+    }
+
+    @Override
+    public String toString() {
+        try {
+            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-mm-dd")).writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
 }
