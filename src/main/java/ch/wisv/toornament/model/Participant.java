@@ -10,20 +10,17 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode
 public class Participant {
-    String id;
-    String name;
-    CustomFields customFields;
+    private String id;
+    private String name;
     private String country;
     private CustomFields custom_fields;
-
 
     @Override
     public String toString() {
         try {
-            return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
+            return new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writerWithDefaultPrettyPrinter().writeValueAsString(this);
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
         }
