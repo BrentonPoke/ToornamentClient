@@ -12,8 +12,9 @@ import lombok.Setter;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.TimeZone;
 
 @Getter
 @Setter
@@ -26,8 +27,8 @@ public class Tournament {
     private String name;
     @JsonProperty("full_name")
     private String fullName;
-    private Date scheduled_date_start;
-    private Date scheduled_date_end;
+    private LocalDate scheduled_date_start;
+    private LocalDate scheduled_date_end;
     private TournamentStatus status;
     @JsonProperty("date_start")
     private LocalDate dateStart;
@@ -43,10 +44,11 @@ public class Tournament {
     private Logo logo;
     private ArrayList<String> platforms;
     private String registration_enabled;
-    private Date registration_opening_datetime;
-    private Date registration_closing_datetime;
+    private ZonedDateTime registration_opening_datetime;
+    private ZonedDateTime registration_closing_datetime;
     @JsonProperty("public")
     private boolean public_event;
+    private TimeZone timezone;
 
     public Tournament() {
     }

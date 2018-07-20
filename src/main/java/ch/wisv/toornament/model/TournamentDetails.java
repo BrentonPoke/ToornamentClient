@@ -38,7 +38,6 @@ public class TournamentDetails extends Tournament {
     private Boolean participantNationality;
     @JsonProperty("match_format")
     private MatchFormat matchFormat;
-    private String timezone;
     private Map<String, Object[]> disciplineFields = new HashMap<>();
 
     // Capture all other fields that Jackson do not match other members

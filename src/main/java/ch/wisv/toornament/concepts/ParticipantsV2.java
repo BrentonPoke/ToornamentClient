@@ -32,7 +32,7 @@ public class ParticipantsV2 extends Concept {
         }
         Request request = client.getRequestBuilder()
             .get()
-            .url(url.toString())
+            .url(url.build())
             .addHeader("range",header.get("range"))
             .build();
         try {
@@ -58,7 +58,7 @@ public class ParticipantsV2 extends Concept {
         }
         Request request = client.getRequestBuilder()
             .get()
-            .url(url.toString())
+            .url(url.build())
             .addHeader("range",header.get("range"))
             .build();
         try {
@@ -82,7 +82,7 @@ public class ParticipantsV2 extends Concept {
 
         Request request = client.getRequestBuilder()
             .get()
-            .url(url.toString())
+            .url(url.build())
             .build();
         try {
             String responseBody = client.executeRequest(request).body().string();
@@ -106,7 +106,7 @@ public class ParticipantsV2 extends Concept {
 
         Request request = client.getRequestBuilder()
             .get()
-            .url(url.toString())
+            .url(url.build())
             .build();
         try {
             String responseBody = client.executeRequest(request).body().string();

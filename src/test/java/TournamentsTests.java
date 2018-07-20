@@ -121,7 +121,7 @@ public class TournamentsTests {
     public void StagesTest(){
         List<Stage> list = client.tournaments().getStages("906278647555784704");
         assertFalse(list.isEmpty());
-        assertEquals(6,list.size());
+        assertEquals(7,list.size());
 
     }
 

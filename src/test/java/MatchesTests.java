@@ -32,7 +32,8 @@ public class MatchesTests {
 
     @Test
     public void getMatchesTest(){
-        List<Match> result = matches.getMatches(new MatchQueryBuilder().participant("906379665349820416"));
+        List<Match> result = matches.getMatches(new MatchQueryBuilder().participant("906379665349820416").withResult(true));
+        System.out.println(result);
         assertFalse(result.isEmpty());
 
     }

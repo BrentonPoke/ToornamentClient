@@ -36,7 +36,7 @@ public class MatchGamesV2 extends Concept {
             .addPathSegment(number);
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
-            .url(urlBuilder.toString())
+            .url(urlBuilder.build())
             .build();
         try{
         String responseBody = client.executeRequest(request).body().string();

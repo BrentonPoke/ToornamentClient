@@ -43,7 +43,7 @@ public class Matches extends Concept {
 
             Request request = client.getAuthenticatedRequestBuilder()
                 .get()
-                .url(urlBuilder.toString())
+                .url(urlBuilder.build())
                 .build();
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Match.class));

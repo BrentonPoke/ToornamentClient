@@ -30,7 +30,7 @@ public class GroupsV2 extends Concept {
         }
         Request request = client.getRequestBuilder()
             .get()
-            .url(url.toString())
+            .url(url.build())
             .addHeader("range",header.get("range"))
             .build();
         try {
@@ -52,7 +52,7 @@ public class GroupsV2 extends Concept {
             .addPathSegment(tournamentID)
             .addPathSegment("groups")
             .addPathSegment(groupID);
-        Request request = client.getRequestBuilder().get().url(urlBuilder.toString()).build();
+        Request request = client.getRequestBuilder().get().url(urlBuilder.build()).build();
         try {
 
             String responseBody = client.executeRequest(request).body().string();

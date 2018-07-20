@@ -37,7 +37,7 @@ public class MatchesV2 extends Concept {
 
             Request request = client.getAuthenticatedRequestBuilder()
                 .get()
-                .url(urlBuilder.toString())
+                .url(urlBuilder.build())
                 .addHeader("Range",headers)
                 .build();
             String responseBody = client.executeRequest(request).body().string();

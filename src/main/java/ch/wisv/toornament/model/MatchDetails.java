@@ -13,7 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode
 public class MatchDetails extends Match {
 
     private List<Stream> streams;

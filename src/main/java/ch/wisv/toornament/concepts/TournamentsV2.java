@@ -88,8 +88,7 @@ public class TournamentsV2 extends Concept {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
                 Stream.class));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | NullPointerException e) {
             throw new ToornamentException("Couldn't retrieve streams from tournament with id "+ id);
         }
 
