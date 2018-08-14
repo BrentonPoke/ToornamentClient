@@ -41,6 +41,16 @@ public class ToornamentClient {
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         authorize();
     }
+    public ToornamentClient(String apiKey, String clientId, String clientSecret) {
+        this.apiKey = apiKey;
+        this.clientId = clientId;
+        this.clientSecret = clientSecret;
+        httpClient = new OkHttpClient();
+        mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        authorizeV1();
+    }
 
     public OkHttpClient getHttpClient() {
         return httpClient;
@@ -86,6 +96,24 @@ public class ToornamentClient {
                 + "&" + "client_id=" + tokenRequest.getClientId()
                 + "&" + "client_secret=" + tokenRequest.getClientSecret()
             + "&" + "scope=" + tokenRequest.getScope());
+            Request request = requestBuilder.build();
+            Response response = executeRequest(request);
+            this.oAuthToken =
+                mapper.readValue(response.body().string(), ApiTokenResponse.class).getAccessToken();
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void authorizeV1() {
+        ApiTokenRequest tokenRequest =
+            new ApiTokenRequest("client_credentials", clientId, clientSecret, scope);
+        Request.Builder requestBuilder = new Request.Builder();
+        try {
+            requestBuilder.url("https://api.toornament.com/oauth/v2/token"
+                + "?grant_type=" + tokenRequest.getGrantType()
+                + "&" + "client_id=" + tokenRequest.getClientId()
+                + "&" + "client_secret=" + tokenRequest.getClientSecret());
             Request request = requestBuilder.build();
             Response response = executeRequest(request);
             this.oAuthToken =

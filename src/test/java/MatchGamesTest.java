@@ -20,8 +20,7 @@ public class MatchGamesTest {
     private ObjectMapper mapper;
     @Before
     public void setUp() {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
-            Scope.ORGANIZER_ADMIN);
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
         client.authorize();
         mapper = new ObjectMapper();
         match = new Match();

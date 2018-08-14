@@ -16,9 +16,8 @@ public class DisciplinesTest {
     private Disciplines disciplines;
     @Before
     public void Setup() throws IOException {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
-            Scope.ORGANIZER_ADMIN);
-        client.authorize();
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
+        client.authorizeV1();
         disciplines = new Disciplines(client);
     }
 

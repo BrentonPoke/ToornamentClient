@@ -1,7 +1,6 @@
 import static org.junit.Assert.*;
 
 import ch.wisv.toornament.ToornamentClient;
-import ch.wisv.toornament.concepts.Tournaments;
 import ch.wisv.toornament.model.*;
 import ch.wisv.toornament.model.enums.MatchFormat;
 import ch.wisv.toornament.model.enums.ParticipantType;

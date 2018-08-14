@@ -23,8 +23,8 @@ public class MatchesTests {
 
     @Before
     public void Setup() {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), Scope.ORGANIZER_ADMIN);
-        client.authorize();
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
+        client.authorizeV1();
 
         details.setId("906278647555784704");
         matches = new Matches(client,details);
