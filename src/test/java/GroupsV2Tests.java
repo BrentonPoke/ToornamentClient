@@ -1,6 +1,7 @@
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.GroupsV2;
 import ch.wisv.toornament.model.Group;
+import ch.wisv.toornament.model.enums.Scope;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,7 +20,8 @@ public class GroupsV2Tests {
 
     @Before
     public void Setup() throws IOException {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
+            Scope.ORGANIZER_ADMIN);
         client.authorize();
         groups = new GroupsV2(client,"906278647555784704");
         header.put("range","groups=0-49");
