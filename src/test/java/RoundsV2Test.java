@@ -1,6 +1,7 @@
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.RoundsV2;
 import ch.wisv.toornament.model.Round;
+import ch.wisv.toornament.model.enums.Scope;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +17,8 @@ import static org.junit.jupiter.api.Assertions.*;
     private RoundsV2 rounds;
     @Before
     public void Setup() throws IOException {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
+            Scope.ORGANIZER_ADMIN);
         client.authorize();
         rounds = new RoundsV2(client,"906278647555784704");
 

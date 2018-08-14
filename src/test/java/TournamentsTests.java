@@ -5,6 +5,7 @@ import ch.wisv.toornament.concepts.Tournaments;
 import ch.wisv.toornament.model.*;
 import ch.wisv.toornament.model.enums.MatchFormat;
 import ch.wisv.toornament.model.enums.ParticipantType;
+import ch.wisv.toornament.model.enums.Scope;
 import ch.wisv.toornament.model.request.TournamentRequest;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,8 @@ public class TournamentsTests {
     private TournamentDetails tournamentDetails = new TournamentDetails();
     @Before
     public void Setup() throws IOException {
-        client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
+        client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"),
+            Scope.ORGANIZER_ADMIN);
         client.authorize();
 
         headers = new HashMap<>();

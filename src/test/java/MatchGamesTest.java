@@ -2,6 +2,7 @@ import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.MatchGamesV2;
 import ch.wisv.toornament.model.Game;
 import ch.wisv.toornament.model.Match;
+import ch.wisv.toornament.model.enums.Scope;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,8 @@ public class MatchGamesTest {
     private ObjectMapper mapper;
     @Before
     public void setUp() {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
+            Scope.ORGANIZER_ADMIN);
         client.authorize();
         mapper = new ObjectMapper();
         match = new Match();

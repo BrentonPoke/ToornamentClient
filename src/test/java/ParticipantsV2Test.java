@@ -2,6 +2,7 @@ import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.ParticipantsV2;
 import ch.wisv.toornament.model.Participant;
 import ch.wisv.toornament.model.TeamParticipant;
+import ch.wisv.toornament.model.enums.Scope;
 import ch.wisv.toornament.model.enums.Sort;
 import org.junit.Assert;
 import org.junit.Before;
@@ -20,7 +21,8 @@ public class ParticipantsV2Test {
     private Participant participant;
     @Before
     public void Setup() throws IOException {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
+            Scope.ORGANIZER_ADMIN);
         client.authorize();
     }
     @Test

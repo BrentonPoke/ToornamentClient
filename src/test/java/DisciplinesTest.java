@@ -2,6 +2,7 @@ import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.Disciplines;
 import ch.wisv.toornament.model.Discipline;
 import ch.wisv.toornament.model.DisciplineDetails;
+import ch.wisv.toornament.model.enums.Scope;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -15,7 +16,8 @@ public class DisciplinesTest {
     private Disciplines disciplines;
     @Before
     public void Setup() throws IOException {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
+            Scope.ORGANIZER_ADMIN);
         client.authorize();
         disciplines = new Disciplines(client);
     }
