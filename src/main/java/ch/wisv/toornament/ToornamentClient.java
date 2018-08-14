@@ -2,6 +2,7 @@ package ch.wisv.toornament;
 
 import ch.wisv.toornament.concepts.*;
 import ch.wisv.toornament.model.TournamentDetails;
+import ch.wisv.toornament.model.enums.Scope;
 import ch.wisv.toornament.model.request.ApiTokenRequest;
 import ch.wisv.toornament.model.response.ApiTokenResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -25,13 +26,15 @@ public class ToornamentClient {
     private String clientId;
     private String clientSecret;
     private String oAuthToken;
+    private Scope scope;
     private ObjectMapper mapper;
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public ToornamentClient(String apiKey, String clientId, String clientSecret) {
+    public ToornamentClient(String apiKey, String clientId, String clientSecret, Scope scope) {
         this.apiKey = apiKey;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
+        this.scope = scope;
         httpClient = new OkHttpClient();
         mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
@@ -75,18 +78,19 @@ public class ToornamentClient {
 
     public void authorize() {
         ApiTokenRequest tokenRequest =
-            new ApiTokenRequest("client_credentials", clientId, clientSecret);
+            new ApiTokenRequest("client_credentials", clientId, clientSecret, scope);
         Request.Builder requestBuilder = new Request.Builder();
         try {
             requestBuilder.url("https://api.toornament.com/oauth/v2/token"
                 + "?grant_type=" + tokenRequest.getGrantType()
                 + "&" + "client_id=" + tokenRequest.getClientId()
-                + "&" + "client_secret=" + tokenRequest.getClientSecret());
+                + "&" + "client_secret=" + tokenRequest.getClientSecret()
+            + "&" + "scope=" + tokenRequest.getScope());
             Request request = requestBuilder.build();
             Response response = executeRequest(request);
             this.oAuthToken =
                 mapper.readValue(response.body().string(), ApiTokenResponse.class).getAccessToken();
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             e.printStackTrace();
         }
     }

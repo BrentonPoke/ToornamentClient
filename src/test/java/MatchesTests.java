@@ -6,6 +6,7 @@ import ch.wisv.toornament.model.MatchDetails;
 import ch.wisv.toornament.model.MatchResult;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.enums.MatchStatus;
+import ch.wisv.toornament.model.enums.Scope;
 import ch.wisv.toornament.model.request.MatchQueryBuilder;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,8 +22,8 @@ public class MatchesTests {
     private TournamentDetails details = new TournamentDetails();
 
     @Before
-    public void Setup() throws IOException {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
+    public void Setup() {
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), Scope.ORGANIZER_ADMIN);
         client.authorize();
 
         details.setId("906278647555784704");
