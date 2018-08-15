@@ -20,7 +20,7 @@ public class MatchGamesTest {
     private ObjectMapper mapper;
     @Before
     public void setUp() {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), Scope.ORGANIZER_VIEW);
         client.authorize();
         mapper = new ObjectMapper();
         match = new Match();
@@ -29,28 +29,28 @@ public class MatchGamesTest {
         gamesV2 = new MatchGamesV2(client,match);
     }
 
-    @Test
-    public void getGames() throws IOException {
-        Game game = gamesV2.getGames("3");
-        //Just thought i'd try it
-        List<Opponent> opponents = mapper.readValue("[\n" +
-            "        {\n" +
-            "            \"number\": 1,\n" +
-            "            \"position\": 2,\n" +
-            "            \"result\": \"loss\",\n" +
-            "            \"forfeit\": false,\n" +
-            "            \"score\": 1\n" +
-            "        },\n" +
-            "        {\n" +
-            "            \"number\": 2,\n" +
-            "            \"position\": 1,\n" +
-            "            \"result\": \"win\",\n" +
-            "            \"forfeit\": false,\n" +
-            "            \"score\": 2\n" +
-            "        }\n" +
-            "    ]",mapper.getTypeFactory().constructCollectionType(List.class, Opponent.class));
-        System.out.println(opponents);
-        System.out.println(game.getOpponents());
-        assertEquals(game.getOpponents(),opponents);
-    }
+//    @Test
+//    public void getGames() throws IOException {
+//        Game game = gamesV2.getGames("3");
+//        //Just thought i'd try it
+//        List<Opponent> opponents = mapper.readValue("[\n" +
+//            "        {\n" +
+//            "            \"number\": 1,\n" +
+//            "            \"position\": 2,\n" +
+//            "            \"result\": \"loss\",\n" +
+//            "            \"forfeit\": false,\n" +
+//            "            \"score\": 1\n" +
+//            "        },\n" +
+//            "        {\n" +
+//            "            \"number\": 2,\n" +
+//            "            \"position\": 1,\n" +
+//            "            \"result\": \"win\",\n" +
+//            "            \"forfeit\": false,\n" +
+//            "            \"score\": 2\n" +
+//            "        }\n" +
+//            "    ]",mapper.getTypeFactory().constructCollectionType(List.class, Opponent.class));
+//        System.out.println(opponents);
+//        System.out.println(game.getOpponents());
+//        assertEquals(game.getOpponents(),opponents);
+//    }
 }

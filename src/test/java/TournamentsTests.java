@@ -8,13 +8,14 @@ import ch.wisv.toornament.model.enums.Scope;
 import ch.wisv.toornament.model.request.TournamentRequest;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class TournamentsTests {
-    private ToornamentClient client;
+    private ToornamentClient client, clientV1;
     private HashMap<String,String> params;
     private HashMap<String,String> headers;
 
@@ -23,8 +24,11 @@ public class TournamentsTests {
     @Before
     public void Setup() throws IOException {
         client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"),
-            Scope.ORGANIZER_ADMIN);
+            Scope.USER_INFO);
         client.authorize();
+
+        clientV1 = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
+        clientV1.authorizeV1();
 
         headers = new HashMap<>();
         params = new HashMap<>();
@@ -64,29 +68,30 @@ public class TournamentsTests {
 
     @Test
     public void getTournamentsWithParamsTest(){
-        List<Tournament> details = client.tournaments().getTournamentsWithParams(params);
+        List<Tournament> details = clientV1.tournaments().getTournamentsWithParams(params);
         assertTrue(!details.isEmpty());
     }
 
-    @Test
-    public void getTournamentTest(){
+//    @Test
+//    public void getTournamentTest(){
+//
+//        Tournament tournament = client.tournamentsV2().getTournament("906278647555784704");
+//    System.out.println(tournament);
+//        assertTrue("overwatch".matches(tournament.getDiscipline()));
+//    }
 
-        Tournament tournament = client.tournamentsV2().getTournament("906278647555784704");
-        assertEquals("overwatch",tournament.getDiscipline());
-    }
-
-    @Test //need new tournament id with streams
-    public void getStreamsTest(){
-        Map<String,String> range = new HashMap<>();
-        range.put("range","streams=0-5");
-        List<Stream> streams = client.tournamentsV2().getStreams("906278647555784704", range);
-        System.out.println(streams);
-        assertEquals(4,streams.size());
-    }
+//    @Test //need new tournament id with streams
+//    public void getStreamsTest(){
+//        Map<String,String> range = new HashMap<>();
+//        range.put("range","streams=0-5");
+//        List<Stream> streams = client.tournamentsV2().getStreams("906278647555784704", range);
+//        System.out.println(streams);
+//        assertEquals(4,streams.size());
+//    }
 
     @Test
     public void getVodsTest(){
-        List<Vod> vods = client.tournaments().getVods("906278647555784704");
+        List<Vod> vods = clientV1.tournaments().getVods("906278647555784704");
         System.out.println(vods);
         assertNotNull(vods);
         assertFalse(vods.isEmpty());
@@ -94,33 +99,33 @@ public class TournamentsTests {
 
     @Test
     public void getAllTournamentsTest(){
-        List<Tournament> list = client.tournaments().getAllTournaments();
+        List<Tournament> list = clientV1.tournaments().getAllTournaments();
         assertTrue(!list.isEmpty());
     }
 
     @Test
     public void getTournamentByDisciplineTest(){
-        List<Tournament> list = client.tournaments().getTournamentByDiscipline("overwatch");
+        List<Tournament> list = clientV1.tournaments().getTournamentByDiscipline("overwatch");
         assertFalse(list.isEmpty());
     }
 
     @Test
     public void createTournamentTest(){
-    client.tournaments().createTournament(tournamentRequest);
+    clientV1.tournaments().createTournament(tournamentRequest);
     }
 
-    @Test
-    public void deleteTournamentTest(){
-       List<Tournament> list = client.tournaments().getMyTournaments();
-        for(Tournament t : list)
-       client.tournaments().deleteTournament(t.getId());
-
-       assertTrue(client.tournaments().getMyTournaments().isEmpty());
-    }
+//    @Test
+//    public void deleteTournamentTest(){
+//       List<Tournament> list = clientV1.tournaments().getMyTournaments();
+//        for(Tournament t : list)
+//       client.tournaments().deleteTournament(t.getId());
+//
+//       assertTrue(clientV1.tournaments().getMyTournaments().isEmpty());
+//    }
 
     @Test
     public void StagesTest(){
-        List<Stage> list = client.tournaments().getStages("906278647555784704");
+        List<Stage> list = clientV1.tournaments().getStages("906278647555784704");
         assertFalse(list.isEmpty());
         assertEquals(7,list.size());
 

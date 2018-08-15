@@ -16,18 +16,20 @@ import java.io.IOException;
 import java.util.List;
 
 public class MatchesTests {
-    private ToornamentClient client;
+    private ToornamentClient client, clientV1;
     private Matches matches;
     private MatchesV2 matchesV2;
     private TournamentDetails details = new TournamentDetails();
 
     @Before
     public void Setup() {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), Scope.USER_INFO);
+        client.authorize();
+        clientV1 = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
         client.authorizeV1();
 
         details.setId("906278647555784704");
-        matches = new Matches(client,details);
+        matches = new Matches(clientV1,details);
         matchesV2 = new MatchesV2(client,details);
     }
 

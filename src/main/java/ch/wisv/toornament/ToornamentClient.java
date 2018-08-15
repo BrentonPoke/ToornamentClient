@@ -107,7 +107,7 @@ public class ToornamentClient {
 
     public void authorizeV1() {
         ApiTokenRequest tokenRequest =
-            new ApiTokenRequest("client_credentials", clientId, clientSecret, scope);
+            new ApiTokenRequest("client_credentials", clientId, clientSecret, Scope.USER_INFO); //Scope will be ignored in requestBuilder
         Request.Builder requestBuilder = new Request.Builder();
         try {
             requestBuilder.url("https://api.toornament.com/oauth/v2/token"
