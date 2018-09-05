@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class TournamentsTests {
-    private ToornamentClient client, clientV1;
+    private ToornamentClient client;
     private HashMap<String,String> params;
     private HashMap<String,String> headers;
 
@@ -26,9 +26,6 @@ public class TournamentsTests {
         client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"),
             Scope.USER_INFO);
         client.authorize();
-
-        clientV1 = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"));
-        clientV1.authorizeV1();
 
         headers = new HashMap<>();
         params = new HashMap<>();
@@ -66,12 +63,6 @@ public class TournamentsTests {
                 assertTrue(!list.isEmpty());
     }
 
-    @Test
-    public void getTournamentsWithParamsTest(){
-        List<Tournament> details = clientV1.tournaments().getTournamentsWithParams(params);
-        assertTrue(!details.isEmpty());
-    }
-
 //    @Test
 //    public void getTournamentTest(){
 //
@@ -89,31 +80,6 @@ public class TournamentsTests {
 //        assertEquals(4,streams.size());
 //    }
 
-    @Test
-    public void getVodsTest(){
-        List<Vod> vods = clientV1.tournaments().getVods("906278647555784704");
-        System.out.println(vods);
-        assertNotNull(vods);
-        assertFalse(vods.isEmpty());
-    }
-
-    @Test
-    public void getAllTournamentsTest(){
-        List<Tournament> list = clientV1.tournaments().getAllTournaments();
-        assertTrue(!list.isEmpty());
-    }
-
-    @Test
-    public void getTournamentByDisciplineTest(){
-        List<Tournament> list = clientV1.tournaments().getTournamentByDiscipline("overwatch");
-        assertFalse(list.isEmpty());
-    }
-
-    @Test
-    public void createTournamentTest(){
-    clientV1.tournaments().createTournament(tournamentRequest);
-    }
-
 //    @Test
 //    public void deleteTournamentTest(){
 //       List<Tournament> list = clientV1.tournaments().getMyTournaments();
@@ -122,13 +88,5 @@ public class TournamentsTests {
 //
 //       assertTrue(clientV1.tournaments().getMyTournaments().isEmpty());
 //    }
-
-    @Test
-    public void StagesTest(){
-        List<Stage> list = clientV1.tournaments().getStages("906278647555784704");
-        assertFalse(list.isEmpty());
-        assertEquals(7,list.size());
-
-    }
 
 }

@@ -16,14 +16,15 @@ public class DisciplinesTest {
     private Disciplines disciplines;
     @Before
     public void Setup() throws IOException {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
-        client.authorizeV1();
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),Scope.ORGANIZER_VIEW);
+        client.authorize();
         disciplines = new Disciplines(client);
     }
 
     @Test
     public void getDisciplines() {
-        List<Discipline> list = disciplines.getDisciplines();
+        List<Discipline> list = disciplines.getDisciplines("disciplines=200-249");
+    System.out.println(list);
 
         assertTrue(!list.isEmpty());
 
@@ -31,7 +32,7 @@ public class DisciplinesTest {
 
     @Test
     public void getDiscipline() {
-        DisciplineDetails details = disciplines.getDiscipline("overwatch");
-        assertTrue(details.getId().matches("overwatch"));
+        DisciplineDetails details = disciplines.getDiscipline("smite");
+        assertTrue(details.getId().matches("smite"));
     }
 }

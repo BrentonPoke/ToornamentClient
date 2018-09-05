@@ -16,54 +16,26 @@ import java.io.IOException;
 import java.util.List;
 
 public class MatchesTests {
-    private ToornamentClient client, clientV1;
-    private Matches matches;
+    private ToornamentClient client;
     private MatchesV2 matchesV2;
     private TournamentDetails details = new TournamentDetails();
 
     @Before
     public void Setup() {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), Scope.USER_INFO);
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), Scope.ORGANIZER_VIEW);
         client.authorize();
-        clientV1 = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"));
-        client.authorizeV1();
 
         details.setId("906278647555784704");
-        matches = new Matches(clientV1,details);
         matchesV2 = new MatchesV2(client,details);
     }
 
-    @Test
-    public void getMatchesTest(){
-        List<Match> result = matches.getMatches(new MatchQueryBuilder().participant("906379665349820416").withResult(true));
-        System.out.println(result);
-        assertFalse(result.isEmpty());
-
-    }
-
-    @Test
-    public void getMatchesV2Test(){
-        List<Match> result = client.matchesV2(details).getMatches(new MatchQueryBuilder().participant("906379665349820416"),"matches=0-127");
-
-        assertFalse(result.isEmpty());
-
-    }
-
-    @Test
-    public void getMatchTest() {
-        MatchDetails details = matches.getMatch("989807940598333464",true);
-        System.out.println(details);
-        assertFalse(details.getGames().isEmpty());
-        assertTrue(details.getId().matches("989807940598333464"));
-        assertFalse(details.getVods().isEmpty());
-    }
-
-    @Test
-    public void getResultTest() {
-        MatchResult result = matches.getResult("989807940598333464");
-        assertEquals(result.getStatus(),MatchStatus.COMPLETED);
-        assertEquals(result.getOpponents().size(), 2);
-    }
+//    @Test
+//    public void getMatchesV2Test(){
+//        List<Match> result = matchesV2.getMatches(new MatchQueryBuilder().participant("906379665349820416"),"matches=0-127");
+//
+//        assertFalse(result.isEmpty());
+//
+//    }
 
     @Test
     public void getMatchV2Test(){

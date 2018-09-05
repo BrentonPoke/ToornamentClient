@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +20,9 @@ public class DisciplineDetails extends Discipline {
 
     @JsonProperty("team_size")
     TeamSize teamSize;
-    @JsonProperty("additional_fields")
-    Map<String, Map<String, String>> additionalFields;
+//    @JsonProperty("additional_fields")
+//    Map<String, Map<String, String>> additionalFields;
+    List<String> platforms_available;
 
     @Getter
     @Setter
