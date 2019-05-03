@@ -15,24 +15,33 @@ import java.util.Map;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode
 public class DisciplineDetails extends Discipline {
 
     @JsonProperty("team_size")
-    TeamSize teamSize;
+    public TeamSize teamSize;
 //    @JsonProperty("additional_fields")
 //    Map<String, Map<String, String>> additionalFields;
-    List<String> platforms_available;
+    public List<String> platforms_available;
+    public List<Features> features;
 
     @Getter
     @Setter
-    private class TeamSize {
+    static private class TeamSize {
         int min;
         int max;
 
         public TeamSize() {
         }
 
+    }
+    @Getter
+    @Setter
+    static private class Features {
+        String name;
+        String type;
+        Object options;
+        public Features(){
+        }
     }
     @Override
     public String toString() {

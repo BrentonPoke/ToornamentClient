@@ -39,7 +39,7 @@ public class MatchesTests {
 
     @Test
     public void getMatchV2Test(){
-        Match match = matchesV2.getMatch("989807940598333454");
+        MatchDetails match = matchesV2.getMatch("989807940598333454");
         assertEquals(987313091175768089L,match.getGroupNumber());
         assertEquals(989807940564779021L,match.getRoundNumber());
         assertEquals(987313089934254080L,match.getStageNumber());

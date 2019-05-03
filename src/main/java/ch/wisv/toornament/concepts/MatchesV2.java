@@ -3,6 +3,7 @@ package ch.wisv.toornament.concepts;
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Match;
+import ch.wisv.toornament.model.MatchDetails;
 import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.request.MatchQueryBuilder;
 import okhttp3.HttpUrl;
@@ -48,7 +49,7 @@ public class MatchesV2 extends Concept {
         }
     }
 
-    public Match getMatch(String matchId){
+    public MatchDetails getMatch(String matchId){
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
@@ -62,7 +63,7 @@ public class MatchesV2 extends Concept {
         try {
 
             String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody,mapper.getTypeFactory().constructType(Match.class));
+            return mapper.readValue(responseBody,mapper.getTypeFactory().constructType(MatchDetails.class));
         } catch (IOException e) {
             e.printStackTrace();
         }
