@@ -11,7 +11,7 @@ import lombok.Setter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+
 @Getter
 @Setter
 public class TournamentRequest {
@@ -25,9 +25,9 @@ public class TournamentRequest {
     private String fullName;
     private String organization;
     private String website;
-    @JsonProperty("date_start")
+    @JsonProperty("scheduled_date_start")
     private LocalDate dateStart;
-    @JsonProperty("date_end")
+    @JsonProperty("scheduled_date_end")
     private LocalDate dateEnd;
     private String timezone;
     private Boolean online;
@@ -44,6 +44,19 @@ public class TournamentRequest {
     private Boolean participantNationality;
     @JsonProperty("match_format")
     private MatchFormat matchFormat;
+    private Boolean archived;
+    private Boolean match_report_enabled;
+    private Boolean registration_enabled;
+    private LocalDateTime registration_opening_datetime;
+    private LocalDateTime registration_closing_datetime;
+    private Boolean registration_notification_enabled;
+    private String registration_request_message;
+    private String registration_accept_message;
+    private String registration_refuse_message;
+    private Boolean check_in_enabled;
+    private Boolean check_in_participant_enabled;
+    private LocalDateTime check_in_participant_start_datetime;
+    private LocalDateTime check_in_participant_end_datetime;
 
     public TournamentRequest() {
     }
