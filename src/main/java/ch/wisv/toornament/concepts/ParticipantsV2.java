@@ -2,7 +2,6 @@ package ch.wisv.toornament.concepts;
 
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
-import ch.wisv.toornament.model.Group;
 import ch.wisv.toornament.model.Participant;
 import ch.wisv.toornament.model.TeamParticipant;
 import okhttp3.HttpUrl;
@@ -19,49 +18,13 @@ public class ParticipantsV2 extends Concept {
         this.tournamentID = tournamentID;
     }
     public List<TeamParticipant> getTeamParticipants(Map<String,String> header, Map<String,String> paramsMap){
-        HttpUrl.Builder url = new HttpUrl.Builder()
-            .scheme("https")
-            .host("api.toornament.com")
-            .addEncodedPathSegment("viewer")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("tournaments")
-            .addEncodedPathSegment(tournamentID)
-            .addEncodedPathSegment("participants");
-        for (Map.Entry<String, String> params : paramsMap.entrySet()) {
-            url.addQueryParameter(params.getKey(), params.getValue());
-        }
-        Request request = client.getRequestBuilder()
-            .get()
-            .url(url.build())
-            .addHeader("range",header.get("range"))
-            .build();
-        try {
-            String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, TeamParticipant.class));
-        } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption getting Participants");
-        }
+        Request request = getRequestHelper(header, paramsMap);
+        return getTeamParticipantsHelper(request);
     }
 
     //Intended for getting participants of non-team games like Hearthstone or Mortal Kombat.
     public List<Participant> getParticipants(Map<String,String> header, Map<String,String> paramsMap){
-        HttpUrl.Builder url = new HttpUrl.Builder()
-            .scheme("https")
-            .host("api.toornament.com")
-            .addEncodedPathSegment("viewer")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("tournaments")
-            .addEncodedPathSegment(tournamentID)
-            .addEncodedPathSegment("participants");
-        for (Map.Entry<String, String> params : paramsMap.entrySet()) {
-            url.addQueryParameter(params.getKey(), params.getValue());
-        }
-        Request request = client.getRequestBuilder()
-            .get()
-            .url(url.build())
-            .addHeader("range",header.get("range"))
-            .build();
+        Request request = getRequestHelper(header, paramsMap);
         try {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Participant.class));
@@ -70,6 +33,26 @@ public class ParticipantsV2 extends Concept {
             throw new ToornamentException("Got IOExcption getting Participants");
         }
     }
+
+    private Request getRequestHelper(Map<String, String> header, Map<String, String> paramsMap) {
+        HttpUrl.Builder url = new HttpUrl.Builder()
+            .scheme("https")
+            .host("api.toornament.com")
+            .addEncodedPathSegment("viewer")
+            .addEncodedPathSegment("v2")
+            .addEncodedPathSegment("tournaments")
+            .addEncodedPathSegment(tournamentID)
+            .addEncodedPathSegment("participants");
+        for (Map.Entry<String, String> params : paramsMap.entrySet()) {
+            url.addQueryParameter(params.getKey(), params.getValue());
+        }
+        return client.getRequestBuilder()
+            .get()
+            .url(url.build())
+            .addHeader("range", header.get("range"))
+            .build();
+    }
+
     public Participant getParticipant(String participantID){
         HttpUrl.Builder url = new HttpUrl.Builder()
             .scheme("https")
@@ -134,9 +117,14 @@ public class ParticipantsV2 extends Concept {
             .addHeader("range",header.get("range"))
             .build();
 
+        return getTeamParticipantsHelper(request);
+    }
+
+    private List<TeamParticipant> getTeamParticipantsHelper(Request request) {
         try {
             String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, TeamParticipant.class));
+            return mapper.readValue(responseBody,
+                mapper.getTypeFactory().constructCollectionType(List.class, TeamParticipant.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
             throw new ToornamentException("Got IOExcption getting Participants");
