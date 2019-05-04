@@ -44,6 +44,7 @@ public class ParticipantsV2 extends Concept {
         }
     }
 
+    //Intended for getting participants of non-team games like Hearthstone or Mortal Kombat.
     public List<Participant> getParticipants(Map<String,String> header, Map<String,String> paramsMap){
         HttpUrl.Builder url = new HttpUrl.Builder()
             .scheme("https")
@@ -114,6 +115,31 @@ public class ParticipantsV2 extends Concept {
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
             throw new ToornamentException("Got IOExcption getting Team Participants");
+        }
+    }
+
+    //Uses the Participant API to get other participants associated with the current user token. Requires participant:manage_participations for the scope
+    public List<TeamParticipant> getMyTeamParticipants(Map<String,String> header, Map<String,String> paramsMap) {
+        HttpUrl.Builder url = new HttpUrl.Builder()
+            .scheme("https")
+            .host("api.toornament.com")
+            .addEncodedPathSegment("participant")
+            .addEncodedPathSegment("v2")
+            .addEncodedPathSegment("me")
+            .addEncodedPathSegment("participants");
+
+        Request request = client.getRequestBuilder()
+            .get()
+            .url(url.build())
+            .addHeader("range",header.get("range"))
+            .build();
+
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, TeamParticipant.class));
+        } catch (IOException | NullPointerException e) {
+            System.out.println(e.getMessage());
+            throw new ToornamentException("Got IOExcption getting Participants");
         }
     }
 }

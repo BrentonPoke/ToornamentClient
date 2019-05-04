@@ -34,7 +34,7 @@ public class ParticipantsV2Test {
         params.put("name","Outlaws");
         params.put("sort",String.valueOf(Sort.created_desc));
         List<TeamParticipant> participantList = participants.getTeamParticipants(header,params);
-
+        System.out.println(participantList);
         Assert.assertNotNull(participantList);
         assertTrue(participantList.get(0).getId().matches("906362615269785600"));
 
