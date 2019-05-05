@@ -4,6 +4,7 @@ import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Participant;
 import ch.wisv.toornament.model.TeamParticipant;
+import ch.wisv.toornament.model.enums.Scope;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 
@@ -70,34 +71,10 @@ public class ParticipantsV2 extends Concept {
             .build();
         try {
             String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(Participant.class));
-        } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption getting Participants");
-        }
-    }
-
-    public TeamParticipant getTeamParticipant(String participantID){
-        HttpUrl.Builder url = new HttpUrl.Builder()
-            .scheme("https")
-            .host("api.toornament.com")
-            .addEncodedPathSegment("viewer")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("tournaments")
-            .addEncodedPathSegment(tournamentID)
-            .addEncodedPathSegment("participants")
-            .addEncodedPathSegment(participantID);
-
-        Request request = client.getRequestBuilder()
-            .get()
-            .url(url.build())
-            .build();
-        try {
-            String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(TeamParticipant.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption getting Team Participants");
+            throw new ToornamentException("Got IOExcption getting Participants");
         }
     }
 
@@ -118,6 +95,46 @@ public class ParticipantsV2 extends Concept {
             .build();
 
         return getTeamParticipantsHelper(request);
+    }
+
+    public TeamParticipant getTeamParticipantByID(String id){
+
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        
+        if(client.getScope() == Scope.MANAGE_PARTICIPANTS){
+        url
+            .scheme("https")
+            .host("api.toornament.com")
+            .addEncodedPathSegment("participant")
+            .addEncodedPathSegment("v2")
+            .addEncodedPathSegment("me")
+            .addEncodedPathSegment("participants")
+            .addEncodedPathSegment(id);
+        }
+        else
+            if(client.getScope() == Scope.ORGANIZER_PARTICIPANT){
+                url
+                    .scheme("https")
+                    .host("api.toornament.com")
+                    .addEncodedPathSegment("organizer")
+                    .addEncodedPathSegment("v2")
+                    .addEncodedPathSegment("tournaments")
+                    .addEncodedPathSegment(tournamentID)
+                    .addEncodedPathSegment("participants")
+                    .addEncodedPathSegment(id);
+            }
+        Request request = client.getRequestBuilder()
+            .get()
+            .url(url.build())
+            .build();
+
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(TeamParticipant.class));
+        } catch (IOException | NullPointerException e) {
+            System.out.println(e.getMessage());
+            throw new ToornamentException("Got IOExcption getting Team Participants");
+        }
     }
 
     private List<TeamParticipant> getTeamParticipantsHelper(Request request) {

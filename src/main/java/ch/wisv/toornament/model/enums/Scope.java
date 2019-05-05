@@ -1,22 +1,26 @@
 package ch.wisv.toornament.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
 public enum Scope {
-    @JsonProperty("participant:manage_registrations")
-    MANAGE,
-    @JsonProperty("user:info")
-    USER_INFO,
-    @JsonProperty("organizer:view")
-    ORGANIZER_VIEW,
-    @JsonProperty("organizer:admin")
-    ORGANIZER_ADMIN,
-    @JsonProperty("organizer:result")
-    ORGANIZER_RESULT,
-    @JsonProperty("organizer:participant")
-    ORGANIZER_PARTICIPANT,
-    @JsonProperty("organizer:delete")
-    ORGANIZER_DELETE
 
+    MANAGE("participant:manage_registrations"),
+    USER_INFO("user:info"),
+    ORGANIZER_VIEW("organizer:view"),
+    ORGANIZER_ADMIN("organizer:admin"),
+    ORGANIZER_RESULT("organizer:result"),
+    ORGANIZER_PARTICIPANT("organizer:participant"),
+    ORGANIZER_DELETE("organizer:delete"),
+    MANAGE_PARTICIPANTS("participant:manage_participations");
 
+    private String scope;
+
+    Scope(String scope) {
+        this.scope = scope;
+    }
+
+    public String toString() {
+        return scope;
+    }
 }

@@ -41,6 +41,11 @@ public class ToornamentClient {
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         authorize();
     }
+
+    public Scope getScope() {
+        return scope;
+    }
+
     public OkHttpClient getHttpClient() {
         return httpClient;
     }

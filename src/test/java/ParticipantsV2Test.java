@@ -22,7 +22,7 @@ public class ParticipantsV2Test {
     @Before
     public void Setup() throws IOException {
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
-            Scope.ORGANIZER_ADMIN);
+            Scope.MANAGE_PARTICIPANTS);
         client.authorize();
     }
     @Test
@@ -65,7 +65,7 @@ public class ParticipantsV2Test {
     @Test
     public void getTeamParticipantTest(){
         participants = new ParticipantsV2(client, "906278647555784704");
-        TeamParticipant team = participants.getTeamParticipant("906362615269785600");
+        Participant team = participants.getParticipant("906362615269785600");
         assertTrue(team.getName().matches("A. Houston Outlaws"));
     }
 }

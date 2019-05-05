@@ -20,6 +20,6 @@ public class ApiTokenRequest {
         this.grantType = grantType;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-        this.scope = scope.name();
+        this.scope = scope.toString();
     }
 }
