@@ -4,6 +4,7 @@ import ch.wisv.toornament.model.Participant;
 import ch.wisv.toornament.model.TeamParticipant;
 import ch.wisv.toornament.model.enums.Scope;
 import ch.wisv.toornament.model.enums.Sort;
+import java.util.HashSet;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,10 +20,13 @@ public class ParticipantsV2Test {
     private ToornamentClient client;
     private ParticipantsV2 participants;
     private Participant participant;
+    private HashSet<Scope> scopes = new HashSet<>();
     @Before
     public void Setup() throws IOException {
+        scopes.add(Scope.MANAGE_PARTICIPANTS);
+        scopes.add(Scope.USER_INFO);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
-            Scope.MANAGE_PARTICIPANTS);
+            scopes);
         client.authorize();
     }
     @Test

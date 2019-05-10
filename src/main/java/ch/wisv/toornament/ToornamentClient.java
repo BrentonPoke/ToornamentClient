@@ -8,6 +8,7 @@ import ch.wisv.toornament.model.response.ApiTokenResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.util.HashSet;
 import lombok.ToString;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -26,11 +27,11 @@ public class ToornamentClient {
     private String clientId;
     private String clientSecret;
     private String oAuthToken;
-    private Scope scope;
+    private HashSet<Scope> scope;
     private ObjectMapper mapper;
     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-    public ToornamentClient(String apiKey, String clientId, String clientSecret, Scope scope) {
+    public ToornamentClient(String apiKey, String clientId, String clientSecret, HashSet<Scope> scope) {
         this.apiKey = apiKey;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
@@ -42,7 +43,7 @@ public class ToornamentClient {
         authorize();
     }
 
-    public Scope getScope() {
+    public HashSet<Scope> getScope() {
         return scope;
     }
 

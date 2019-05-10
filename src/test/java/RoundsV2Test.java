@@ -2,6 +2,7 @@ import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.RoundsV2;
 import ch.wisv.toornament.model.Round;
 import ch.wisv.toornament.model.enums.Scope;
+import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,11 +15,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
  public class RoundsV2Test {
     private ToornamentClient client;
+     private HashSet<Scope> scopes = new HashSet<>();
     private RoundsV2 rounds;
     @Before
     public void Setup() throws IOException {
+        scopes.add(Scope.ORGANIZER_ADMIN);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
-            Scope.ORGANIZER_ADMIN);
+            scopes);
         client.authorize();
         rounds = new RoundsV2(client,"906278647555784704");
 

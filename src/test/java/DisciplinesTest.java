@@ -3,6 +3,7 @@ import ch.wisv.toornament.concepts.Disciplines;
 import ch.wisv.toornament.model.Discipline;
 import ch.wisv.toornament.model.DisciplineDetails;
 import ch.wisv.toornament.model.enums.Scope;
+import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -14,9 +15,11 @@ import java.util.List;
 public class DisciplinesTest {
     private ToornamentClient client;
     private Disciplines disciplines;
+    private HashSet<Scope> scopes = new HashSet<>();
     @Before
     public void Setup() throws IOException {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),Scope.ORGANIZER_VIEW);
+        scopes.add(Scope.ORGANIZER_VIEW);
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),scopes);
         client.authorize();
         disciplines = new Disciplines(client);
     }

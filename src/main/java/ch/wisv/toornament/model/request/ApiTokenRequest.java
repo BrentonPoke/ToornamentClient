@@ -2,6 +2,7 @@ package ch.wisv.toornament.model.request;
 
 import ch.wisv.toornament.model.enums.Scope;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.HashSet;
 import lombok.Getter;
 
 @Getter
@@ -14,12 +15,20 @@ public class ApiTokenRequest {
     @JsonProperty("client_secret")
     String clientSecret;
     @JsonProperty("scope")
-    String scope;
+    String scope="";
 
-    public ApiTokenRequest(String grantType, String clientId, String clientSecret, Scope scope) {
+    public ApiTokenRequest(String grantType, String clientId, String clientSecret, HashSet<Scope> scopes) {
         this.grantType = grantType;
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-        this.scope = scope.toString();
+        this.scope = stringify(scopes);
     }
+
+    private String stringify(HashSet<Scope> scopeHashSet){
+        for (Scope s : scopeHashSet ) {
+            scope = scope.concat(s.toString()+" ");
+        }
+        return scope;
+    }
+
 }

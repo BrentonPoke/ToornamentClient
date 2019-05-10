@@ -18,13 +18,14 @@ public class TournamentsTests {
     private ToornamentClient client;
     private HashMap<String,String> params;
     private HashMap<String,String> headers;
-
+    private HashSet<Scope> scopes = new HashSet<>();
     private TournamentRequest tournamentRequest = new TournamentRequest();
     private TournamentDetails tournamentDetails = new TournamentDetails();
     @Before
     public void Setup() throws IOException {
+        scopes.add(Scope.USER_INFO);
         client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"),
-            Scope.USER_INFO);
+            scopes);
         client.authorize();
 
         headers = new HashMap<>();

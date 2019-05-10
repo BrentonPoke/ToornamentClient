@@ -8,6 +8,7 @@ import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.enums.MatchStatus;
 import ch.wisv.toornament.model.enums.Scope;
 import ch.wisv.toornament.model.request.MatchQueryBuilder;
+import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -19,10 +20,11 @@ public class MatchesTests {
     private ToornamentClient client;
     private MatchesV2 matchesV2;
     private TournamentDetails details = new TournamentDetails();
-
+    private HashSet<Scope> scopes = new HashSet<>();
     @Before
     public void Setup() {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), Scope.ORGANIZER_VIEW);
+        scopes.add(Scope.ORGANIZER_VIEW);
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), scopes);
         client.authorize();
 
         details.setId("906278647555784704");

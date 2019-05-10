@@ -2,6 +2,7 @@ import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.GroupsV2;
 import ch.wisv.toornament.model.Group;
 import ch.wisv.toornament.model.enums.Scope;
+import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,11 +18,12 @@ public class GroupsV2Tests {
     private GroupsV2 groups;
     private Map<String,String> params = new HashMap<>();
     private Map<String,String> header = new HashMap<>();
-
+    private HashSet<Scope> scopes = new HashSet<>();
     @Before
     public void Setup() throws IOException {
+        scopes.add(Scope.ORGANIZER_ADMIN);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
-            Scope.ORGANIZER_ADMIN);
+            scopes);
         client.authorize();
         groups = new GroupsV2(client,"906278647555784704");
         header.put("range","groups=0-49");

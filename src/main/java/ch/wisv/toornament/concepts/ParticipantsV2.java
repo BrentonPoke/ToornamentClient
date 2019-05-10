@@ -100,8 +100,8 @@ public class ParticipantsV2 extends Concept {
     public TeamParticipant getTeamParticipantByID(String id){
 
         HttpUrl.Builder url = new HttpUrl.Builder();
-        
-        if(client.getScope() == Scope.MANAGE_PARTICIPANTS){
+
+        if(client.getScope().contains(Scope.MANAGE_PARTICIPANTS)){
         url
             .scheme("https")
             .host("api.toornament.com")
@@ -112,7 +112,7 @@ public class ParticipantsV2 extends Concept {
             .addEncodedPathSegment(id);
         }
         else
-            if(client.getScope() == Scope.ORGANIZER_PARTICIPANT){
+            if(client.getScope().contains(Scope.ORGANIZER_PARTICIPANT)){
                 url
                     .scheme("https")
                     .host("api.toornament.com")

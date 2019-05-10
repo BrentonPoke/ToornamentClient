@@ -4,6 +4,7 @@ import ch.wisv.toornament.model.Game;
 import ch.wisv.toornament.model.Match;
 import ch.wisv.toornament.model.enums.Scope;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 import ch.wisv.toornament.model.Opponent;
@@ -18,9 +19,11 @@ public class MatchGamesTest {
     private Match match;
     private MatchGamesV2 gamesV2;
     private ObjectMapper mapper;
+    private HashSet<Scope> scopes = new HashSet<>();
     @Before
     public void setUp() {
-        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), Scope.ORGANIZER_VIEW);
+        scopes.add(Scope.ORGANIZER_VIEW);
+        client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), scopes);
         client.authorize();
         mapper = new ObjectMapper();
         match = new Match();
