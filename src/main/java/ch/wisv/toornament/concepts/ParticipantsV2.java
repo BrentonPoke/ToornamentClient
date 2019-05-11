@@ -6,11 +6,13 @@ import ch.wisv.toornament.model.Participant;
 import ch.wisv.toornament.model.TeamParticipant;
 import ch.wisv.toornament.model.enums.Scope;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.Request;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import okhttp3.RequestBody;
 
 public class ParticipantsV2 extends Concept {
     private String tournamentID;
@@ -69,13 +71,7 @@ public class ParticipantsV2 extends Concept {
             .get()
             .url(url.build())
             .build();
-        try {
-            String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(TeamParticipant.class));
-        } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption getting Participants");
-        }
+        return getTeamParticipanthelper(request, "Got IOExcption getting Participants");
     }
 
     //Uses the Participant API to get other participants associated with the current user token. Requires participant:manage_participations for the scope
@@ -128,12 +124,39 @@ public class ParticipantsV2 extends Concept {
             .url(url.build())
             .build();
 
+        return getTeamParticipanthelper(request, "Got IOExcption getting Team Participants");
+    }
+
+    public TeamParticipant updateParticipant(String id){
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        if(client.getScope().contains(Scope.MANAGE_PARTICIPANTS)){
+            url
+                .scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("participant")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("me")
+                .addEncodedPathSegment("participants")
+                .addEncodedPathSegment(id);
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"),"{ \"checked_in\": true }");
+        Request request = client.getRequestBuilder()
+            .patch(body)
+            .url(url.build())
+            .build();
+
+        return getTeamParticipanthelper(request, "Got IOExcption getting Team Participants");
+
+    }
+
+    private TeamParticipant getTeamParticipanthelper(Request request, String s) {
         try {
             String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(TeamParticipant.class));
+            return mapper.readValue(responseBody,
+                mapper.getTypeFactory().constructType(TeamParticipant.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption getting Team Participants");
+            throw new ToornamentException(s);
         }
     }
 
