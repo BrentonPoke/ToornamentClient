@@ -29,7 +29,6 @@ public class Disciplines extends Concept {
 
         Request request = client.getRequestBuilder()
             .get()
-
             .url(urlBuilder.build())
             .addHeader("range",header)
 

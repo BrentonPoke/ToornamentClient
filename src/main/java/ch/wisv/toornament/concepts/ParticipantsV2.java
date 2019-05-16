@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 
 public class ParticipantsV2 extends Concept {
     private String tournamentID;
@@ -78,13 +77,15 @@ public class ParticipantsV2 extends Concept {
 
     //Uses the Participant API to get other participants associated with the current user token. Requires participant:manage_participations for the scope
     public List<TeamParticipant> getMyTeamParticipants(Map<String,String> header, Map<String,String> paramsMap) {
-        HttpUrl.Builder url = new HttpUrl.Builder()
-            .scheme("https")
-            .host("api.toornament.com")
-            .addEncodedPathSegment("participant")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("me")
-            .addEncodedPathSegment("participants");
+        Builder url = new Builder();
+    if (client.getScope().contains(Scope.MANAGE_PARTICIPANTS)) {
+      url.scheme("https")
+          .host("api.toornament.com")
+          .addEncodedPathSegment("participant")
+          .addEncodedPathSegment("v2")
+          .addEncodedPathSegment("me")
+          .addEncodedPathSegment("participants");
+            }
 
         Request request = client.getRequestBuilder()
             .get()

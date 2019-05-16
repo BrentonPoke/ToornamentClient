@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.HashSet;
-import lombok.ToString;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -55,10 +54,6 @@ public class ToornamentClient {
         return mapper;
     }
 
-    public Tournaments tournaments() {
-        return new Tournaments(this);
-    }
-
     public TournamentsV2 tournamentsV2(){
         return new TournamentsV2(this);
     }
@@ -67,16 +62,10 @@ public class ToornamentClient {
         return new Disciplines(this);
     }
 
-    public Matches matches(TournamentDetails tournament) {
-        return new Matches(this, tournament);
-    }
     public MatchesV2 matchesV2(TournamentDetails tournament){
         return new MatchesV2(this,tournament);
     }
 
-    public Matches matches(String tournamentId) {
-        return new Matches(this, this.tournaments().getTournament(tournamentId));
-    }
     public RoundsV2 roundsV2(String tournamentID){
         return new RoundsV2(this,tournamentID);
     }
