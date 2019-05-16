@@ -2,10 +2,8 @@ package ch.wisv.toornament.model.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
-import lombok.ToString;
 
 @Getter
-@ToString
 public enum StageType {
     GROUP("group"),
     LEAGUE("league"),
@@ -17,5 +15,10 @@ public enum StageType {
     private String type;
     StageType(String type){
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return type;
     }
 }

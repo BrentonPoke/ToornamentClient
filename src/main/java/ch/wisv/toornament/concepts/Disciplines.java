@@ -13,8 +13,6 @@ import java.util.List;
 
 public class Disciplines extends Concept {
 
-    private String endpoint = "/disciplines/";
-
     public Disciplines(ToornamentClient client) {
         super(client);
     }

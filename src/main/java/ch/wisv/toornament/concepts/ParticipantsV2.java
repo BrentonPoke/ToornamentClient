@@ -86,6 +86,9 @@ public class ParticipantsV2 extends Concept {
           .addEncodedPathSegment("me")
           .addEncodedPathSegment("participants");
             }
+        for (Map.Entry<String, String> params : paramsMap.entrySet()) {
+            url.addQueryParameter(params.getKey(), params.getValue());
+        }
 
         Request request = client.getRequestBuilder()
             .get()

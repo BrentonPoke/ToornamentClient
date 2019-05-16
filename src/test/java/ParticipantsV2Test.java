@@ -36,7 +36,7 @@ public class ParticipantsV2Test {
         header.put("range"," participants=0-49");
         Map<String,String> params = new HashMap<>();
         params.put("name","Outlaws");
-        params.put("sort",String.valueOf(Sort.created_desc));
+        params.put("sort",String.valueOf(Sort.DESCENDING));
         List<TeamParticipant> participantList = participants.getTeamParticipants(header,params);
         System.out.println(participantList);
         Assert.assertNotNull(participantList);
@@ -50,7 +50,7 @@ public class ParticipantsV2Test {
         header.put("range"," participants=0-49");
         Map<String,String> params = new HashMap<>();
         params.put("name","Ant");
-        params.put("sort",String.valueOf(Sort.alphabetic));
+        params.put("sort",String.valueOf(Sort.ALPHABETIC));
         List<Participant> participantList = participants.getParticipants(header,params);
 
         assertNotNull(participantList);

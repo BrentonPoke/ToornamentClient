@@ -1,9 +1,17 @@
 package ch.wisv.toornament.model.enums;
-import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Sort {
-    created_asc,
-    created_desc,
-    alphabetic;
+    ASCENDING("created_asc"),
+    DESCENDING("created_desc"),
+    ALPHABETIC("alphabetic");
+    private String sort;
 
+    Sort(String sort) {
+        this.sort = sort;
+    }
+
+    @Override
+    public String toString() {
+        return sort;
+    }
 }

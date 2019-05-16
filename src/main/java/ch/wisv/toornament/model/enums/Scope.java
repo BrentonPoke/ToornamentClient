@@ -1,8 +1,5 @@
 package ch.wisv.toornament.model.enums;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-
 public enum Scope {
 
     MANAGE("participant:manage_registrations"),

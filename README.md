@@ -1,7 +1,7 @@
 [![master](https://jitpack.io/v/BrentonPoke/ToornamentClient.svg)](https://jitpack.io/#BrentonPoke/ToornamentClient) [![Build Status](https://travis-ci.org/BrentonPoke/ToornamentClient.svg?branch=master)](https://travis-ci.org/BrentonPoke/ToornamentClient)
 # Toornament Client
 
-A java api client for Toornament. V1 of Toornament's API is ready. V2 is on the docket.
+A java api client for Toornament. V2 of the api is still being developed.
 
 
 ## Add to Maven:
