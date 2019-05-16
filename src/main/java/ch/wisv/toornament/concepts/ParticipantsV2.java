@@ -6,6 +6,7 @@ import ch.wisv.toornament.model.Participant;
 import ch.wisv.toornament.model.TeamParticipant;
 import ch.wisv.toornament.model.enums.Scope;
 import okhttp3.HttpUrl;
+import okhttp3.HttpUrl.Builder;
 import okhttp3.MediaType;
 import okhttp3.Request;
 
@@ -95,30 +96,7 @@ public class ParticipantsV2 extends Concept {
 
     public TeamParticipant getTeamParticipantByID(String id){
 
-        HttpUrl.Builder url = new HttpUrl.Builder();
-
-        if(client.getScope().contains(Scope.MANAGE_PARTICIPANTS)){
-        url
-            .scheme("https")
-            .host("api.toornament.com")
-            .addEncodedPathSegment("participant")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("me")
-            .addEncodedPathSegment("participants")
-            .addEncodedPathSegment(id);
-        }
-        else
-            if(client.getScope().contains(Scope.ORGANIZER_PARTICIPANT)){
-                url
-                    .scheme("https")
-                    .host("api.toornament.com")
-                    .addEncodedPathSegment("organizer")
-                    .addEncodedPathSegment("v2")
-                    .addEncodedPathSegment("tournaments")
-                    .addEncodedPathSegment(tournamentID)
-                    .addEncodedPathSegment("participants")
-                    .addEncodedPathSegment(id);
-            }
+        Builder url = participantHelper(id);
         Request request = client.getRequestBuilder()
             .get()
             .url(url.build())
@@ -128,17 +106,7 @@ public class ParticipantsV2 extends Concept {
     }
 
     public TeamParticipant updateParticipant(String id){
-        HttpUrl.Builder url = new HttpUrl.Builder();
-        if(client.getScope().contains(Scope.MANAGE_PARTICIPANTS)){
-            url
-                .scheme("https")
-                .host("api.toornament.com")
-                .addEncodedPathSegment("participant")
-                .addEncodedPathSegment("v2")
-                .addEncodedPathSegment("me")
-                .addEncodedPathSegment("participants")
-                .addEncodedPathSegment(id);
-        }
+        Builder url = participantHelper(id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"),"{ \"checked_in\": true }");
         Request request = client.getRequestBuilder()
             .patch(body)
@@ -147,6 +115,31 @@ public class ParticipantsV2 extends Concept {
 
         return getTeamParticipanthelper(request, "Got IOExcption getting Team Participants");
 
+    }
+
+    private Builder participantHelper(String id) {
+        Builder url = new Builder();
+        if (client.getScope().contains(Scope.MANAGE_PARTICIPANTS)) {
+            url
+                .scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("participant")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("me")
+                .addEncodedPathSegment("participants")
+                .addEncodedPathSegment(id);
+        } else if (client.getScope().contains(Scope.ORGANIZER_PARTICIPANT)) {
+            url
+                .scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("organizer")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("tournaments")
+                .addEncodedPathSegment(tournamentID)
+                .addEncodedPathSegment("participants")
+                .addEncodedPathSegment(id);
+        }
+        return url;
     }
 
     private TeamParticipant getTeamParticipanthelper(Request request, String s) {
