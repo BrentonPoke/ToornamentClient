@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ParticipantsV2 extends Concept {
     private String tournamentID;
@@ -115,6 +116,16 @@ public class ParticipantsV2 extends Concept {
 
         return getTeamParticipanthelper(request, "Got IOExcption getting Team Participants");
 
+    }
+
+    public Integer deleteParticipant(String id){
+        Builder url = participantHelper(id);
+        Request request = client.getRequestBuilder()
+            .delete()
+            .url(url.build())
+            .build();
+
+        return client.executeRequest(request).code();
     }
 
     private Builder participantHelper(String id) {
