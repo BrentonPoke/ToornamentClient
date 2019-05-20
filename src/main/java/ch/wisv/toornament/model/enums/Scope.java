@@ -9,8 +9,8 @@ public enum Scope {
     ORGANIZER_RESULT("organizer:result"),
     ORGANIZER_PARTICIPANT("organizer:participant"),
     ORGANIZER_DELETE("organizer:delete"),
-    MANAGE_PARTICIPANTS("participant:manage_participations");
-
+    MANAGE_PARTICIPANTS("participant:manage_participations"),
+    ORGANIZER_REGISTRATION("organizer:registration");
     private String scope;
 
     Scope(String scope) {
