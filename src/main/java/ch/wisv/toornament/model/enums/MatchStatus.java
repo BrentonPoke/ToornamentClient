@@ -1,9 +1,13 @@
 package ch.wisv.toornament.model.enums;
 
-public enum MatchStatus {
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+public enum MatchStatus {
+    @JsonProperty
     PENDING("pending"),
+    @JsonProperty
     RUNNING("running"),
+    @JsonProperty
     COMPLETED("completed");
 
     private String name;

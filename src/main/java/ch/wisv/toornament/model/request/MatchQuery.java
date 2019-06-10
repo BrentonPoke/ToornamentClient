@@ -17,13 +17,13 @@ public class MatchQuery {
 
     private boolean hasResult = false;
    @Singular
-   private List<Integer> stageIds;
+   private List<Long> stageIds;
    @Singular
-   private List<Integer> groupIds;
+   private List<Long> groupIds;
    @Singular
-   private List<Integer> roundIds;
+   private List<Long> roundIds;
    @Builder.Default private MatchSort sort = MatchSort.STRUCTURE;
-   @Singular private List<Integer> participantIds;
+   @Singular private List<Long> participantIds;
    private boolean scheduled;
     private LocalDateTime scheduledBefore, scheduledAfter;
    @Singular
