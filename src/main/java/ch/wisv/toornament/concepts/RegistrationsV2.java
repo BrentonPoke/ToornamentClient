@@ -5,7 +5,6 @@ import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Participant;
 import ch.wisv.toornament.model.TeamParticipant;
 import ch.wisv.toornament.model.enums.Scope;
-import com.sun.deploy.net.HttpResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
