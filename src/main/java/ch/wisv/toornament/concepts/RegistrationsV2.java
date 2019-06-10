@@ -5,6 +5,7 @@ import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Participant;
 import ch.wisv.toornament.model.TeamParticipant;
 import ch.wisv.toornament.model.enums.Scope;
+import com.sun.deploy.net.HttpResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +71,27 @@ public class RegistrationsV2 extends Concept {
             .addHeader("range", header.get("range"))
             .build();
     return getTeamParticipantsHelper(request);
+  }
+
+  public int deleteRegistration(String id){
+      HttpUrl.Builder url = new HttpUrl.Builder();
+    if (client.getScope().contains(Scope.ORGANIZER_REGISTRATION)) {
+      url.scheme("https")
+          .host("api.toornament.com")
+          .addEncodedPathSegment("organizer")
+          .addEncodedPathSegment("v2")
+          .addEncodedPathSegment("tournaments")
+          .addEncodedPathSegment(tournamentID)
+          .addEncodedPathSegment("registrations")
+          .addEncodedPathSegment(id);
+          }
+      Request request =
+          client
+          .getRequestBuilder()
+          .delete()
+          .url(url.build())
+          .build();
+      return client.executeRequest(request).code();
   }
 
   private List<TeamParticipant> getTeamParticipantsHelper(Request request) {

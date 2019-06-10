@@ -5,13 +5,14 @@ import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Match;
 import ch.wisv.toornament.model.MatchDetails;
 import ch.wisv.toornament.model.TournamentDetails;
-import ch.wisv.toornament.model.request.MatchQueryBuilder;
+import ch.wisv.toornament.model.request.MatchQuery;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 
 public class MatchesV2 extends Concept {
     private TournamentDetails tournament;
@@ -20,8 +21,7 @@ public class MatchesV2 extends Concept {
         this.tournament = tournament;
     }
 
-    public List<Match> getMatches(MatchQueryBuilder builder,String headers) {
-        Map<String, String> parameterMap = builder.build();
+    public List<Match> getMatches(MatchQuery parameter,String headers) {
         try {
             HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
                 .scheme("https")
@@ -32,9 +32,22 @@ public class MatchesV2 extends Concept {
                 .addPathSegment(tournament.getId())
                 .addPathSegment("matches");
 
-            for (Map.Entry<String, String> parameter : parameterMap.entrySet()) {
-                urlBuilder.addQueryParameter(parameter.getKey(), parameter.getValue());
-            }
+
+            urlBuilder.addQueryParameter("stage_ids", StringUtils
+                    .join(parameter.getStageIds(),","));
+            urlBuilder.addQueryParameter("group_ids", StringUtils
+                .join(parameter.getGroupIds(),","));
+            urlBuilder.addQueryParameter("round_ids", StringUtils
+                .join(parameter.getRoundIds(),","));
+            urlBuilder.addQueryParameter("statuses", StringUtils
+                .join(parameter.getStatuses(),","));
+            urlBuilder.addQueryParameter("participant_ids", StringUtils
+                .join(parameter.getParticipantIds(),","));
+            urlBuilder.addQueryParameter("is_scheduled",parameter.isScheduled() ? "1" : "0");
+            urlBuilder.addQueryParameter("scheduled_before", parameter.getScheduledBefore().toString());
+            urlBuilder.addQueryParameter("scheduled_after", parameter.getScheduledAfter().toString());
+            urlBuilder.addQueryParameter("custom_user_identifier",parameter.getCustomUserIdentifier());
+            urlBuilder.addQueryParameter("sort",parameter.getSort().name());
 
             Request request = client.getAuthenticatedRequestBuilder()
                 .get()

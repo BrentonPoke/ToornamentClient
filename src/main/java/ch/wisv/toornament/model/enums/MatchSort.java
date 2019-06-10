@@ -3,7 +3,7 @@ package ch.wisv.toornament.model.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum MatchSort {
-    STRUCTURE("structure"), SCHEDULE("schedule"), LATEST("latest");
+    STRUCTURE("structure"), SCHEDULE("schedule"), LATEST("latest_results");
 
     private String name;
 

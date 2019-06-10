@@ -14,6 +14,7 @@ import lombok.Setter;
 public class Participant {
     private String id;
     private String name;
+    private String email;
     private String country;
     private CustomFields custom_fields;
 

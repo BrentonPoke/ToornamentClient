@@ -3,7 +3,7 @@ package ch.wisv.toornament.model.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum MatchType {
-    DUEL("duel"), FFA("ffa");
+    DUEL("duel"), FFA("ffa"), BYE("bye");
 
     private String name;
 
