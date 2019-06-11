@@ -8,12 +8,12 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.time.LocalDateTime;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -35,13 +35,14 @@ public class Match {
     @JsonAlias({"round_number","round_id"})
     private long roundNumber;
     @JsonAlias({"date","scheduled_datetime"})
-    private Date date;
+    private LocalDateTime date;
     private String timezone;
     @JsonProperty("match_format")
     private MatchFormat matchFormat;
     private List<Opponent> opponents;
-    private List<Game> games;
-    private Date played_at;
+    private Object settings;
+    private LocalDateTime played_at;
+    private boolean report_closed;
 
 
 

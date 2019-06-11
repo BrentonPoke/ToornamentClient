@@ -8,10 +8,12 @@ import ch.wisv.toornament.model.TournamentDetails;
 import ch.wisv.toornament.model.enums.Scope;
 import ch.wisv.toornament.model.request.MatchQuery;
 import okhttp3.HttpUrl;
+import okhttp3.MediaType;
 import okhttp3.Request;
 
 import java.io.IOException;
 import java.util.List;
+import okhttp3.RequestBody;
 import org.apache.commons.lang3.StringUtils;
 
 public class MatchesV2 extends Concept {
@@ -61,8 +63,30 @@ public class MatchesV2 extends Concept {
         }
     }
 
+public MatchDetails updateMatch(MatchDetails details, String matchId){
+    HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
+    if(client.getScope().contains(Scope.ORGANIZER_RESULT)){
+        urlBuilder
+            .scheme("https")
+            .host("api.toornament.com")
+            .addPathSegment("organizer")
+            .addPathSegment("v2")
+            .addPathSegment("tournaments")
+            .addPathSegment(tournament.getId())
+            .addPathSegment("matches")
+            .addPathSegment(matchId);
+
+    }
+
+    RequestBody body = RequestBody.create(MediaType.parse("Application/Json"),details.toString());
+    Request request = client.getRequestBuilder().patch(body).build();
+    return matchDetailsHelper(request);
+}
+
     public MatchDetails getMatch(String matchId){
-        HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
+        HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
+
+        urlBuilder
             .scheme("https")
             .host("api.toornament.com")
             .addPathSegment("viewer")
@@ -72,15 +96,17 @@ public class MatchesV2 extends Concept {
             .addPathSegment("matches")
             .addPathSegment(matchId);
         Request request = client.getRequestBuilder().get().url(urlBuilder.toString()).build();
+        return matchDetailsHelper(request);
+
+    }
+    private MatchDetails matchDetailsHelper(Request request) {
         try {
 
             String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody,mapper.getTypeFactory().constructType(MatchDetails.class));
+            return mapper
+                .readValue(responseBody, mapper.getTypeFactory().constructType(MatchDetails.class));
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new ToornamentException("Got IOExcption getting match");
         }
-        return null;
-
     }
-
 }

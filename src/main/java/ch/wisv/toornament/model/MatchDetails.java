@@ -19,7 +19,8 @@ public class MatchDetails extends Match {
     private List<Vod> vods;
     @JsonProperty("private_note")
     private String privateNote;
-    private String public_notes;
+    @JsonProperty("public_note")
+    private String publicNote;
     @Override
     public String toString() {
         try {
