@@ -5,6 +5,7 @@ import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Match;
 import ch.wisv.toornament.model.MatchDetails;
 import ch.wisv.toornament.model.TournamentDetails;
+import ch.wisv.toornament.model.enums.Scope;
 import ch.wisv.toornament.model.request.MatchQuery;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -21,42 +22,41 @@ public class MatchesV2 extends Concept {
     }
 
     public List<Match> getMatches(MatchQuery parameter,String headers) {
-        try {
-            HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
-                .scheme("https")
-                .host("api.toornament.com")
-                .addPathSegment("viewer")
-                .addPathSegment("v2")
-                .addPathSegment("tournaments")
-                .addPathSegment(tournament.getId())
-                .addPathSegment("matches");
+        HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
 
+      if (client.getScope().contains(Scope.ORGANIZER_RESULT)) {
+        urlBuilder
+            .scheme("https")
+            .host("api.toornament.com")
+            .addPathSegment("viewer")
+            .addPathSegment("v2")
+            .addPathSegment("tournaments")
+            .addPathSegment(tournament.getId())
+            .addPathSegment("matches");
 
-            urlBuilder.addQueryParameter("stage_ids", StringUtils
-                    .join(parameter.getStageIds(),","));
-            urlBuilder.addQueryParameter("group_ids", StringUtils
-                .join(parameter.getGroupIds(),","));
-            urlBuilder.addQueryParameter("round_ids", StringUtils
-                .join(parameter.getRoundIds(),","));
-            urlBuilder.addQueryParameter("statuses", StringUtils
-                .join(parameter.getStatuses(),","));
-            urlBuilder.addQueryParameter("participant_ids", StringUtils
-                .join(parameter.getParticipantIds(),","));
-            urlBuilder.addQueryParameter("is_scheduled",parameter.isScheduled() ? "1" : "0");
-            urlBuilder.addQueryParameter("scheduled_before", parameter.getScheduledBefore().toString());
-            urlBuilder.addQueryParameter("scheduled_after", parameter.getScheduledAfter().toString());
-            urlBuilder.addQueryParameter("custom_user_identifier",parameter.getCustomUserIdentifier());
-            urlBuilder.addQueryParameter("sort",parameter.getSort().name());
+        urlBuilder.addQueryParameter("stage_ids", StringUtils.join(parameter.getStageIds(), ","));
+        urlBuilder.addQueryParameter("group_ids", StringUtils.join(parameter.getGroupIds(), ","));
+        urlBuilder.addQueryParameter("round_ids", StringUtils.join(parameter.getRoundIds(), ","));
+        urlBuilder.addQueryParameter("statuses", StringUtils.join(parameter.getStatuses(), ","));
+        urlBuilder.addQueryParameter(
+            "participant_ids", StringUtils.join(parameter.getParticipantIds(), ","));
+        urlBuilder.addQueryParameter("is_scheduled", parameter.isScheduled() ? "1" : "0");
+        urlBuilder.addQueryParameter("scheduled_before", parameter.getScheduledBefore().toString());
+        urlBuilder.addQueryParameter("scheduled_after", parameter.getScheduledAfter().toString());
+        urlBuilder.addQueryParameter("custom_user_identifier", parameter.getCustomUserIdentifier());
+        urlBuilder.addQueryParameter("sort", parameter.getSort().name());
+            }
 
             Request request = client.getAuthenticatedRequestBuilder()
                 .get()
                 .url(urlBuilder.build())
                 .addHeader("Range",headers)
                 .build();
+      try{
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Match.class));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             throw new ToornamentException("Got IOExcption getting matches");
         }
     }
