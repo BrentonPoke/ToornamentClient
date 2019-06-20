@@ -6,6 +6,7 @@ import ch.wisv.toornament.model.Participant;
 import ch.wisv.toornament.model.Registration;
 import ch.wisv.toornament.model.TeamParticipant;
 import ch.wisv.toornament.model.enums.Scope;
+import ch.wisv.toornament.model.enums.Sort;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,12 @@ public class RegistrationsV2 extends Concept {
   }
 
   public List<Registration> getRegistrations(
-      Map<String, String> header, Map<String, String> paramsMap) {
+        Map<String, String> header){
+      return getRegistrations(header, Sort.ASCENDING);
+    }
+
+  public List<Registration> getRegistrations(
+      Map<String, String> header, Sort sort) {
     HttpUrl.Builder url = new HttpUrl.Builder();
     if (client.getScope().contains(Scope.ORGANIZER_REGISTRATION)) {
       url.scheme("https")
@@ -59,9 +65,8 @@ public class RegistrationsV2 extends Concept {
           .addEncodedPathSegment("tournaments")
           .addEncodedPathSegment(tournamentID)
           .addEncodedPathSegment("registrations");
-      for (Map.Entry<String, String> params : paramsMap.entrySet()) {
-        url.addQueryParameter(params.getKey(), params.getValue());
-      }
+
+        url.addQueryParameter("sort",sort.name());
     }
     Request request =
         client
