@@ -23,7 +23,7 @@ public class RegistrationsV2 extends Concept {
     this.tournamentID = tournamentID;
   }
 
-  public TeamParticipant register(Participant participant) {
+  public Registration register(Registration registration) {
     HttpUrl.Builder url = new HttpUrl.Builder();
     if (client.getScope().contains(Scope.ORGANIZER_REGISTRATION)) {
       url.scheme("https")
@@ -35,20 +35,48 @@ public class RegistrationsV2 extends Concept {
           .addEncodedPathSegment("registrations");
     }
     RequestBody body =
-        RequestBody.create(MediaType.parse("application/json"), participant.toString());
+        RequestBody.create(MediaType.parse("application/json"), registration.toString());
     Request request = client.getRequestBuilder()
         .post(body)
         .url(url.build())
         .build();
     try {
       String responseBody = client.executeRequest(request).body().string();
-      return mapper.readValue(responseBody, mapper.constructType(TeamParticipant.class));
+      return mapper.readValue(responseBody, mapper.constructType(Registration.class));
     } catch (IOException | NullPointerException e) {
       System.out.println(e.getMessage());
       throw new ToornamentException("Got Excption posting Participant");
     }
   }
+  public Registration updateRegistration(String id, Registration registration){
+      HttpUrl.Builder url = new HttpUrl.Builder();
+      if (client.getScope().contains(Scope.ORGANIZER_REGISTRATION)) {
+          url.scheme("https")
+              .host("api.toornament.com")
+              .addEncodedPathSegment("organizer")
+              .addEncodedPathSegment("v2")
+              .addEncodedPathSegment("tournaments")
+              .addEncodedPathSegment(tournamentID)
+              .addEncodedPathSegment("registrations")
+              .addEncodedPathSegment(id);
+      }
 
+      RequestBody body =
+          RequestBody.create(MediaType.parse("application/json"), registration.toString());
+      Request request =
+          client
+              .getRequestBuilder()
+              .patch(body)
+              .url(url.build())
+              .build();
+      try {
+          String responseBody = client.executeRequest(request).body().string();
+          return mapper.readValue(responseBody, mapper.constructType(Registration.class));
+      } catch (IOException | NullPointerException e) {
+          System.out.println(e.getMessage());
+          throw new ToornamentException("Got Excption posting Participant");
+      }
+  }
   public List<Registration> getRegistrations(
         Map<String, String> header){
       return getRegistrations(header, Sort.ASCENDING);
@@ -77,7 +105,32 @@ public class RegistrationsV2 extends Concept {
             .build();
     return getTeamParticipantsHelper(request);
   }
-
+  public Registration getRegistration(String id){
+      HttpUrl.Builder url = new HttpUrl.Builder();
+    if (client.getScope().contains(Scope.ORGANIZER_REGISTRATION)) {
+      url.scheme("https")
+          .host("api.toornament.com")
+          .addEncodedPathSegment("organizer")
+          .addEncodedPathSegment("v2")
+          .addEncodedPathSegment("tournaments")
+          .addEncodedPathSegment(tournamentID)
+          .addEncodedPathSegment("registrations")
+          .addEncodedPathSegment(id);
+          }
+      Request request =
+          client
+              .getRequestBuilder()
+              .get()
+              .url(url.build())
+              .build();
+      try {
+          String responseBody = client.executeRequest(request).body().string();
+          return mapper.readValue(responseBody, mapper.constructType(Registration.class));
+      } catch (IOException | NullPointerException e) {
+          System.out.println(e.getMessage());
+          throw new ToornamentException("Got Excption posting Participant");
+      }
+  }
   public int deleteRegistration(String id){
       HttpUrl.Builder url = new HttpUrl.Builder();
     if (client.getScope().contains(Scope.ORGANIZER_REGISTRATION)) {
