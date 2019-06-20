@@ -10,6 +10,7 @@ public enum Scope {
     ORGANIZER_PARTICIPANT("organizer:participant"),
     ORGANIZER_DELETE("organizer:delete"),
     MANAGE_PARTICIPANTS("participant:manage_participations"),
+    MANAGE_REGISTRATIONS("participant:manage_registrations"),
     ORGANIZER_REGISTRATION("organizer:registration");
     private String scope;
 
