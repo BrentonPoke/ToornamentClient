@@ -3,6 +3,7 @@ package ch.wisv.toornament.concepts;
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Participant;
+import ch.wisv.toornament.model.Registration;
 import ch.wisv.toornament.model.TeamParticipant;
 import ch.wisv.toornament.model.enums.Scope;
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class RegistrationsV2 extends Concept {
     }
   }
 
-  public List<TeamParticipant> getRegistrations(
+  public List<Registration> getRegistrations(
       Map<String, String> header, Map<String, String> paramsMap) {
     HttpUrl.Builder url = new HttpUrl.Builder();
     if (client.getScope().contains(Scope.ORGANIZER_REGISTRATION)) {
@@ -93,12 +94,12 @@ public class RegistrationsV2 extends Concept {
       return client.executeRequest(request).code();
   }
 
-  private List<TeamParticipant> getTeamParticipantsHelper(Request request) {
+  private List<Registration> getTeamParticipantsHelper(Request request) {
     try {
       String responseBody = client.executeRequest(request).body().string();
       return mapper.readValue(
           responseBody,
-          mapper.getTypeFactory().constructCollectionType(List.class, TeamParticipant.class));
+          mapper.getTypeFactory().constructCollectionType(List.class, Registration.class));
     } catch (IOException | NullPointerException e) {
       System.out.println(e.getMessage());
       throw new ToornamentException("Got Excption getting Participants");
