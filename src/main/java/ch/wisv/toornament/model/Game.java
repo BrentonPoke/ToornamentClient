@@ -1,6 +1,7 @@
 package ch.wisv.toornament.model;
 
 import ch.wisv.toornament.model.enums.MatchStatus;
+import ch.wisv.toornament.model.enums.MatchType;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -23,8 +24,8 @@ public class Game {
     private int number;
     private MatchStatus status;
     private List<Opponent> opponents;
-    private String type;
-    private String map;
+    private MatchType type;
+    private Object properties;
 
     @Override
     public String toString() {
