@@ -2,9 +2,6 @@ package ch.wisv.toornament.model;
 
 import ch.wisv.toornament.model.enums.MatchStatus;
 import ch.wisv.toornament.model.enums.MatchType;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,9 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 @Getter
 @Setter
 @EqualsAndHashCode
