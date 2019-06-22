@@ -24,8 +24,6 @@ public class Group {
     @Getter
     private class Settings{
         String size;
-        //The model for this entity is ridiculous and I hope they change it.
-        ArrayList<ArrayList<ArrayList<Integer>>> pairing_values;
         public Settings(){}
 
     }

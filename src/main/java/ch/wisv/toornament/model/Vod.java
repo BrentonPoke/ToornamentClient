@@ -19,10 +19,6 @@ public class Vod extends Video {
 
     private VodCategory category;
     private BigInteger match_id;
-
-    public BigInteger getMatch_id() {
-        return match_id;
-    }
     @Override
     public String toString() {
         try {

@@ -105,7 +105,7 @@ public MatchDetails updateMatch(MatchDetails details, String matchId){
             String responseBody = client.executeRequest(request).body().string();
             return mapper
                 .readValue(responseBody, mapper.getTypeFactory().constructType(MatchDetails.class));
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             throw new ToornamentException("Got IOExcption getting match");
         }
     }

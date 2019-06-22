@@ -16,7 +16,7 @@ import java.util.List;
 @EqualsAndHashCode
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Game {
-    private int number;
+    private Integer number;
     private MatchStatus status;
     private List<Opponent> opponents;
     private MatchType type;

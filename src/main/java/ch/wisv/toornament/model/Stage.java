@@ -13,10 +13,13 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode
 public class Stage {
+    private String id;
     private Integer number;
     private String name;
     private StageType type;
     private Integer size;
+    private Boolean closed;
+    private Object settings;
     @Override
     public String toString() {
         try {

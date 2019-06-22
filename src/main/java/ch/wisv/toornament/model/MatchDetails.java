@@ -15,8 +15,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MatchDetails extends Match {
 
-    private List<Stream> streams;
-    private List<Vod> vods;
     @JsonProperty("private_note")
     private String privateNote;
     @JsonProperty("public_note")

@@ -13,7 +13,7 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode
 public class Opponent {
-    private int number;
+    private Integer number;
     private Participant participant;
     private Object result;
     private Integer rank;

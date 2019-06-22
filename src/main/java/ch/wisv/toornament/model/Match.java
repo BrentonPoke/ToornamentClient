@@ -27,13 +27,13 @@ public class Match {
     private MatchStatus status;
     @JsonProperty("tournament_id")
     private String tournamentId;
-    private long number;
+    private Long number;
     @JsonAlias({"stage_number","stage_id"})
-    private long stageNumber;
+    private Long stageNumber;
     @JsonAlias({"group_number","group_id"})
-    private long groupNumber;
+    private Long groupNumber;
     @JsonAlias({"round_number","round_id"})
-    private long roundNumber;
+    private Long roundNumber;
     @JsonAlias({"date","scheduled_datetime"})
     private LocalDateTime date;
     private String timezone;
