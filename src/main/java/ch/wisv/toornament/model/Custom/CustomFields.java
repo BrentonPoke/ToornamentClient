@@ -1,14 +1,15 @@
 package ch.wisv.toornament.model.Custom;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.ArrayList;
-import ch.wisv.toornament.model.Custom.Address;
 import ch.wisv.toornament.model.Logo;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class CustomFields {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class CustomFields extends Custom {
     /*social*/
     private String twitter;
     private String facebook;

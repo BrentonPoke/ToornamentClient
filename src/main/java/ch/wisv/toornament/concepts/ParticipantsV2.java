@@ -5,6 +5,7 @@ import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Participant;
 import ch.wisv.toornament.model.TeamParticipant;
 import ch.wisv.toornament.model.enums.Scope;
+import ch.wisv.toornament.model.request.ParticipantQuery;
 import okhttp3.HttpUrl;
 import okhttp3.HttpUrl.Builder;
 import okhttp3.MediaType;
@@ -72,7 +73,7 @@ public class ParticipantsV2 extends Concept {
             .get()
             .url(url.build())
             .build();
-        return getTeamParticipanthelper(request, "Got IOExcption getting Participants");
+        return TeamParticipanthelper(request, "Got IOExcption getting Participants");
     }
 
     //Uses the Participant API to get other participants associated with the current user token. Requires participant:manage_participations for the scope
@@ -107,7 +108,7 @@ public class ParticipantsV2 extends Concept {
             .url(url.build())
             .build();
 
-        return getTeamParticipanthelper(request, "Got IOExcption getting Team Participants");
+        return TeamParticipanthelper(request, "Got IOExcption getting Team Participants");
     }
 
     public TeamParticipant updateParticipant(String id){
@@ -118,8 +119,28 @@ public class ParticipantsV2 extends Concept {
             .url(url.build())
             .build();
 
-        return getTeamParticipanthelper(request, "Got IOExcption getting Team Participants");
+        return TeamParticipanthelper(request, "Got IOExcption getting Team Participants");
 
+    }
+
+    public TeamParticipant createParticipant(ParticipantQuery query){
+        Builder url = new Builder();
+        if (client.getScope().contains(Scope.ORGANIZER_PARTICIPANT)) {
+            url
+                .scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("organizer")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("tournaments")
+                .addEncodedPathSegment(tournamentID)
+                .addEncodedPathSegment("participants");
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"),query.toString());
+        Request request = client.getRequestBuilder()
+            .post(body)
+            .url(url.build())
+            .build();
+        return TeamParticipanthelper(request,"Error creating new Participant");
     }
 
     public Integer deleteParticipant(String id){
@@ -157,7 +178,7 @@ public class ParticipantsV2 extends Concept {
         return url;
     }
 
-    private TeamParticipant getTeamParticipanthelper(Request request, String s) {
+    private TeamParticipant TeamParticipanthelper(Request request, String s) {
         try {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody,

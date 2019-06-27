@@ -3,12 +3,12 @@ package ch.wisv.toornament.model;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -24,6 +24,7 @@ public class Group {
     @Getter
     private class Settings{
         String size;
+        List<List<List<Integer>>> pairing_values;
         public Settings(){}
 
     }
