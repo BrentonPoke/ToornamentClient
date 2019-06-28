@@ -5,6 +5,7 @@ import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Game;
 import ch.wisv.toornament.model.Match;
 import ch.wisv.toornament.model.enums.Scope;
+import java.util.List;
 import okhttp3.HttpUrl;
 import okhttp3.HttpUrl.Builder;
 import okhttp3.MediaType;
@@ -26,11 +27,11 @@ public class MatchGamesV2 extends Concept {
         this.tournamentID = match.getTournamentId();
     }
 
-    public Game getGames(String number){
+    public Game getGame(String number){
         getURL(number);
-        return getGame(urlBuilder);
+        return getGameHelper(urlBuilder);
     }
-    public Game getGames(){
+    public List<Game> getGames(){
 
         urlBuilder = new HttpUrl.Builder();
         if (client.getScope().contains(Scope.ORGANIZER_RESULT)) {
@@ -46,10 +47,21 @@ public class MatchGamesV2 extends Concept {
                 .addEncodedPathSegment(matchID)
                 .addEncodedPathSegment("games");
         }
-        return getGame(urlBuilder);
+        Request request = client.getAuthenticatedRequestBuilder()
+            .get()
+            .url(urlBuilder.build())
+            .build();
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper
+                .readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,Game.class));
+        } catch (IOException | NullPointerException e) {
+            e.printStackTrace();
+            throw new ToornamentException("Got IOExcption getting games");
+        }
     }
 
-    private Game getGame(Builder urlBuilder) {
+    private Game getGameHelper(Builder urlBuilder) {
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
             .url(urlBuilder.build())
@@ -60,7 +72,7 @@ public class MatchGamesV2 extends Concept {
                 .readValue(responseBody, mapper.getTypeFactory().constructType(Game.class));
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
-            throw new ToornamentException("Got IOExcption getting matches");
+            throw new ToornamentException("Got IOExcption getting game");
         }
     }
 
@@ -77,7 +89,7 @@ public class MatchGamesV2 extends Concept {
                 .readValue(responseBody, mapper.getTypeFactory().constructType(Game.class));
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
-            throw new ToornamentException("Got IOExcption getting matches");
+            throw new ToornamentException("Got IOExcption updating game");
         }
     }
 
