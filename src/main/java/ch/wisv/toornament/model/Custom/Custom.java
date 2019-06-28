@@ -25,6 +25,6 @@ public class Custom {
     @JsonProperty("public")
     public String _public;
     @JsonProperty("position")
-    public String position;
+    public Integer position;
 
 }

@@ -17,7 +17,7 @@ import java.text.SimpleDateFormat;
 public class Group {
     private String id, stage_id, name;
     private Integer number;
-    private boolean closed;
+    private Boolean closed;
     private Settings settings;
 
     @Setter
