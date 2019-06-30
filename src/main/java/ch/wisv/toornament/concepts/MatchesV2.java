@@ -35,10 +35,13 @@ public class MatchesV2 extends Concept {
             .addPathSegment("tournaments")
             .addPathSegment(tournament.getId())
             .addPathSegment("matches");
-
+        if(!parameter.getStageIds().isEmpty())
         urlBuilder.addQueryParameter("stage_ids", StringUtils.join(parameter.getStageIds(), ","));
+        if(!parameter.getGroupIds().isEmpty())
         urlBuilder.addQueryParameter("group_ids", StringUtils.join(parameter.getGroupIds(), ","));
+        if(!parameter.getRoundIds().isEmpty())
         urlBuilder.addQueryParameter("round_ids", StringUtils.join(parameter.getRoundIds(), ","));
+        if(!parameter.getStatuses().isEmpty())
         urlBuilder.addQueryParameter("statuses", StringUtils.join(parameter.getStatuses(), ","));
         urlBuilder.addQueryParameter(
             "participant_ids", StringUtils.join(parameter.getParticipantIds(), ","));
