@@ -43,6 +43,7 @@ public class MatchesV2 extends Concept {
         urlBuilder.addQueryParameter("round_ids", StringUtils.join(parameter.getRoundIds(), ","));
         if(!parameter.getStatuses().isEmpty())
         urlBuilder.addQueryParameter("statuses", StringUtils.join(parameter.getStatuses(), ","));
+        if(!parameter.getParticipantIds().isEmpty())
         urlBuilder.addQueryParameter(
             "participant_ids", StringUtils.join(parameter.getParticipantIds(), ","));
         urlBuilder.addQueryParameter("is_scheduled", parameter.isScheduled() ? "1" : "0");
