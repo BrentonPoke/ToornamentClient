@@ -73,7 +73,7 @@ public class RegistrationsV2 extends Concept {
           return mapper.readValue(responseBody, mapper.constructType(Registration.class));
       } catch (IOException | NullPointerException e) {
           System.out.println(e.getMessage());
-          throw new ToornamentException("Got Excption posting Participant");
+          throw new ToornamentException("Got Excption updating Participant");
       }
   }
   public List<Registration> getRegistrations(

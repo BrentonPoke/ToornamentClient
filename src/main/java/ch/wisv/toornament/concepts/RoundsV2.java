@@ -4,6 +4,7 @@ import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Round;
 import ch.wisv.toornament.model.TournamentDetails;
+import ch.wisv.toornament.model.request.RoundsQuery;
 import lombok.Getter;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -11,6 +12,7 @@ import okhttp3.Request;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 
 @Getter
 public class RoundsV2 extends Concept {
@@ -20,7 +22,7 @@ public class RoundsV2 extends Concept {
         this.tournamentID = tournamentID;
     }
 
-    public List<Round> getRounds(Map<String,String> paramsMap, Map<String,String> header) {
+    public List<Round> getRounds(RoundsQuery parameter, Map<String,String> header) {
 
         HttpUrl.Builder url = new HttpUrl.Builder()
             .scheme("https")
@@ -30,9 +32,12 @@ public class RoundsV2 extends Concept {
             .addEncodedPathSegment("tournaments")
             .addEncodedPathSegment(tournamentID)
             .addEncodedPathSegment("rounds");
-        for (Map.Entry<String, String> params : paramsMap.entrySet()) {
-            url.addQueryParameter(params.getKey(), params.getValue());
-        }
+
+        url.addQueryParameter("stage_ids", StringUtils.join(parameter.getStageIds(), ","));
+        url.addQueryParameter("group_ids", StringUtils.join(parameter.getGroupIds(), ","));
+        url.addQueryParameter("group_numbers", StringUtils.join(parameter.getGroupNumbers(), ","));
+        url.addQueryParameter("stage_numbers", StringUtils.join(parameter.getStageNumbers(), ","));
+
         Request request = client.getRequestBuilder()
             .get()
             .url(url.build())
