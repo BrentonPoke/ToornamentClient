@@ -32,10 +32,13 @@ public class RoundsV2 extends Concept {
             .addEncodedPathSegment("tournaments")
             .addEncodedPathSegment(tournamentID)
             .addEncodedPathSegment("rounds");
-
+        if(!parameter.getStageIds().isEmpty())
         url.addQueryParameter("stage_ids", StringUtils.join(parameter.getStageIds(), ","));
+        if(!parameter.getGroupIds().isEmpty())
         url.addQueryParameter("group_ids", StringUtils.join(parameter.getGroupIds(), ","));
+        if(!parameter.getGroupNumbers().isEmpty())
         url.addQueryParameter("group_numbers", StringUtils.join(parameter.getGroupNumbers(), ","));
+        if(!parameter.getStageNumbers().isEmpty())
         url.addQueryParameter("stage_numbers", StringUtils.join(parameter.getStageNumbers(), ","));
 
         Request request = client.getRequestBuilder()

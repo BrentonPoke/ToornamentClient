@@ -2,6 +2,8 @@ import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.RoundsV2;
 import ch.wisv.toornament.model.Round;
 import ch.wisv.toornament.model.enums.Scope;
+import ch.wisv.toornament.model.request.RoundsQuery;
+import ch.wisv.toornament.model.request.RoundsQuery.RoundsQueryBuilder;
 import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,14 +30,12 @@ import static org.junit.jupiter.api.Assertions.*;
     }
     @Test
     public void getRounds() {
-        Map<String,String> params = new HashMap<>();
+        RoundsQueryBuilder roundsQuery = RoundsQuery.builder();
         Map<String,String> header = new HashMap<>();
-        header.put("range","rounds=0-49");
-        params.put("group_ids","986865420542550016,987029336941142023");
-        params.put("stage_ids","987313089934254080,906330006561030144");
-        System.out.println(params);
-
-        List<Round> list = rounds.getRounds(params,header);
+        header.put("range","rounds=0-9");
+        roundsQuery.groupId(986865420542550016L).groupId(987029336941142023L)
+        .stageId(987313089934254080L).stageId(906330006561030144L);
+        List<Round> list = rounds.getRounds(roundsQuery.build(),header);
         System.out.println(list);
     }
 
