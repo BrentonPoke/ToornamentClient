@@ -5,6 +5,7 @@ import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Registration;
 import ch.wisv.toornament.model.enums.Scope;
 import ch.wisv.toornament.model.enums.Sort;
+import ch.wisv.toornament.model.request.RegistrationQuery;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class RegistrationsV2 extends Concept {
     this.tournamentID = tournamentID;
   }
 
-  public Registration register(Registration registration) {
+  public Registration register(RegistrationQuery registration) {
     HttpUrl.Builder url = new HttpUrl.Builder();
     if (client.getScope().contains(Scope.ORGANIZER_REGISTRATION)) {
       url.scheme("https")

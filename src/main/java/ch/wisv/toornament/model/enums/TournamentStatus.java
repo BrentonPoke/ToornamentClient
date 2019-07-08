@@ -1,14 +1,18 @@
 package ch.wisv.toornament.model.enums;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public enum TournamentStatus {
-    @JsonProperty("setup")
-    SETUP,
-    @JsonProperty("running")
-    RUNNING,
-    @JsonProperty("completed")
-    COMPLETED,
-    @JsonProperty("pending")
-    PENDING
+    SETUP("setup"),
+    RUNNING("running"),
+    COMPLETED("completed"),
+    PENDING("pending");
+    private String status;
+
+    TournamentStatus(String status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return status;
+    }
 }
