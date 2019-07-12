@@ -22,14 +22,14 @@ public class ParticipantsV2 extends Concept {
         super(client);
         this.tournamentID = tournamentID;
     }
-    public List<TeamParticipant> getTeamParticipants(Map<String,String> header, Map<String,String> paramsMap){
-        Request request = getRequestHelper(header, paramsMap);
+    public List<TeamParticipant> getTeamParticipants(Map<String,String> header, ParticipantQuery parameters){
+        Request request = getRequestHelper(header, parameters);
         return getTeamParticipantsHelper(request);
     }
 
     //Intended for getting participants of non-team games like Hearthstone or Mortal Kombat.
-    public List<Participant> getParticipants(Map<String,String> header, Map<String,String> paramsMap){
-        Request request = getRequestHelper(header, paramsMap);
+    public List<Participant> getParticipants(Map<String,String> header, ParticipantQuery parameters){
+        Request request = getRequestHelper(header, parameters);
         try {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Participant.class));
@@ -39,7 +39,7 @@ public class ParticipantsV2 extends Concept {
         }
     }
 
-    private Request getRequestHelper(Map<String, String> header, Map<String, String> paramsMap) {
+    private Request getRequestHelper(Map<String, String> header, ParticipantQuery parameters) {
         HttpUrl.Builder url = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
@@ -48,9 +48,10 @@ public class ParticipantsV2 extends Concept {
             .addEncodedPathSegment("tournaments")
             .addEncodedPathSegment(tournamentID)
             .addEncodedPathSegment("participants");
-        for (Map.Entry<String, String> params : paramsMap.entrySet()) {
-            url.addQueryParameter(params.getKey(), params.getValue());
-        }
+
+        url.addQueryParameter("name",parameters.getName());
+        url.addQueryParameter("sort",parameters.getSort().toString());
+
         return client.getRequestBuilder()
             .get()
             .url(url.build())

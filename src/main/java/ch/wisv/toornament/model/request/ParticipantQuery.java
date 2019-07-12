@@ -1,6 +1,8 @@
 package ch.wisv.toornament.model.request;
 
 import ch.wisv.toornament.model.Custom.CustomFields;
+import ch.wisv.toornament.model.enums.Sort;
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +18,10 @@ import lombok.Singular;
 public class ParticipantQuery {
     private String name;
     private String email;
-    private String custom_user_identifier;
+    @Builder.Default
+    private Sort sort = Sort.ASCENDING;
+    @JsonAlias("custom_user_identifier")
+    private String customUserIdentifier;
     @Singular("lineup")
     private List<ParticipantQuery> lineup;
     private CustomFields custom_fields;
