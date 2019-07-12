@@ -3,12 +3,15 @@ package ch.wisv.toornament.concepts;
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Group;
+import ch.wisv.toornament.model.request.GroupsQuery;
+import ch.wisv.toornament.model.request.GroupsQuery.GroupsQueryBuilder;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 
 public class GroupsV2 extends Concept {
     private String tournamentID;
@@ -16,7 +19,7 @@ public class GroupsV2 extends Concept {
         super(client);
         this.tournamentID = tournamentID;
     }
-    public List<Group> getGroups(Map<String,String> paramsMap, Map<String,String> header){
+    public List<Group> getGroups(GroupsQuery parameters, Map<String,String> header){
         HttpUrl.Builder url = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
@@ -25,9 +28,12 @@ public class GroupsV2 extends Concept {
             .addEncodedPathSegment("tournaments")
             .addEncodedPathSegment(tournamentID)
             .addEncodedPathSegment("groups");
-        for (Map.Entry<String, String> params : paramsMap.entrySet()) {
-            url.addQueryParameter(params.getKey(), params.getValue());
-        }
+
+        if(!parameters.getStageIds().isEmpty())
+            url.addQueryParameter("stage_ids", StringUtils.join(parameters.getStageIds(),","));
+        if(!parameters.getStageNumbers().isEmpty())
+            url.addQueryParameter("stage_numbers",StringUtils.join(parameters.getStageNumbers(),","));
+
         Request request = client.getRequestBuilder()
             .get()
             .url(url.build())
