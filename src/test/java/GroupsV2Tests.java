@@ -2,6 +2,8 @@ import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.concepts.GroupsV2;
 import ch.wisv.toornament.model.Group;
 import ch.wisv.toornament.model.enums.Scope;
+import ch.wisv.toornament.model.request.GroupsQuery;
+import ch.wisv.toornament.model.request.GroupsQuery.GroupsQueryBuilder;
 import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +18,7 @@ import static org.junit.Assert.*;
 public class GroupsV2Tests {
     private ToornamentClient client;
     private GroupsV2 groups;
-    private Map<String,String> params = new HashMap<>();
+    private GroupsQueryBuilder params = GroupsQuery.builder();
     private Map<String,String> header = new HashMap<>();
     private HashSet<Scope> scopes = new HashSet<>();
     @Before
@@ -27,13 +29,12 @@ public class GroupsV2Tests {
         client.authorize();
         groups = new GroupsV2(client,"906278647555784704");
         header.put("range","groups=0-49");
-        params.put("stage_ids","906330006561030144,987313089934254080");
-        params.put("stage_numbers","1");
+        params.stageId(906330006561030144L).stageId(987313089934254080L).stageNumber(1);
 
     }
     @Test
     public void getGroupsV2Test(){
-        List<Group> groupList = groups.getGroups(params,header);
+        List<Group> groupList = groups.getGroups(params.build(),header);
         assertTrue(groupList.get(0).getNumber() == 1);
     }
 
