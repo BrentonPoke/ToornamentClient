@@ -1,20 +1,38 @@
 package ch.wisv.toornament.model.request;
 
-import ch.wisv.toornament.model.enums.DateSort;
+import ch.wisv.toornament.model.enums.Platforms;
+import ch.wisv.toornament.model.enums.ScheduledSort;
 import ch.wisv.toornament.model.enums.TournamentStatus;
 
-import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Locale;
+import lombok.Builder;
+import lombok.Builder.Default;
+import lombok.Getter;
+import lombok.Singular;
 
+@Builder
+@Getter
 public class TournamentQuery {
-    String discipline;
-    TournamentStatus status;
+    @Singular
+    List<String> disciplines;
+    @Singular
+    List<TournamentStatus> statuses;
     Boolean featured;
-    Boolean online;
-    String country;
-    Date afterStart;
-    Date beforeStart;
-    Date afterEnd;
-    Date beforeEnd;
-    DateSort dateSort = DateSort.DATE_DESC;
+    @JsonProperty("is_online")
+    Boolean isOnline;
+    @Singular
+    List<Locale> countries;
+    @Singular
+    List<Platforms> platforms;
+    @JsonProperty("scheduled_before")
+    LocalDate scheduledBefore;
+    @JsonProperty("scheduled_after")
+    LocalDate scheduledAfter;
+    @Default
+    ScheduledSort sort = ScheduledSort.SCHEDULED_ASC;
     String name;
+
 }

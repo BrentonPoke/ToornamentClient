@@ -5,12 +5,15 @@ import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Stream;
 import ch.wisv.toornament.model.Tournament;
 import ch.wisv.toornament.model.TournamentDetails;
+import ch.wisv.toornament.model.request.TournamentQuery;
+import java.time.format.DateTimeFormatter;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 
 public class TournamentsV2 extends Concept {
 
@@ -29,7 +32,7 @@ public class TournamentsV2 extends Concept {
         }
     }
 
-    public List<Tournament> getFeaturedTournaments(Map<String, String> paramsMap, Map<String,String> header) {
+    public List<Tournament> getFeaturedTournaments(TournamentQuery parameters, Map<String,String> header) {
         HttpUrl.Builder url = new HttpUrl.Builder();
         url.scheme("https")
             .host("api.toornament.com")
@@ -37,9 +40,20 @@ public class TournamentsV2 extends Concept {
             .addEncodedPathSegment("v2")
             .addEncodedPathSegment("tournaments")
             .addEncodedPathSegment("featured");
-        for (Map.Entry<String, String> params : paramsMap.entrySet()) {
-            url.addQueryParameter(params.getKey(), params.getValue());
-        }
+
+        if(!parameters.getDisciplines().isEmpty())
+            url.addQueryParameter("disciplines", StringUtils.join(parameters.getDisciplines(),","));
+        if(!parameters.getStatuses().isEmpty())
+            url.addQueryParameter("statuses",StringUtils.join(parameters.getStatuses(),","));
+        if(!parameters.getCountries().isEmpty())
+            url.addQueryParameter("name",StringUtils.join(parameters.getCountries(),","));
+        if(!parameters.getPlatforms().isEmpty())
+            url.addQueryParameter("platforms",StringUtils.join(parameters.getPlatforms(),","));
+        url.addQueryParameter("is_online",parameters.getIsOnline() ? "1":"0");
+        url.addQueryParameter("scheduled_after",parameters.getScheduledAfter().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        url.addQueryParameter("scheduled_before",parameters.getScheduledBefore().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        url.addQueryParameter("sort",parameters.getSort().getName());
+
         Request request = client.getRequestBuilder()
             .get()
             .url(url.build())

@@ -4,7 +4,9 @@ import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.model.*;
 import ch.wisv.toornament.model.enums.MatchFormat;
 import ch.wisv.toornament.model.enums.ParticipantType;
+import ch.wisv.toornament.model.enums.Platforms;
 import ch.wisv.toornament.model.enums.Scope;
+import ch.wisv.toornament.model.request.TournamentQuery;
 import ch.wisv.toornament.model.request.TournamentRequest;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,7 +18,7 @@ import java.util.*;
 
 public class TournamentsTests {
     private ToornamentClient client;
-    private HashMap<String,String> params;
+    private TournamentQuery.TournamentQueryBuilder params = TournamentQuery.builder();
     private HashMap<String,String> headers;
     private HashSet<Scope> scopes = new HashSet<>();
     private TournamentRequest tournamentRequest = new TournamentRequest();
@@ -29,8 +31,12 @@ public class TournamentsTests {
         client.authorize();
 
         headers = new HashMap<>();
-        params = new HashMap<>();
-        params.put("disciplines","overwatch");
+    params
+        .discipline("overwatch")
+        .isOnline(false)
+        .scheduledAfter(LocalDate.parse("2018-09-04"))
+        .scheduledBefore(LocalDate.parse("2019-04-05"))
+        .platform(Platforms.PC);
 
         tournamentDetails.setParticipantType(ParticipantType.TEAM);
         tournamentDetails.setName("OWL Season 1 TEST");
@@ -57,11 +63,11 @@ public class TournamentsTests {
     @Test
     public void getFeaturedTournamentsTest() {
             headers.put("range","tournaments=0-49");
-            List<Tournament> details = client.tournamentsV2().getFeaturedTournaments(params,headers);
+            List<Tournament> details = client.tournamentsV2().getFeaturedTournaments(params.build(),headers);
 
             ArrayList<Tournament> list = new ArrayList<>(details);
-
-                assertTrue(!list.isEmpty());
+    System.out.println(list);
+        assertFalse(list.isEmpty());
     }
 
 //    @Test

@@ -1,6 +1,7 @@
 package ch.wisv.toornament.model.request;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,9 +11,9 @@ import lombok.Singular;
 @Builder
 public class GroupsQuery {
     @Singular
-    @JsonAlias("stage_ids")
+    @JsonProperty("stage_ids")
     List<Long> stageIds;
     @Singular
-    @JsonAlias("stage_numbers")
+    @JsonProperty("stage_numbers")
     List<Integer> stageNumbers;
 }

@@ -11,8 +11,12 @@ public enum StageType {
     SINGLE_ELIMINATION("single_elimination"),
     DOUBLE_ELIMINATION("double_elimination"),
     BRACKET_GROUP("bracket_group");
-    @JsonValue
     private String type;
+    @JsonValue
+    public String getType() {
+        return type;
+    }
+
     StageType(String type){
         this.type = type;
     }

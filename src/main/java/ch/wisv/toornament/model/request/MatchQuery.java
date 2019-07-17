@@ -3,6 +3,7 @@ package ch.wisv.toornament.model.request;
 import ch.wisv.toornament.model.enums.MatchSort;
 
 import ch.wisv.toornament.model.enums.MatchStatus;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
@@ -25,7 +26,10 @@ public class MatchQuery {
    @Builder.Default private MatchSort sort = MatchSort.STRUCTURE;
    @Singular private List<Long> participantIds;
    private boolean scheduled;
-    private LocalDateTime scheduledBefore, scheduledAfter;
+   @JsonProperty("scheduled_before")
+   private LocalDateTime scheduledBefore;
+   @JsonProperty("scheduled_after")
+   private LocalDateTime scheduledAfter;
    @Singular
    private List<MatchStatus> statuses;
    private String customUserIdentifier;

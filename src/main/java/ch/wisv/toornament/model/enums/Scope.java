@@ -1,5 +1,7 @@
 package ch.wisv.toornament.model.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Scope {
 
     MANAGE("participant:manage_registrations"),
@@ -13,6 +15,10 @@ public enum Scope {
     MANAGE_REGISTRATIONS("participant:manage_registrations"),
     ORGANIZER_REGISTRATION("organizer:registration");
     private String scope;
+    @JsonValue
+    public String getScope() {
+        return scope;
+    }
 
     Scope(String scope) {
         this.scope = scope;
