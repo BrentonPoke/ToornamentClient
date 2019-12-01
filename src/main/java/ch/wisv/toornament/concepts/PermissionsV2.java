@@ -42,4 +42,31 @@ public class PermissionsV2 extends Concept {
             throw new ToornamentException("Got IOExcption getting Permissions");
         }
     }
+
+    Permissions getPermission(String permissionID){
+        Builder url = new Builder();
+        if(client.getScope().contains(Scope.ORGANIZER_PERMISSION)){
+            url
+                .scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("organizer")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("tournaments")
+                .addEncodedPathSegment(tournamentID)
+                .addEncodedPathSegment("permissions")
+                .addEncodedPathSegment(permissionID);
+        }
+
+        Request request = client.getRequestBuilder()
+            .get()
+            .url(url.build())
+            .build();
+        try{
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(Permissions.class));
+        } catch (IOException | NullPointerException e){
+            System.out.println(e.getMessage());
+            throw new ToornamentException("Got IOException getting Permission.");
+        }
+    }
 }
