@@ -3,11 +3,15 @@ package ch.wisv.toornament.concepts;
 import ch.wisv.toornament.ToornamentClient;
 import ch.wisv.toornament.exception.ToornamentException;
 import ch.wisv.toornament.model.Permissions;
+import ch.wisv.toornament.model.TeamParticipant;
 import ch.wisv.toornament.model.enums.Scope;
+import ch.wisv.toornament.model.request.PermissionsQuery;
 import java.io.IOException;
 import java.util.List;
 import okhttp3.HttpUrl.Builder;
+import okhttp3.MediaType;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 
 public class PermissionsV2 extends Concept {
     private String tournamentID;
@@ -67,6 +71,33 @@ public class PermissionsV2 extends Concept {
         } catch (IOException | NullPointerException e){
             System.out.println(e.getMessage());
             throw new ToornamentException("Got IOException getting Permission.");
+        }
+    }
+    Permissions createPermission(PermissionsQuery query){
+        Builder url = new Builder();
+        if(client.getScope().contains(Scope.ORGANIZER_PERMISSION)){
+            url
+                .scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("organizer")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("tournaments")
+                .addEncodedPathSegment(tournamentID)
+                .addEncodedPathSegment("permissions");
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"),query.toString());
+        Request request = client.getRequestBuilder()
+            .post(body)
+            .url(url.build())
+            .build();
+
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody,
+                mapper.getTypeFactory().constructType(Permissions.class));
+        } catch (IOException | NullPointerException e) {
+            System.out.println(e.getMessage());
+            throw new ToornamentException("Error creating new permission");
         }
     }
 }
