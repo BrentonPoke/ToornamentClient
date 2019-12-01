@@ -141,4 +141,24 @@ public class PermissionsV2 extends Concept {
             throw new ToornamentException("Error updating new permission");
         }
     }
+
+    Integer removePermission(String permissionsID){
+        Builder url = new Builder();
+        if(client.getScope().contains(Scope.ORGANIZER_PERMISSION)){
+            url
+                .scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("organizer")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("tournaments")
+                .addEncodedPathSegment(tournamentID)
+                .addEncodedPathSegment("permissions")
+                .addEncodedPathSegment(permissionsID);
+        }
+        Request request = client.getRequestBuilder()
+            .delete()
+            .url(url.build())
+            .build();
+        return client.executeRequest(request).code();
+    }
 }
