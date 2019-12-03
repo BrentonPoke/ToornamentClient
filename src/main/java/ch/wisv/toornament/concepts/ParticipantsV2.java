@@ -39,26 +39,6 @@ public class ParticipantsV2 extends Concept {
         }
     }
 
-    private Request getRequestHelper(Map<String, String> header, ParticipantQuery parameters) {
-        HttpUrl.Builder url = new HttpUrl.Builder()
-            .scheme("https")
-            .host("api.toornament.com")
-            .addEncodedPathSegment("viewer")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("tournaments")
-            .addEncodedPathSegment(tournamentID)
-            .addEncodedPathSegment("participants");
-
-        url.addQueryParameter("name",parameters.getName());
-        url.addQueryParameter("sort",parameters.getSort().toString());
-
-        return client.getRequestBuilder()
-            .get()
-            .url(url.build())
-            .addHeader("range", header.get("range"))
-            .build();
-    }
-
     public Participant getParticipant(String participantID){
         HttpUrl.Builder url = new HttpUrl.Builder()
             .scheme("https")
@@ -78,6 +58,7 @@ public class ParticipantsV2 extends Concept {
     }
 
     //Uses the Participant API to get other participants associated with the current user token. Requires participant:manage_participations for the scope
+
     public List<TeamParticipant> getMyTeamParticipants(Map<String,String> header, Map<String,String> paramsMap) {
         Builder url = new Builder();
     if (client.getScope().contains(Scope.MANAGE_PARTICIPANTS)) {
@@ -100,7 +81,6 @@ public class ParticipantsV2 extends Concept {
 
         return getTeamParticipantsHelper(request);
     }
-
     public TeamParticipant getTeamParticipantByID(String id){
 
         Builder url = participantHelper(id);
@@ -199,5 +179,25 @@ public class ParticipantsV2 extends Concept {
             System.out.println(e.getMessage());
             throw new ToornamentException("Got IOExcption getting Participants");
         }
+    }
+
+    private Request getRequestHelper(Map<String, String> header, ParticipantQuery parameters) {
+        HttpUrl.Builder url = new HttpUrl.Builder()
+            .scheme("https")
+            .host("api.toornament.com")
+            .addEncodedPathSegment("viewer")
+            .addEncodedPathSegment("v2")
+            .addEncodedPathSegment("tournaments")
+            .addEncodedPathSegment(tournamentID)
+            .addEncodedPathSegment("participants");
+
+        url.addQueryParameter("name",parameters.getName());
+        url.addQueryParameter("sort",parameters.getSort().toString());
+
+        return client.getRequestBuilder()
+            .get()
+            .url(url.build())
+            .addHeader("range", header.get("range"))
+            .build();
     }
 }
