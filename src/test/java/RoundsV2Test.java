@@ -1,9 +1,9 @@
-import ch.wisv.toornament.ToornamentClient;
-import ch.wisv.toornament.concepts.RoundsV2;
-import ch.wisv.toornament.model.Round;
-import ch.wisv.toornament.model.enums.Scope;
-import ch.wisv.toornament.model.request.RoundsQuery;
-import ch.wisv.toornament.model.request.RoundsQuery.RoundsQueryBuilder;
+import com.toornament.ToornamentClient;
+import com.toornament.concepts.RoundsV2;
+import com.toornament.model.Round;
+import com.toornament.model.enums.Scope;
+import com.toornament.model.request.RoundsQuery;
+import com.toornament.model.request.RoundsQuery.RoundsQueryBuilder;
 import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;

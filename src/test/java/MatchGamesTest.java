@@ -1,18 +1,10 @@
-import ch.wisv.toornament.ToornamentClient;
-import ch.wisv.toornament.concepts.MatchGamesV2;
-import ch.wisv.toornament.model.Game;
-import ch.wisv.toornament.model.Match;
-import ch.wisv.toornament.model.enums.Scope;
+import com.toornament.ToornamentClient;
+import com.toornament.concepts.MatchGamesV2;
+import com.toornament.model.Match;
+import com.toornament.model.enums.Scope;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.HashSet;
 import org.junit.Before;
-import org.junit.Test;
-import ch.wisv.toornament.model.Opponent;
-
-import java.io.IOException;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 public class MatchGamesTest {
     private ToornamentClient client;

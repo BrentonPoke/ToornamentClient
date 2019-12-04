@@ -1,12 +1,9 @@
-import ch.wisv.toornament.ToornamentClient;
-import ch.wisv.toornament.concepts.MatchesV2;
-import ch.wisv.toornament.model.MatchDetails;
-import ch.wisv.toornament.model.TournamentDetails;
-import ch.wisv.toornament.model.enums.Scope;
+import com.toornament.ToornamentClient;
+import com.toornament.concepts.MatchesV2;
+import com.toornament.model.TournamentDetails;
+import com.toornament.model.enums.Scope;
 import java.util.HashSet;
 import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class MatchesTests {
     private ToornamentClient client;

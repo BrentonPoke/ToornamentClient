@@ -1,8 +1,8 @@
-import ch.wisv.toornament.ToornamentClient;
-import ch.wisv.toornament.concepts.Disciplines;
-import ch.wisv.toornament.model.Discipline;
-import ch.wisv.toornament.model.DisciplineDetails;
-import ch.wisv.toornament.model.enums.Scope;
+import com.toornament.ToornamentClient;
+import com.toornament.concepts.Disciplines;
+import com.toornament.model.Discipline;
+import com.toornament.model.DisciplineDetails;
+import com.toornament.model.enums.Scope;
 import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;

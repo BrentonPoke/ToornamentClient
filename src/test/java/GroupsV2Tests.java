@@ -1,9 +1,9 @@
-import ch.wisv.toornament.ToornamentClient;
-import ch.wisv.toornament.concepts.GroupsV2;
-import ch.wisv.toornament.model.Group;
-import ch.wisv.toornament.model.enums.Scope;
-import ch.wisv.toornament.model.request.GroupsQuery;
-import ch.wisv.toornament.model.request.GroupsQuery.GroupsQueryBuilder;
+import com.toornament.ToornamentClient;
+import com.toornament.concepts.GroupsV2;
+import com.toornament.model.Group;
+import com.toornament.model.enums.Scope;
+import com.toornament.model.request.GroupsQuery;
+import com.toornament.model.request.GroupsQuery.GroupsQueryBuilder;
 import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;

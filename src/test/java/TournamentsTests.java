@@ -1,16 +1,16 @@
 import static org.junit.Assert.*;
 
-import ch.wisv.toornament.ToornamentClient;
-import ch.wisv.toornament.model.*;
-import ch.wisv.toornament.model.enums.MatchFormat;
-import ch.wisv.toornament.model.enums.ParticipantType;
-import ch.wisv.toornament.model.enums.Platforms;
-import ch.wisv.toornament.model.enums.Scope;
-import ch.wisv.toornament.model.request.TournamentQuery;
-import ch.wisv.toornament.model.request.TournamentRequest;
+import com.toornament.ToornamentClient;
+import com.toornament.model.Tournament;
+import com.toornament.model.TournamentDetails;
+import com.toornament.model.enums.MatchFormat;
+import com.toornament.model.enums.ParticipantType;
+import com.toornament.model.enums.Platforms;
+import com.toornament.model.enums.Scope;
+import com.toornament.model.request.TournamentQuery;
+import com.toornament.model.request.TournamentRequest;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
