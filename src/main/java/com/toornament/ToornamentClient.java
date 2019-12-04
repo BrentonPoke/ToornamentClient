@@ -1,6 +1,5 @@
 package com.toornament;
 
-import ch.wisv.toornament.concepts.*;
 import com.toornament.concepts.Disciplines;
 import com.toornament.concepts.MatchesV2;
 import com.toornament.concepts.RoundsV2;
