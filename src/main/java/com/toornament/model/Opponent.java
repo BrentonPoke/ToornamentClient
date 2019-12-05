@@ -4,6 +4,7 @@ import com.toornament.model.Custom.CustomFields;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.toornament.model.enums.Result;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,7 @@ import lombok.Setter;
 public class Opponent {
     private Integer number;
     private Participant participant;
-    private Object result;
+    private Result result;
     private Integer rank;
     private Integer score;
     private Boolean forfeit;
