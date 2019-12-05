@@ -19,7 +19,9 @@ public class ReportsQuery {
     String customUserIdentifier;
     Report report;
     ReportsType type;
+    @JsonAlias("participant_id")
     String participantID;
+    Boolean closed;
     public String toString() {
         try {
             return new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writerWithDefaultPrettyPrinter().writeValueAsString(this);
