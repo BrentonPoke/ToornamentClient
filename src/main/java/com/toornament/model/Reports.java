@@ -17,13 +17,13 @@ public class Reports {
     @JsonAlias("custom_user_identifier")
     String customUserIdentifier;
     @JsonAlias("participant_id")
-    private String participantID;
+    String participantID;
     String type;
-    private String id;
+    String id;
     @JsonAlias("closed_author_id")
-    private String closedAuthorID;
-    private Boolean closed;
-    private LocalDateTime closed_at;
+    String closedAuthorID;
+    Boolean closed;
+    LocalDateTime closed_at;
     Report report;
   public class Report {
     List<Opponent> opponents;
