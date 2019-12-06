@@ -11,6 +11,7 @@ import com.toornament.model.enums.Scope;
 import com.toornament.model.request.TournamentQuery;
 import java.time.format.DateTimeFormatter;
 import okhttp3.HttpUrl;
+import okhttp3.HttpUrl.Builder;
 import okhttp3.MediaType;
 import okhttp3.Request;
 
@@ -206,5 +207,53 @@ public class TournamentsV2 extends Concept {
                 throw new ToornamentException("Got IOExcption creating custom field");
             }
         }
+
+    public Custom updateCustomField(String tournamentID, String customFieldID, Custom query){
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        if (client.getScope().contains(Scope.ORGANIZER_ADMIN)) {
+            url.scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("organizer")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("tournaments")
+                .addEncodedPathSegment(tournamentID)
+                .addEncodedPathSegment("custom-fields")
+                .addEncodedPathSegment(customFieldID);
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"),query.toString());
+        Request request = client.getAuthenticatedRequestBuilder()
+            .patch(body)
+            .url(url.build())
+            .build();
+
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody,
+                mapper.getTypeFactory().constructType(Custom.class));
+        } catch (IOException | NullPointerException e) {
+            System.out.println(e.getMessage());
+            throw new ToornamentException("Got IOExcption updating custom field");
+        }
+    }
+
+    public Integer deleteCustomField(String tournamentID, String customFieldID){
+        Builder url = new Builder();
+        if(client.getScope().contains(Scope.ORGANIZER_ADMIN)){
+            url
+                .scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("organizer")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("tournaments")
+                .addEncodedPathSegment(tournamentID)
+                .addEncodedPathSegment("permissions")
+                .addEncodedPathSegment(customFieldID);
+        }
+        Request request = client.getAuthenticatedRequestBuilder()
+            .delete()
+            .url(url.build())
+            .build();
+        return client.executeRequest(request).code();
+    }
 
 }
