@@ -65,7 +65,7 @@ public class RegistrationsV2 extends Concept {
           RequestBody.create(MediaType.parse("application/json"), registration.toString());
       Request request =
           client
-              .getRequestBuilder()
+              .getAuthenticatedRequestBuilder()
               .patch(body)
               .url(url.build())
               .build();
@@ -110,7 +110,7 @@ public class RegistrationsV2 extends Concept {
 
       Request request =
           client
-              .getRequestBuilder()
+              .getAuthenticatedRequestBuilder()
               .get()
               .url(url.build())
               .build();
@@ -161,7 +161,7 @@ public class RegistrationsV2 extends Concept {
           }
       Request request =
           client
-          .getRequestBuilder()
+          .getAuthenticatedRequestBuilder()
           .delete()
           .url(url.build())
           .build();
@@ -183,7 +183,7 @@ public class RegistrationsV2 extends Concept {
 
       Request request =
           client
-              .getRequestBuilder()
+              .getAuthenticatedRequestBuilder()
               .get()
               .url(url.build())
               .addHeader("range", header.get("range"))

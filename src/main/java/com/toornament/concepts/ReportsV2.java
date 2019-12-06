@@ -38,7 +38,7 @@ public class ReportsV2 extends Concept {
             url.addQueryParameter(params.getKey(), params.getValue());
         }
 
-        Request request = client.getRequestBuilder()
+        Request request = client.getAuthenticatedRequestBuilder()
             .get()
             .url(url.build())
             .addHeader("range",header.get("range"))
@@ -70,7 +70,7 @@ public class ReportsV2 extends Concept {
                 .addEncodedPathSegment(reportID);
         }
 
-        Request request = client.getRequestBuilder()
+        Request request = client.getAuthenticatedRequestBuilder()
             .get()
             .url(url.build())
             .build();
@@ -99,7 +99,7 @@ public class ReportsV2 extends Concept {
                 .addEncodedPathSegment("reports");
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json"),query.toString());
-        Request request = client.getRequestBuilder()
+        Request request = client.getAuthenticatedRequestBuilder()
             .post(body)
             .url(url.build())
             .build();
@@ -130,7 +130,7 @@ public class ReportsV2 extends Concept {
                 .addEncodedPathSegment(reportID);
         }
         RequestBody body = RequestBody.create(MediaType.parse("application/json"),query.toString());
-        Request request = client.getRequestBuilder()
+        Request request = client.getAuthenticatedRequestBuilder()
             .patch(body)
             .url(url.build())
             .build();

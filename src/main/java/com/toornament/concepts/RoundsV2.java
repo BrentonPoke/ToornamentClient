@@ -3,6 +3,7 @@ package com.toornament.concepts;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Round;
+import com.toornament.model.enums.Scope;
 import com.toornament.model.request.RoundsQuery;
 import lombok.Getter;
 import okhttp3.HttpUrl;
@@ -23,14 +24,19 @@ public class RoundsV2 extends Concept {
 
     public List<Round> getRounds(RoundsQuery parameter, Map<String,String> header) {
 
-        HttpUrl.Builder url = new HttpUrl.Builder()
-            .scheme("https")
-            .host("api.toornament.com")
-            .addEncodedPathSegment("viewer")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("tournaments")
-            .addEncodedPathSegment(tournamentID)
-            .addEncodedPathSegment("rounds");
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        String scope = "viewer";
+    if (client.getScope().contains(Scope.ORGANIZER_RESULT))
+        scope = "organizer";
+
+      url.scheme("https")
+          .host("api.toornament.com")
+          .addEncodedPathSegment(scope)
+          .addEncodedPathSegment("v2")
+          .addEncodedPathSegment("tournaments")
+          .addEncodedPathSegment(tournamentID)
+          .addEncodedPathSegment("rounds");
+
         if(!parameter.getStageIds().isEmpty())
         url.addQueryParameter("stage_ids", StringUtils.join(parameter.getStageIds(), ","));
         if(!parameter.getGroupIds().isEmpty())
@@ -40,11 +46,19 @@ public class RoundsV2 extends Concept {
         if(!parameter.getStageNumbers().isEmpty())
         url.addQueryParameter("stage_numbers", StringUtils.join(parameter.getStageNumbers(), ","));
 
-        Request request = client.getRequestBuilder()
+        Request request;
+        if(scope.matches("organizer"))
+            request = client.getAuthenticatedRequestBuilder()
             .get()
             .url(url.build())
             .addHeader("range",header.get("range"))
             .build();
+        else
+            request = client.getRequestBuilder()
+                .get()
+                .url(url.build())
+                .addHeader("range",header.get("range"))
+                .build();
         try {
         String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Round.class));
@@ -55,20 +69,30 @@ public class RoundsV2 extends Concept {
     }
 
     public Round getRoundByID(String roundID){
-        HttpUrl.Builder url = new HttpUrl.Builder()
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        String scope = "viewer";
+        if (client.getScope().contains(Scope.ORGANIZER_RESULT))
+            scope = "organizer";
+        url
             .scheme("https")
             .host("api.toornament.com")
-            .addEncodedPathSegment("viewer")
+            .addEncodedPathSegment(scope)
             .addEncodedPathSegment("v2")
             .addEncodedPathSegment("tournaments")
             .addEncodedPathSegment(tournamentID)
             .addEncodedPathSegment("rounds")
             .addEncodedPathSegment(roundID);
-
-        Request request = client.getRequestBuilder()
+        Request request;
+        if(scope.matches("organizer"))
+         request = client.getAuthenticatedRequestBuilder()
             .get()
             .url(url.build())
             .build();
+        else
+            request = client.getRequestBuilder()
+                .get()
+                .url(url.build())
+                .build();
         try {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, Round.class);

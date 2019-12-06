@@ -50,7 +50,7 @@ public class ParticipantsV2 extends Concept {
             .addEncodedPathSegment("participants")
             .addEncodedPathSegment(participantID);
 
-        Request request = client.getRequestBuilder()
+        Request request = client.getAuthenticatedRequestBuilder()
             .get()
             .url(url.build())
             .build();
@@ -95,7 +95,7 @@ public class ParticipantsV2 extends Concept {
     public TeamParticipant updateParticipant(String id){
         Builder url = participantHelper(id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"),"{ \"checked_in\": true }");
-        Request request = client.getRequestBuilder()
+        Request request = client.getAuthenticatedRequestBuilder()
             .patch(body)
             .url(url.build())
             .build();
@@ -126,7 +126,7 @@ public class ParticipantsV2 extends Concept {
 
     public Integer deleteParticipant(String id){
         Builder url = participantHelper(id);
-        Request request = client.getRequestBuilder()
+        Request request = client.getAuthenticatedRequestBuilder()
             .delete()
             .url(url.build())
             .build();
