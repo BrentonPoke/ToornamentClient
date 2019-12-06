@@ -155,7 +155,7 @@ public class PermissionsV2 extends Concept {
                 .addEncodedPathSegment("permissions")
                 .addEncodedPathSegment(permissionsID);
         }
-        Request request = client.getRequestBuilder()
+        Request request = client.getAuthenticatedRequestBuilder()
             .delete()
             .url(url.build())
             .build();

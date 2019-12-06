@@ -3,17 +3,22 @@ package com.toornament.concepts;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Custom.Custom;
+import com.toornament.model.Reports;
 import com.toornament.model.Stream;
 import com.toornament.model.Tournament;
 import com.toornament.model.TournamentDetails;
+import com.toornament.model.enums.Scope;
 import com.toornament.model.request.TournamentQuery;
 import java.time.format.DateTimeFormatter;
 import okhttp3.HttpUrl;
+import okhttp3.HttpUrl.Builder;
+import okhttp3.MediaType;
 import okhttp3.Request;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import okhttp3.RequestBody;
 import org.apache.commons.lang3.StringUtils;
 
 public class TournamentsV2 extends Concept {
@@ -94,7 +99,7 @@ public class TournamentsV2 extends Concept {
             .addEncodedPathSegment("tournaments")
             .addEncodedPathSegment(id)
             .addEncodedPathSegment("streams");
-        Request request = client.getAuthenticatedRequestBuilder()
+        Request request = client.getRequestBuilder()
             .get()
             .url(url.build())
             .addHeader("range",range.get("range"))
@@ -117,6 +122,10 @@ public class TournamentsV2 extends Concept {
         return getCustomFields(tournamentID,"participant");
     }
 
+    public List<Custom> getOrganizerCustomFields(String tournamentID){
+        return getCustomFields(tournamentID,"organizer");
+    }
+
   private List<Custom> getCustomFields(String tournamentID, String scope) {
     HttpUrl.Builder url = new HttpUrl.Builder();
     url.scheme("https")
@@ -126,7 +135,11 @@ public class TournamentsV2 extends Concept {
         .addEncodedPathSegment("tournaments")
         .addEncodedPathSegment(tournamentID);
 
-    Request request = client.getRequestBuilder().get().url(url.build()).build();
+    Request request = null;
+    if(scope.matches("organizer"))
+        request = client.getAuthenticatedRequestBuilder().get().url(url.build()).build();
+    else
+    request = client.getRequestBuilder().get().url(url.build()).build();
 
     try {
       String responseBody = client.executeRequest(request).body().string();
@@ -138,5 +151,109 @@ public class TournamentsV2 extends Concept {
       throw new ToornamentException("Couldn't retrieve custom fields");
     }
         }
+
+        public Custom createCustomField(String tournamentID, Custom query){
+            HttpUrl.Builder url = new HttpUrl.Builder();
+    if (client.getScope().contains(Scope.ORGANIZER_ADMIN)) {
+      url.scheme("https")
+          .host("api.toornament.com")
+          .addEncodedPathSegment("organizer")
+          .addEncodedPathSegment("v2")
+          .addEncodedPathSegment("tournaments")
+          .addEncodedPathSegment(tournamentID)
+          .addEncodedPathSegment("custom-fields");
+            }
+            RequestBody body = RequestBody.create(MediaType.parse("application/json"),query.toString());
+           Request request = client.getAuthenticatedRequestBuilder()
+           .post(body)
+           .url(url.build())
+           .build();
+
+            try {
+                String responseBody = client.executeRequest(request).body().string();
+                return mapper.readValue(responseBody,
+                    mapper.getTypeFactory().constructType(Custom.class));
+            } catch (IOException | NullPointerException e) {
+                System.out.println(e.getMessage());
+                throw new ToornamentException("Got IOExcption creating custom field");
+            }
+
+        }
+
+        public Custom getCustomField(String tournamentID, String customFieldID){
+            HttpUrl.Builder url = new HttpUrl.Builder();
+            if (client.getScope().contains(Scope.ORGANIZER_ADMIN)) {
+                url.scheme("https")
+                    .host("api.toornament.com")
+                    .addEncodedPathSegment("organizer")
+                    .addEncodedPathSegment("v2")
+                    .addEncodedPathSegment("tournaments")
+                    .addEncodedPathSegment(tournamentID)
+                    .addEncodedPathSegment("custom-fields")
+                    .addEncodedPathSegment(customFieldID);
+            }
+
+            Request request = client.getAuthenticatedRequestBuilder()
+                .get()
+                .url(url.build())
+                .build();
+
+            try {
+                String responseBody = client.executeRequest(request).body().string();
+                return mapper.readValue(responseBody,
+                    mapper.getTypeFactory().constructType(Custom.class));
+            } catch (IOException | NullPointerException e) {
+                System.out.println(e.getMessage());
+                throw new ToornamentException("Got IOExcption creating custom field");
+            }
+        }
+
+    public Custom updateCustomField(String tournamentID, String customFieldID, Custom query){
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        if (client.getScope().contains(Scope.ORGANIZER_ADMIN)) {
+            url.scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("organizer")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("tournaments")
+                .addEncodedPathSegment(tournamentID)
+                .addEncodedPathSegment("custom-fields")
+                .addEncodedPathSegment(customFieldID);
+        }
+        RequestBody body = RequestBody.create(MediaType.parse("application/json"),query.toString());
+        Request request = client.getAuthenticatedRequestBuilder()
+            .patch(body)
+            .url(url.build())
+            .build();
+
+        try {
+            String responseBody = client.executeRequest(request).body().string();
+            return mapper.readValue(responseBody,
+                mapper.getTypeFactory().constructType(Custom.class));
+        } catch (IOException | NullPointerException e) {
+            System.out.println(e.getMessage());
+            throw new ToornamentException("Got IOExcption updating custom field");
+        }
+    }
+
+    public Integer deleteCustomField(String tournamentID, String customFieldID){
+        Builder url = new Builder();
+        if(client.getScope().contains(Scope.ORGANIZER_ADMIN)){
+            url
+                .scheme("https")
+                .host("api.toornament.com")
+                .addEncodedPathSegment("organizer")
+                .addEncodedPathSegment("v2")
+                .addEncodedPathSegment("tournaments")
+                .addEncodedPathSegment(tournamentID)
+                .addEncodedPathSegment("permissions")
+                .addEncodedPathSegment(customFieldID);
+        }
+        Request request = client.getAuthenticatedRequestBuilder()
+            .delete()
+            .url(url.build())
+            .build();
+        return client.executeRequest(request).code();
+    }
 
 }
