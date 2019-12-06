@@ -2,10 +2,10 @@ package com.toornament.concepts;
 
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
+import com.toornament.model.Custom.Custom;
 import com.toornament.model.Stream;
 import com.toornament.model.Tournament;
 import com.toornament.model.TournamentDetails;
-import com.toornament.model.CustomField;
 import com.toornament.model.request.TournamentQuery;
 import java.time.format.DateTimeFormatter;
 import okhttp3.HttpUrl;
@@ -109,11 +109,19 @@ public class TournamentsV2 extends Concept {
 
     }
 
-  public List<CustomField> getCustomFields(String tournamentID) {
+    public List<Custom> getViewerCustomFields(String tournamentID){
+        return getCustomFields(tournamentID,"viewer");
+    }
+
+    public List<Custom> getParticipantCustomFields(String tournamentID){
+        return getCustomFields(tournamentID,"participant");
+    }
+
+  private List<Custom> getCustomFields(String tournamentID, String scope) {
     HttpUrl.Builder url = new HttpUrl.Builder();
     url.scheme("https")
         .host("api.toornament.com")
-        .addEncodedPathSegment("viewer")
+        .addEncodedPathSegment(scope)
         .addEncodedPathSegment("v2")
         .addEncodedPathSegment("tournaments")
         .addEncodedPathSegment(tournamentID);
@@ -124,7 +132,7 @@ public class TournamentsV2 extends Concept {
       String responseBody = client.executeRequest(request).body().string();
       return mapper.readValue(
           responseBody,
-          mapper.getTypeFactory().constructCollectionType(List.class, CustomField.class));
+          mapper.getTypeFactory().constructCollectionType(List.class, Custom.class));
     } catch (IOException e) {
       e.getMessage();
       throw new ToornamentException("Couldn't retrieve custom fields");
