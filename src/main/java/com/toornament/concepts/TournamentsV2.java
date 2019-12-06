@@ -179,4 +179,32 @@ public class TournamentsV2 extends Concept {
 
         }
 
+        public Custom getCustomField(String tournamentID, String customFieldID){
+            HttpUrl.Builder url = new HttpUrl.Builder();
+            if (client.getScope().contains(Scope.ORGANIZER_ADMIN)) {
+                url.scheme("https")
+                    .host("api.toornament.com")
+                    .addEncodedPathSegment("organizer")
+                    .addEncodedPathSegment("v2")
+                    .addEncodedPathSegment("tournaments")
+                    .addEncodedPathSegment(tournamentID)
+                    .addEncodedPathSegment("custom-fields")
+                    .addEncodedPathSegment(customFieldID);
+            }
+
+            Request request = client.getAuthenticatedRequestBuilder()
+                .get()
+                .url(url.build())
+                .build();
+
+            try {
+                String responseBody = client.executeRequest(request).body().string();
+                return mapper.readValue(responseBody,
+                    mapper.getTypeFactory().constructType(Custom.class));
+            } catch (IOException | NullPointerException e) {
+                System.out.println(e.getMessage());
+                throw new ToornamentException("Got IOExcption creating custom field");
+            }
+        }
+
 }
