@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import com.toornament.ToornamentClient;
+import com.toornament.model.Stream;
 import com.toornament.model.Tournament;
 import com.toornament.model.TournamentDetails;
 import com.toornament.model.enums.MatchFormat;
@@ -78,22 +79,13 @@ public class TournamentsTests {
 //        assertTrue("overwatch".matches(tournament.getDiscipline()));
 //    }
 
-//    @Test //need new tournament id with streams
-//    public void getStreamsTest(){
-//        Map<String,String> range = new HashMap<>();
-//        range.put("range","streams=0-5");
-//        List<Stream> streams = client.tournamentsV2().getStreams("906278647555784704", range);
-//        System.out.println(streams);
-//        assertEquals(4,streams.size());
-//    }
-
-//    @Test
-//    public void deleteTournamentTest(){
-//       List<Tournament> list = clientV1.tournaments().getMyTournaments();
-//        for(Tournament t : list)
-//       client.tournaments().deleteTournament(t.getId());
-//
-//       assertTrue(clientV1.tournaments().getMyTournaments().isEmpty());
-//    }
+    @Test //need new tournament id with streams
+    public void getStreamsTest(){
+        Map<String,String> range = new HashMap<>();
+        range.put("range","streams=0-5");
+        List<Stream> streams = client.tournamentsV2().getStreams("906278647555784704", range);
+        System.out.println(streams);
+        assertEquals(4,streams.size());
+    }
 
 }

@@ -16,14 +16,10 @@ public class Stream extends Video {
 
     private String id;
 
-    Stream(String name, String url, String language) {
-        super(name, url, language);
-    }
-
     @Override
     public String toString() {
         try {
-            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-mm-dd")).writeValueAsString(this);
+            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-mm-dd")).withDefaultPrettyPrinter().writeValueAsString(this);
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
         }
