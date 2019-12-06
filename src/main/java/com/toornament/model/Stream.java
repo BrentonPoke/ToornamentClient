@@ -12,10 +12,14 @@ import java.text.SimpleDateFormat;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode
 public class Stream extends Video {
 
     private String id;
+
+    Stream(String name, String url, String language) {
+        super(name, url, language);
+    }
+
     @Override
     public String toString() {
         try {
