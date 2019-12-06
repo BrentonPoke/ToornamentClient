@@ -42,7 +42,7 @@ public class Match {
     private List<Opponent> opponents;
     private Object settings;
     private LocalDateTime played_at;
-    private boolean report_closed;
+    private Boolean report_closed;
 
 
 
