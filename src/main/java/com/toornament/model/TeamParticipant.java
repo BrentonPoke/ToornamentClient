@@ -6,8 +6,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class TeamParticipant extends Participant {
     private ArrayList<Participant> lineup;
-
 }

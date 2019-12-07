@@ -35,7 +35,7 @@ public class ParticipantsV2 extends Concept {
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Participant.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption getting Participants");
+            throw new ToornamentException("Got IOException getting Participants");
         }
     }
 
@@ -54,7 +54,7 @@ public class ParticipantsV2 extends Concept {
             .get()
             .url(url.build())
             .build();
-        return TeamParticipanthelper(request, "Got IOExcption getting Participants");
+        return TeamParticipanthelper(request, "Got IOException getting Participants");
     }
 
     //Uses the Participant API to get other participants associated with the current user token. Requires participant:manage_participations for the scope
@@ -89,7 +89,7 @@ public class ParticipantsV2 extends Concept {
             .url(url.build())
             .build();
 
-        return TeamParticipanthelper(request, "Got IOExcption getting Team Participants");
+        return TeamParticipanthelper(request, "Got IOException getting Team Participants");
     }
 
     public TeamParticipant updateParticipant(String id){
@@ -100,7 +100,7 @@ public class ParticipantsV2 extends Concept {
             .url(url.build())
             .build();
 
-        return TeamParticipanthelper(request, "Got IOExcption getting Team Participants");
+        return TeamParticipanthelper(request, "Got IOException getting Team Participants");
 
     }
 
@@ -177,7 +177,7 @@ public class ParticipantsV2 extends Concept {
                 mapper.getTypeFactory().constructCollectionType(List.class, TeamParticipant.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption getting Participants");
+            throw new ToornamentException("Got IOException getting Participants");
         }
     }
 
