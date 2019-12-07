@@ -97,7 +97,7 @@ public class TournamentsV2 extends Concept {
             .addEncodedPathSegment("viewer")
             .addEncodedPathSegment("v2")
             .addEncodedPathSegment("tournaments")
-            .addEncodedPathSegment(id)
+            .addPathSegment(id)
             .addEncodedPathSegment("streams");
         Request request = client.getRequestBuilder()
             .get()
