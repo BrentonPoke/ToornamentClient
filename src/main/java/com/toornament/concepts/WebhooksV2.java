@@ -59,4 +59,60 @@ public Webhook createWebhook(WebhookQuery query){
 
 }
 
+public Webhook getWebhook(String webhookID){
+    HttpUrl.Builder url = new HttpUrl.Builder();
+    url.scheme("https")
+        .host("api.toornament.com")
+        .addEncodedPathSegment("organizer")
+        .addEncodedPathSegment("v2")
+        .addEncodedPathSegment("webhooks")
+        .addEncodedPathSegment(webhookID);
+    Request request = client.getAuthenticatedRequestBuilder()
+        .get()
+        .url(url.build())
+        .build();
+
+    try {
+        String responseBody = client.executeRequest(request).body().string();
+        return mapper.readValue(responseBody, Webhook.class);
+    } catch (IOException e) {
+        throw new ToornamentException("Couldn't get webhook: "+e.getMessage());
+    }
+}
+
+public Webhook updateWebhook(String webhookID, WebhookQuery query){
+    HttpUrl.Builder url = new HttpUrl.Builder();
+    url.scheme("https")
+        .host("api.toornament.com")
+        .addEncodedPathSegment("organizer")
+        .addEncodedPathSegment("v2")
+        .addEncodedPathSegment("webhooks");
+    RequestBody body = RequestBody.create(MediaType.parse("application/json"),query.toString());
+    Request request = client.getAuthenticatedRequestBuilder()
+        .patch(body)
+        .url(url.build())
+        .build();
+
+    try {
+        String responseBody = client.executeRequest(request).body().string();
+        return mapper.readValue(responseBody, Webhook.class);
+    } catch (IOException e) {
+        throw new ToornamentException("Couldn't update webhook: "+e.getMessage());
+    }
+}
+    public Integer deleteWebhook(String webhookID){
+        HttpUrl.Builder url = new HttpUrl.Builder();
+        url.scheme("https")
+            .host("api.toornament.com")
+            .addEncodedPathSegment("organizer")
+            .addEncodedPathSegment("v2")
+            .addEncodedPathSegment("webhooks")
+            .addEncodedPathSegment(webhookID);
+        Request request = client.getAuthenticatedRequestBuilder()
+            .delete()
+            .url(url.build())
+            .build();
+        return client.executeRequest(request).code();
+    }
+
 }
