@@ -1,7 +1,7 @@
 [![master](https://jitpack.io/v/BrentonPoke/ToornamentClient.svg)](https://jitpack.io/#BrentonPoke/ToornamentClient) [![Build Status](https://travis-ci.org/BrentonPoke/ToornamentClient.svg?branch=master)](https://travis-ci.org/BrentonPoke/ToornamentClient)
 # Toornament Client
 
-A java api client for Toornament. V2 of the api is still being developed.
+A java api client for Toornament.
 
 
 ## Add to Maven:
@@ -20,7 +20,7 @@ To use the current master branch in your project, add this to your pom.xml
 	    <version>-SNAPSHOT</version>
 	</dependency>
 ```
-This will add a snapshot of the current master to your classpath. Note that this will update very regularly, and can break. Use with caution, not recommended for production systems quite yet!
+Finally released to v1.0 and is ready for commentary.
 
 ## Terms and Guidelines
 
