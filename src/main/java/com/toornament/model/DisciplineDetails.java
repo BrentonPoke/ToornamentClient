@@ -19,7 +19,8 @@ public class DisciplineDetails extends Discipline {
     public TeamSize teamSize;
 //    @JsonProperty("additional_fields")
 //    Map<String, Map<String, String>> additionalFields;
-    public List<String> platforms_available;
+    @JsonProperty("platforms_available")
+    public List<String> platformsAvailable;
     public List<Features> features;
 
     @Getter
