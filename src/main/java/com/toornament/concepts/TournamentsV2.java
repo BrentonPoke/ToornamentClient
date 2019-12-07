@@ -204,7 +204,7 @@ public class TournamentsV2 extends Concept {
                     mapper.getTypeFactory().constructType(Custom.class));
             } catch (IOException | NullPointerException e) {
                 System.out.println(e.getMessage());
-                throw new ToornamentException("Got IOExcption creating custom field");
+                throw new ToornamentException("Got IOException creating custom field");
             }
         }
 
@@ -232,7 +232,7 @@ public class TournamentsV2 extends Concept {
                 mapper.getTypeFactory().constructType(Custom.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption updating custom field");
+            throw new ToornamentException("Got IOException updating custom field");
         }
     }
 
