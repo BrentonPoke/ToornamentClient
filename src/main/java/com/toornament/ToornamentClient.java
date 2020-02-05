@@ -1,6 +1,6 @@
 package com.toornament;
 
-import com.toornament.concepts.Disciplines;
+import com.toornament.concepts.DisciplinesV2;
 import com.toornament.concepts.MatchesV2;
 import com.toornament.concepts.RoundsV2;
 import com.toornament.concepts.TournamentsV2;
@@ -61,8 +61,8 @@ public class ToornamentClient {
         return new TournamentsV2(this);
     }
 
-    public Disciplines disciplines() {
-        return new Disciplines(this);
+    public DisciplinesV2 disciplines() {
+        return new DisciplinesV2(this);
     }
 
     public MatchesV2 matchesV2(TournamentDetails tournament){
