@@ -55,7 +55,7 @@ public class RegistrationsV2 extends Concept {
       return mapper.readValue(responseBody, mapper.constructType(Registration.class));
     } catch (IOException | NullPointerException e) {
       System.out.println(e.getMessage());
-      throw new ToornamentException("Got Excption posting Participant");
+      throw new ToornamentException("Got Exception posting Participant");
     }
   }
   public Registration updateRegistration(String id, Registration registration){
@@ -74,7 +74,7 @@ public class RegistrationsV2 extends Concept {
           return mapper.readValue(responseBody, mapper.constructType(Registration.class));
       } catch (IOException | NullPointerException e) {
           System.out.println(e.getMessage());
-          throw new ToornamentException("Got Excption updating Participant");
+          throw new ToornamentException("Got Exception updating Participant");
       }
   }
   public List<Registration> getRegistrations(
@@ -119,7 +119,7 @@ public class RegistrationsV2 extends Concept {
           return mapper.readValue(responseBody, mapper.constructType(Registration.class));
       } catch (IOException | NullPointerException e) {
           System.out.println(e.getMessage());
-          throw new ToornamentException("Got Excption posting Participant");
+          throw new ToornamentException("Got Exception posting Participant");
       }
   }
 
@@ -198,7 +198,7 @@ public class RegistrationsV2 extends Concept {
           mapper.getTypeFactory().constructCollectionType(List.class, Registration.class));
     } catch (IOException | NullPointerException e) {
       System.out.println(e.getMessage());
-      throw new ToornamentException("Got Excption getting Participants");
+      throw new ToornamentException("Got Exception getting Participants");
     }
   }
 }

@@ -2,18 +2,19 @@
 package com.toornament.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.toornament.model.Custom.CustomFields;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Data
 @SuppressWarnings("unused")
-public class Participant {
+public class Standings {
 
-    @JsonProperty("custom_fields")
-    private CustomFields customFields;
     private String id;
-    private String name;
+    private Participant participant;
+    private Integer position;
+    private Integer rank;
+    @JsonProperty("tournament_id")
+    private String tournamentId;
 
 }
