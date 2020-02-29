@@ -7,6 +7,7 @@ import com.toornament.model.MatchDetails;
 import com.toornament.model.TournamentDetails;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.request.MatchQuery;
+import java.time.format.DateTimeFormatter;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -18,6 +19,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class Matches extends Concept {
     private TournamentDetails tournament;
+    private static final DateTimeFormatter RFC_3339 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
     public Matches(ToornamentClient client, TournamentDetails tournament) {
         super(client);
         this.tournament = tournament;
@@ -47,10 +49,10 @@ public class Matches extends Concept {
         urlBuilder.addQueryParameter(
             "participant_ids", StringUtils.join(parameter.getParticipantIds(), ","));
         urlBuilder.addQueryParameter("is_scheduled", parameter.isScheduled() ? "1" : "0");
-        urlBuilder.addQueryParameter("scheduled_before", parameter.getScheduledBefore().toString());
-        urlBuilder.addQueryParameter("scheduled_after", parameter.getScheduledAfter().toString());
+        urlBuilder.addQueryParameter("scheduled_before", parameter.getScheduledBefore().format(RFC_3339));
+        urlBuilder.addQueryParameter("scheduled_after", parameter.getScheduledAfter().format(RFC_3339));
         urlBuilder.addQueryParameter("custom_user_identifier", parameter.getCustomUserIdentifier());
-        urlBuilder.addQueryParameter("sort", parameter.getSort().name());
+        urlBuilder.addQueryParameter("sort", parameter.getSort().getName());
             }
 
             Request request = client.getAuthenticatedRequestBuilder()

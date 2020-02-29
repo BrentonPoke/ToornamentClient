@@ -1,15 +1,9 @@
-import static org.junit.Assert.assertFalse;
-
 import com.toornament.ToornamentClient;
 import com.toornament.concepts.Matches;
-import com.toornament.model.Match;
 import com.toornament.model.TournamentDetails;
 import com.toornament.model.enums.Scope;
-import com.toornament.model.request.MatchQuery;
 import java.util.HashSet;
-import java.util.List;
 import org.junit.Before;
-import org.junit.Test;
 
 public class MatchesTests {
     private ToornamentClient client;
@@ -18,7 +12,7 @@ public class MatchesTests {
     private HashSet<Scope> scopes = new HashSet<>();
     @Before
     public void Setup() {
-        scopes.add(Scope.ORGANIZER_VIEW);
+        scopes.add(Scope.ORGANIZER_RESULT);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), scopes);
         client.authorize();
 
@@ -26,13 +20,20 @@ public class MatchesTests {
         matches = new Matches(client,details);
     }
 
-    @Test
-    public void getMatchesTest(){
-        List<Match> result = matches.getMatches(MatchQuery.builder().participantId(906379665349820416L).build(),"matches=0-127");
-
-        assertFalse(result.isEmpty());
-
-    }
+//    @Test
+//    public void getMatchesTest(){
+//        System.out.println(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX",
+//            Locale.ENGLISH)));
+//        List<Match> result = matches.getMatches(MatchQuery.builder().participantId(906379665349820416L)
+//            .scheduledBefore(ZonedDateTime.now())
+//            .scheduledAfter(ZonedDateTime.now().minusYears(3L))
+//            .build(),"matches=0-127");
+//
+//        System.out.println(result);
+//
+//        assertFalse(result.isEmpty());
+//
+//    }
 
 //    @Test
 //    public void getMatchV2Test(){

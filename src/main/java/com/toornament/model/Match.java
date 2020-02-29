@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,13 +36,14 @@ public class Match {
     @JsonProperty("round_id")
     private Long roundNumber;
     @JsonProperty("scheduled_datetime")
-    private LocalDateTime date;
+    private ZonedDateTime date;
     private String timezone;
     @JsonProperty("match_format")
     private MatchFormat matchFormat;
     private List<Opponent> opponents;
     private Object settings;
-    private LocalDateTime played_at;
+    @JsonProperty("played_at")
+    private ZonedDateTime playedAt;
     private Boolean report_closed;
 
 
