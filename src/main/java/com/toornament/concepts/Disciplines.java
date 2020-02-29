@@ -10,11 +10,13 @@ import okhttp3.Request;
 
 import java.io.IOException;
 import java.util.List;
+import org.slf4j.LoggerFactory;
 
 public class Disciplines extends Concept {
 
     public Disciplines(ToornamentClient client) {
         super(client);
+        this.logger = LoggerFactory.getLogger(this.getClass());
     }
 
     public List<Discipline> getDisciplines(String header) {

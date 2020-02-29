@@ -28,6 +28,8 @@ import okhttp3.Response;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ToornamentClient {
   public static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
@@ -141,7 +143,8 @@ public class ToornamentClient {
       this.oAuthToken =
           mapper.readValue(response.body().string(), ApiTokenResponse.class).getAccessToken();
     } catch (IOException | NullPointerException e) {
-      e.printStackTrace();
+      Logger logger = LoggerFactory.getLogger(this.getClass());
+      logger.error("Issue authorizing client: {}",e.getMessage());
     }
   }
 

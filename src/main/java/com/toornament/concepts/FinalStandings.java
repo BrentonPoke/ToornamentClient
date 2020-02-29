@@ -42,8 +42,9 @@ public class FinalStandings extends Concept {
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
                 Standings.class));
         } catch (IOException e) {
-            e.printStackTrace();
-            throw new ToornamentException("Couldn't retrieve standings");
+            ToornamentException exception =new ToornamentException("Couldn't retrieve standings");
+            exception.setError(e.getMessage());
+            throw exception;
         }
     }
 }
