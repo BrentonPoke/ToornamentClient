@@ -55,6 +55,7 @@ public class ToornamentClient {
     mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     authorize();
   }
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
   public HashSet<Scope> getScope() {
     return scope;
@@ -142,8 +143,8 @@ public class ToornamentClient {
       Response response = executeRequest(request);
       this.oAuthToken =
           mapper.readValue(response.body().string(), ApiTokenResponse.class).getAccessToken();
-    } catch (IOException | NullPointerException e) {
-      Logger logger = LoggerFactory.getLogger(this.getClass());
+    } catch (IOException e) {
+
       logger.error("Issue authorizing client: {}",e.getMessage());
     }
   }
@@ -159,12 +160,9 @@ public class ToornamentClient {
     return new Request.Builder().addHeader("X-Api-Key", apiKey);
   }
 
-  public Response executeRequest(Request request) {
-    try {
+  private Response executeRequest(Request request) throws IOException {
+
       return this.httpClient.newCall(request).execute();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    return null;
+
   }
 }
