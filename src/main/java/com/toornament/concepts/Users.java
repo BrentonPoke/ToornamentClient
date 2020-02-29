@@ -8,8 +8,8 @@ import java.io.IOException;
 import okhttp3.HttpUrl.Builder;
 import okhttp3.Request;
 
-public class UsersV2 extends Concept {
-    public UsersV2(ToornamentClient client){
+public class Users extends Concept {
+    public Users(ToornamentClient client){
         super(client);
     }
 

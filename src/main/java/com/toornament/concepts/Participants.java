@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Map;
 import okhttp3.RequestBody;
 
-public class ParticipantsV2 extends Concept {
+public class Participants extends Concept {
     private String tournamentID;
-    public ParticipantsV2(ToornamentClient client, String tournamentID) {
+    public Participants(ToornamentClient client, String tournamentID) {
         super(client);
         this.tournamentID = tournamentID;
     }

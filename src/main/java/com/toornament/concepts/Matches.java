@@ -16,9 +16,9 @@ import java.util.List;
 import okhttp3.RequestBody;
 import org.apache.commons.lang3.StringUtils;
 
-public class MatchesV2 extends Concept {
+public class Matches extends Concept {
     private TournamentDetails tournament;
-    public MatchesV2(ToornamentClient client, TournamentDetails tournament) {
+    public Matches(ToornamentClient client, TournamentDetails tournament) {
         super(client);
         this.tournament = tournament;
     }

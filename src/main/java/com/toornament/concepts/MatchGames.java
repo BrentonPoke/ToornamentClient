@@ -14,14 +14,14 @@ import okhttp3.Request;
 import java.io.IOException;
 import okhttp3.RequestBody;
 
-public class MatchGamesV2 extends Concept {
+public class MatchGames extends Concept {
     private String tournamentID;
     private String matchID;
     private HttpUrl.Builder urlBuilder;
-    public MatchGamesV2(ToornamentClient client) {
+    public MatchGames(ToornamentClient client) {
         super(client);
     }
-    public MatchGamesV2(ToornamentClient client, Match match){
+    public MatchGames(ToornamentClient client, Match match){
         super(client);
         this.matchID = match.getId();
         this.tournamentID = match.getTournamentId();

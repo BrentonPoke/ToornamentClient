@@ -14,13 +14,13 @@ import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-public class ReportsV2 extends Concept {
+public class MatchReports extends Concept {
     private String tournamentID;
-    public ReportsV2(ToornamentClient client, String tournamentID){
+    public MatchReports(ToornamentClient client, String tournamentID){
         super(client);
         this.tournamentID = tournamentID;
     }
-    public List<Reports> getReports(String matchID, Map<String,String> header, Map<String,String> paramsMap){
+    public List<com.toornament.model.Reports> getReports(String matchID, Map<String,String> header, Map<String,String> paramsMap){
         Builder url = new Builder();
         if(client.getScope().contains(Scope.ORGANIZER_RESULT)){
             url

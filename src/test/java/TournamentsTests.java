@@ -64,7 +64,7 @@ public class TournamentsTests {
     @Test
     public void getFeaturedTournamentsTest() {
             headers.put("range","tournaments=0-49");
-            List<Tournament> details = client.tournamentsV2().getFeaturedTournaments(params.build(),headers);
+            List<Tournament> details = client.tournaments().getFeaturedTournaments(params.build(),headers);
 
             ArrayList<Tournament> list = new ArrayList<>(details);
     System.out.println(list);
@@ -83,7 +83,7 @@ public class TournamentsTests {
     public void getStreamsTest(){
         Map<String,String> range = new HashMap<>();
         range.put("range","streams=0-5");
-        List<Stream> streams = client.tournamentsV2().getStreams("906278647555784704", range);
+        List<Stream> streams = client.tournaments().getStreams("906278647555784704", range);
         System.out.println(streams);
         assertEquals(4,streams.size());
     }

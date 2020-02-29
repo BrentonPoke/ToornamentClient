@@ -1,5 +1,5 @@
 import com.toornament.ToornamentClient;
-import com.toornament.concepts.RoundsV2;
+import com.toornament.concepts.Rounds;
 import com.toornament.model.Round;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.request.RoundsQuery;
@@ -15,17 +15,17 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- public class RoundsV2Test {
+ public class RoundsTest {
     private ToornamentClient client;
      private HashSet<Scope> scopes = new HashSet<>();
-    private RoundsV2 rounds;
+    private Rounds rounds;
     @Before
     public void Setup() throws IOException {
         scopes.add(Scope.ORGANIZER_ADMIN);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
             scopes);
         client.authorize();
-        rounds = new RoundsV2(client,"906278647555784704");
+        rounds = new Rounds(client,"906278647555784704");
 
     }
     @Test

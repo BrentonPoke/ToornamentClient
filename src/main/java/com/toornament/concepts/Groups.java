@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
-public class GroupsV2 extends Concept {
+public class Groups extends Concept {
     private String tournamentID;
-    public GroupsV2(ToornamentClient client, String tournamentID) {
+    public Groups(ToornamentClient client, String tournamentID) {
         super(client);
         this.tournamentID = tournamentID;
     }

@@ -2,7 +2,6 @@ package com.toornament.concepts;
 
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
-import com.toornament.model.Permissions;
 import com.toornament.model.enums.Attribute;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.request.PermissionsQuery;
@@ -16,15 +15,15 @@ import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-public class PermissionsV2 extends Concept {
+public class Permissions extends Concept {
     private String tournamentID;
-    public PermissionsV2(ToornamentClient client, String tournamentID) {
+    public Permissions(ToornamentClient client, String tournamentID) {
         super(client);
         this.tournamentID = tournamentID;
     }
 
 
-    List<Permissions> getPermissions(){
+    List<com.toornament.model.Permissions> getPermissions(){
         Builder url = new Builder();
         if(client.getScope().contains(Scope.ORGANIZER_PERMISSION)){
             url
@@ -43,14 +42,14 @@ public class PermissionsV2 extends Concept {
         try {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody,
-                mapper.getTypeFactory().constructCollectionType(List.class, Permissions.class));
+                mapper.getTypeFactory().constructCollectionType(List.class, com.toornament.model.Permissions.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
             throw new ToornamentException("Got IOExcption getting Permissions");
         }
     }
 
-    Permissions getPermission(String permissionID){
+    com.toornament.model.Permissions getPermission(String permissionID){
         Builder url = new Builder();
         if(client.getScope().contains(Scope.ORGANIZER_PERMISSION)){
             url
@@ -70,13 +69,14 @@ public class PermissionsV2 extends Concept {
             .build();
         try{
             String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(Permissions.class));
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(
+                com.toornament.model.Permissions.class));
         } catch (IOException | NullPointerException e){
             System.out.println(e.getMessage());
             throw new ToornamentException("Got IOException getting Permission.");
         }
     }
-    Permissions createPermission(PermissionsQuery query){
+    com.toornament.model.Permissions createPermission(PermissionsQuery query){
         Builder url = new Builder();
         if(client.getScope().contains(Scope.ORGANIZER_PERMISSION)){
             url
@@ -97,14 +97,14 @@ public class PermissionsV2 extends Concept {
         try {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody,
-                mapper.getTypeFactory().constructType(Permissions.class));
+                mapper.getTypeFactory().constructType(com.toornament.model.Permissions.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
             throw new ToornamentException("Error creating new permission");
         }
     }
 
-    Permissions updatePermissions(List<Attribute> attributes, String permissionID){
+    com.toornament.model.Permissions updatePermissions(List<Attribute> attributes, String permissionID){
         Builder url = new Builder();
         if(client.getScope().contains(Scope.ORGANIZER_PERMISSION)){
             url
@@ -135,7 +135,7 @@ public class PermissionsV2 extends Concept {
         try{
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody,
-                mapper.getTypeFactory().constructType(Permissions.class));
+                mapper.getTypeFactory().constructType(com.toornament.model.Permissions.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
             throw new ToornamentException("Error updating new permission");

@@ -15,9 +15,9 @@ import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-public class StreamsV2 extends Concept{
+public class Streams extends Concept{
     private String tournamentID;
-    public StreamsV2(ToornamentClient client, String tournamentID) {
+    public Streams(ToornamentClient client, String tournamentID) {
         super(client);
         this.tournamentID = tournamentID;
     }

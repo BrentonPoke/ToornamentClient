@@ -21,9 +21,9 @@ import java.util.Map;
 import okhttp3.RequestBody;
 import org.apache.commons.lang3.StringUtils;
 
-public class TournamentsV2 extends Concept {
+public class Tournaments extends Concept {
 
-    public TournamentsV2(ToornamentClient client) {
+    public Tournaments(ToornamentClient client) {
         super(client);
     }
 

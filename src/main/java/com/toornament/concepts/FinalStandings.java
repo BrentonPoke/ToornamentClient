@@ -3,7 +3,6 @@ package com.toornament.concepts;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
-import com.toornament.model.Discipline;
 import com.toornament.model.Standings;
 import com.toornament.model.request.StandingsQuery;
 import java.io.IOException;
@@ -12,13 +11,13 @@ import okhttp3.HttpUrl;
 import okhttp3.Request;
 import org.apache.commons.lang3.StringUtils;
 
-public class FinalStandingsV2 extends Concept {
+public class FinalStandings extends Concept {
 
-    public FinalStandingsV2(ToornamentClient client) {
+    public FinalStandings(ToornamentClient client) {
         super(client);
     }
 
-    List<Standings> getFinalStandings(String range, StandingsQuery query){
+    public List<Standings> getFinalStandings(String range, StandingsQuery query){
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")

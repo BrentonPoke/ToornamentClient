@@ -1,5 +1,5 @@
 import com.toornament.ToornamentClient;
-import com.toornament.concepts.MatchGamesV2;
+import com.toornament.concepts.MatchGames;
 import com.toornament.model.Match;
 import com.toornament.model.enums.Scope;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +9,7 @@ import org.junit.Before;
 public class MatchGamesTest {
     private ToornamentClient client;
     private Match match;
-    private MatchGamesV2 gamesV2;
+    private MatchGames gamesV2;
     private ObjectMapper mapper;
     private HashSet<Scope> scopes = new HashSet<>();
     @Before
@@ -21,7 +21,7 @@ public class MatchGamesTest {
         match = new Match();
         match.setId("989807940598333454");
         match.setTournamentId("906278647555784704");
-        gamesV2 = new MatchGamesV2(client,match);
+        gamesV2 = new MatchGames(client,match);
     }
 
 //    @Test

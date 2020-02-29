@@ -1,5 +1,5 @@
 import com.toornament.ToornamentClient;
-import com.toornament.concepts.GroupsV2;
+import com.toornament.concepts.Groups;
 import com.toornament.model.Group;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.request.GroupsQuery;
@@ -15,9 +15,9 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class GroupsV2Tests {
+public class GroupsTests {
     private ToornamentClient client;
-    private GroupsV2 groups;
+    private Groups groups;
     private GroupsQueryBuilder params = GroupsQuery.builder();
     private Map<String,String> header = new HashMap<>();
     private HashSet<Scope> scopes = new HashSet<>();
@@ -27,7 +27,7 @@ public class GroupsV2Tests {
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
             scopes);
         client.authorize();
-        groups = new GroupsV2(client,"906278647555784704");
+        groups = new Groups(client,"906278647555784704");
         header.put("range","groups=0-49");
         params.stageId(906330006561030144L).stageId(987313089934254080L).stageNumber(1);
 

@@ -15,9 +15,9 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
 @Getter
-public class RoundsV2 extends Concept {
+public class Rounds extends Concept {
     private String tournamentID;
-    public RoundsV2(ToornamentClient client, String tournamentID) {
+    public Rounds(ToornamentClient client, String tournamentID) {
         super(client);
         this.tournamentID = tournamentID;
     }

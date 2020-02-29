@@ -14,8 +14,8 @@ import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-public class WebhooksV2 extends Concept {
-public WebhooksV2(ToornamentClient client){
+public class Webhooks extends Concept {
+public Webhooks(ToornamentClient client){
     super(client);
 }
 

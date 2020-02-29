@@ -1,5 +1,5 @@
 import com.toornament.ToornamentClient;
-import com.toornament.concepts.DisciplinesV2;
+import com.toornament.concepts.Disciplines;
 import com.toornament.model.Discipline;
 import com.toornament.model.DisciplineDetails;
 import com.toornament.model.enums.Scope;
@@ -14,14 +14,14 @@ import java.util.List;
 
 public class DisciplinesTest {
     private ToornamentClient client;
-    private DisciplinesV2 disciplines;
+    private Disciplines disciplines;
     private HashSet<Scope> scopes = new HashSet<>();
     @Before
     public void Setup() throws IOException {
         scopes.add(Scope.ORGANIZER_VIEW);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),scopes);
         client.authorize();
-        disciplines = new DisciplinesV2(client);
+        disciplines = client.disciplines();
     }
 
     @Test

@@ -16,10 +16,10 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.apache.commons.lang3.StringUtils;
 
-public class RegistrationsV2 extends Concept {
+public class Registrations extends Concept {
   private String tournamentID;
 
-  public RegistrationsV2(ToornamentClient client, String tournamentID) {
+  public Registrations(ToornamentClient client, String tournamentID) {
     super(client);
     this.tournamentID = tournamentID;
   }

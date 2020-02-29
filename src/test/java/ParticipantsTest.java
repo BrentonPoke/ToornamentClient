@@ -1,5 +1,5 @@
 import com.toornament.ToornamentClient;
-import com.toornament.concepts.ParticipantsV2;
+import com.toornament.concepts.Participants;
 import com.toornament.model.Participant;
 import com.toornament.model.TeamParticipant;
 import com.toornament.model.enums.Scope;
@@ -18,9 +18,9 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class ParticipantsV2Test {
+public class ParticipantsTest {
     private ToornamentClient client;
-    private ParticipantsV2 participants;
+    private Participants participants;
     private Participant participant;
     private HashSet<Scope> scopes = new HashSet<>();
     @Before
@@ -33,7 +33,7 @@ public class ParticipantsV2Test {
     }
     @Test
     public void getTeamParticipants() {
-        participants = new ParticipantsV2(client, "906278647555784704");
+        participants = new Participants(client, "906278647555784704");
         Map<String,String> header = new HashMap<>();
         header.put("range"," participants=0-49");
         ParticipantQueryBuilder params = ParticipantQuery.builder();
@@ -47,7 +47,7 @@ public class ParticipantsV2Test {
     }
     @Test
     public void getParticipants() {
-        participants = new ParticipantsV2(client,"1065246192351223808");
+        participants = new Participants(client,"1065246192351223808");
         Map<String,String> header = new HashMap<>();
         header.put("range"," participants=0-49");
         ParticipantQueryBuilder params = ParticipantQuery.builder();
@@ -63,14 +63,14 @@ public class ParticipantsV2Test {
 
     @Test
     public void getParticipantTest() {
-        participants = new ParticipantsV2(client,"1065246192351223808");
+        participants = new Participants(client,"1065246192351223808");
         participant = participants.getParticipant("1065253210852368384");
         assertTrue(participant.getName().matches("Ant"));
     }
 
     @Test
     public void getTeamParticipantTest(){
-        participants = new ParticipantsV2(client, "906278647555784704");
+        participants = new Participants(client, "906278647555784704");
         Participant team = participants.getParticipant("906362615269785600");
         assertTrue(team.getName().matches("A. Houston Outlaws"));
     }

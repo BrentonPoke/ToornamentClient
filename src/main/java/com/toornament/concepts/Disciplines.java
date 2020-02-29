@@ -11,9 +11,9 @@ import okhttp3.Request;
 import java.io.IOException;
 import java.util.List;
 
-public class DisciplinesV2 extends Concept {
+public class Disciplines extends Concept {
 
-    public DisciplinesV2(ToornamentClient client) {
+    public Disciplines(ToornamentClient client) {
         super(client);
     }
 
