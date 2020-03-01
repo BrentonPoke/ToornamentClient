@@ -21,6 +21,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.HashSet;
+import lombok.Getter;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -160,9 +161,13 @@ public class ToornamentClient {
     return new Request.Builder().addHeader("X-Api-Key", apiKey);
   }
 
-  private Response executeRequest(Request request) throws IOException {
+  public Response executeRequest(Request request) {
 
-      return this.httpClient.newCall(request).execute();
-
+      try {
+          return this.httpClient.newCall(request).execute();
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+return null;
   }
 }

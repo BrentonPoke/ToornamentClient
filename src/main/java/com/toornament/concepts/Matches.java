@@ -2,9 +2,9 @@ package com.toornament.concepts;
 
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
-import com.toornament.model.Match;
 import com.toornament.model.MatchDetails;
 import com.toornament.model.TournamentDetails;
+import com.toornament.model.enums.MatchStatus;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.request.MatchQuery;
 import java.time.format.DateTimeFormatter;
@@ -25,14 +25,14 @@ public class Matches extends Concept {
         this.tournament = tournament;
     }
 
-    public List<Match> getMatches(MatchQuery parameter,String headers) {
+    public List<MatchDetails> getMatches(MatchQuery parameter,String headers) {
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
 
       if (client.getScope().contains(Scope.ORGANIZER_RESULT)) {
         urlBuilder
             .scheme("https")
             .host("api.toornament.com")
-            .addPathSegment("viewer")
+            .addPathSegment("organizer")
             .addPathSegment("v2")
             .addPathSegment("tournaments")
             .addPathSegment(tournament.getId())
@@ -43,15 +43,22 @@ public class Matches extends Concept {
         urlBuilder.addQueryParameter("group_ids", StringUtils.join(parameter.getGroupIds(), ","));
         if(!parameter.getRoundIds().isEmpty())
         urlBuilder.addQueryParameter("round_ids", StringUtils.join(parameter.getRoundIds(), ","));
-        if(!parameter.getStatuses().isEmpty())
-        urlBuilder.addQueryParameter("statuses", StringUtils.join(parameter.getStatuses(), ","));
+      if (!parameter.getStatuses().isEmpty()) {
+          StringBuilder s = new StringBuilder();
+          for (MatchStatus e : parameter.getStatuses() ) {
+              s.append(e.getName()).append(',');
+          }
+        urlBuilder.addQueryParameter("statuses", s.deleteCharAt(s.length()-1).toString());
+        }
         if(!parameter.getParticipantIds().isEmpty())
         urlBuilder.addQueryParameter(
             "participant_ids", StringUtils.join(parameter.getParticipantIds(), ","));
         urlBuilder.addQueryParameter("is_scheduled", parameter.isScheduled() ? "1" : "0");
-        urlBuilder.addQueryParameter("scheduled_before", parameter.getScheduledBefore().format(RFC_3339));
+        if(parameter.getScheduledBefore() != null)
+        urlBuilder.addEncodedQueryParameter("scheduled_before", parameter.getScheduledBefore().format(RFC_3339));
+        if(parameter.getScheduledAfter() != null)
         urlBuilder.addQueryParameter("scheduled_after", parameter.getScheduledAfter().format(RFC_3339));
-        urlBuilder.addQueryParameter("custom_user_identifier", parameter.getCustomUserIdentifier());
+        urlBuilder.addEncodedQueryParameter("custom_user_identifier", parameter.getCustomUserIdentifier());
         urlBuilder.addQueryParameter("sort", parameter.getSort().getName());
             }
 
@@ -62,10 +69,10 @@ public class Matches extends Concept {
                 .build();
       try{
             String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Match.class));
+            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, MatchDetails.class));
         } catch (IOException e) {
             System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption getting matches");
+            throw new ToornamentException("Got IOException getting matches");
         }
     }
 
@@ -112,7 +119,7 @@ public MatchDetails updateMatch(MatchDetails details, String matchId){
             return mapper
                 .readValue(responseBody, mapper.getTypeFactory().constructType(MatchDetails.class));
         } catch (IOException | NullPointerException e) {
-            throw new ToornamentException("Got IOExcption getting match");
+            throw new ToornamentException("Got IOException getting match");
         }
     }
 }

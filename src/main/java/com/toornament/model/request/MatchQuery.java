@@ -6,6 +6,7 @@ import com.toornament.model.enums.MatchStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,11 +31,12 @@ public class MatchQuery {
    @Singular private List<Long> participantIds;
    @JsonProperty("is_scheduled")
    private boolean scheduled;
-   @JsonProperty("scheduled_before")
+   //@JsonProperty("scheduled_before")
    private ZonedDateTime scheduledBefore;
-   @JsonProperty("scheduled_after")
+   //@JsonProperty("scheduled_after")
    private ZonedDateTime scheduledAfter;
    @Singular
    private List<MatchStatus> statuses;
+   @JsonProperty("custom_user_identifier")
    private String customUserIdentifier;
 }
