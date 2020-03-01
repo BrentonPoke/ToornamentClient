@@ -15,5 +15,7 @@ public class Participant {
     private CustomFields customFields;
     private String id;
     private String name;
+    @JsonProperty("custom_user_identifier")
+    private String customUserIdentifier;
 
 }
