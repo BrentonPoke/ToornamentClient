@@ -1,6 +1,8 @@
 package com.toornament.model;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.toornament.model.enums.MatchFormat;
 import com.toornament.model.enums.MatchStatus;
 import com.toornament.model.enums.MatchType;
@@ -20,6 +22,7 @@ import java.util.List;
 @Getter
 @Setter
 @EqualsAndHashCode
+@JsonInclude(value = Include.NON_NULL)
 public class Match {
 
     private String id;
@@ -28,23 +31,24 @@ public class Match {
     private MatchStatus status;
     @JsonProperty("tournament_id")
     private String tournamentId;
-    private Long number;
+    private Integer number;
     @JsonProperty("stage_id")
-    private Long stageNumber;
+    private String stageNumber;
     @JsonProperty("group_id")
-    private Long groupNumber;
+    private String groupNumber;
     @JsonProperty("round_id")
-    private Long roundNumber;
+    private String roundNumber;
     @JsonProperty("scheduled_datetime")
-    private ZonedDateTime date;
+    private String date;
     private String timezone;
     @JsonProperty("match_format")
     private MatchFormat matchFormat;
     private List<Opponent> opponents;
     private Object settings;
     @JsonProperty("played_at")
-    private ZonedDateTime playedAt;
-    private Boolean report_closed;
+    private String playedAt;
+    @JsonProperty("report_closed")
+    private Boolean reportClosed;
 
 
 
