@@ -4,6 +4,7 @@ import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Group;
 import com.toornament.model.request.GroupsQuery;
+import java.util.logging.Level;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 
@@ -11,15 +12,20 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 
 public class Groups extends Concept {
-    private String tournamentID;
-    public Groups(ToornamentClient client, String tournamentID) {
-        super(client);
-        this.tournamentID = tournamentID;
-    }
-    public List<Group> getGroups(GroupsQuery parameters, Map<String,String> header){
-        HttpUrl.Builder url = new HttpUrl.Builder()
+  private String tournamentID;
+
+  public Groups(ToornamentClient client, String tournamentID) {
+    super(client);
+    this.tournamentID = tournamentID;
+    logger = LoggerFactory.getLogger(this.getClass());
+  }
+
+  public List<Group> getGroups(GroupsQuery parameters, Map<String, String> header) {
+    HttpUrl.Builder url =
+        new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
             .addEncodedPathSegment("viewer")
@@ -28,27 +34,33 @@ public class Groups extends Concept {
             .addEncodedPathSegment(tournamentID)
             .addEncodedPathSegment("groups");
 
-        if(!parameters.getStageIds().isEmpty())
-            url.addQueryParameter("stage_ids", StringUtils.join(parameters.getStageIds(),","));
-        if(!parameters.getStageNumbers().isEmpty())
-            url.addQueryParameter("stage_numbers",StringUtils.join(parameters.getStageNumbers(),","));
+    if (!parameters.getStageIds().isEmpty())
+      url.addQueryParameter("stage_ids", StringUtils.join(parameters.getStageIds(), ","));
+    if (!parameters.getStageNumbers().isEmpty())
+      url.addQueryParameter("stage_numbers", StringUtils.join(parameters.getStageNumbers(), ","));
 
-        Request request = client.getRequestBuilder()
+    logger.debug("url: {}",url.build().toString());
+
+    Request request =
+        client
+            .getRequestBuilder()
             .get()
             .url(url.build())
-            .addHeader("range",header.get("range"))
+            .addHeader("range", header.get("range"))
             .build();
-        try {
-            String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Group.class));
-        } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption getting Groups");
-        }
+    try {
+      String responseBody = client.executeRequest(request).body().string();
+      return mapper.readValue(
+          responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Group.class));
+    } catch (IOException | NullPointerException e) {
+      logger.error(e.getMessage());
+      throw new ToornamentException("Got IOException getting Groups");
     }
+  }
 
-    public Group getGroup(String groupID){
-        HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
+  public Group getGroup(String groupID) {
+    HttpUrl.Builder urlBuilder =
+        new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
             .addPathSegment("viewer")
@@ -57,16 +69,14 @@ public class Groups extends Concept {
             .addPathSegment(tournamentID)
             .addPathSegment("groups")
             .addPathSegment(groupID);
-        Request request = client.getRequestBuilder().get().url(urlBuilder.build()).build();
-        try {
+    Request request = client.getRequestBuilder().get().url(urlBuilder.build()).build();
+    try {
 
-            String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody,mapper.getTypeFactory().constructType(Group.class));
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+      String responseBody = client.executeRequest(request).body().string();
+      return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(Group.class));
+    } catch (IOException e) {
+      System.out.println(e.getMessage());
     }
-
-
+    return null;
+  }
 }

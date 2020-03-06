@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.List;
 import okhttp3.RequestBody;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 
 public class Matches extends Concept {
     private TournamentDetails tournament;
@@ -23,11 +24,12 @@ public class Matches extends Concept {
     public Matches(ToornamentClient client, TournamentDetails tournament) {
         super(client);
         this.tournament = tournament;
+        logger = LoggerFactory.getLogger(this.getClass());
     }
 
     public List<MatchDetails> getMatches(MatchQuery parameter,String headers) {
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
-
+        logger.debug("Scopes in client: {}",client.getScope().toString());
       if (client.getScope().contains(Scope.ORGANIZER_RESULT)) {
         urlBuilder
             .scheme("https")
@@ -61,7 +63,7 @@ public class Matches extends Concept {
         urlBuilder.addEncodedQueryParameter("custom_user_identifier", parameter.getCustomUserIdentifier());
         urlBuilder.addQueryParameter("sort", parameter.getSort().getName());
             }
-
+        logger.debug("url: {}",urlBuilder.build().toString());
             Request request = client.getAuthenticatedRequestBuilder()
                 .get()
                 .url(urlBuilder.build())
@@ -90,7 +92,7 @@ public MatchDetails updateMatch(MatchDetails details, String matchId){
             .addPathSegment(matchId);
 
     }
-
+    logger.debug("url: {}",urlBuilder.build().toString());
     RequestBody body = RequestBody.create(MediaType.parse("Application/Json"),details.toString());
     Request request = client.getRequestBuilder().patch(body).build();
     return matchDetailsHelper(request);

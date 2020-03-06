@@ -42,8 +42,6 @@ public class ToornamentClient {
   private String oAuthToken;
   private HashSet<Scope> scope;
   private ObjectMapper mapper;
-  SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
   public ToornamentClient(
       String apiKey, String clientId, String clientSecret, HashSet<Scope> scope) {
     this.apiKey = apiKey;
