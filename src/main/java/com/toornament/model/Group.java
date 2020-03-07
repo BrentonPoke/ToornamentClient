@@ -1,6 +1,7 @@
 package com.toornament.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
@@ -15,7 +16,10 @@ import java.text.SimpleDateFormat;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode
 public class Group {
-    private String id, stage_id, name;
+    private String id;
+    @JsonProperty("stage_id")
+    private String stageID;
+    private String name;
     private Integer number;
     private Boolean closed;
     private Settings settings;

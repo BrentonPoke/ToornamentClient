@@ -42,6 +42,6 @@ public class GroupsTests {
     public void getGroupTest(){
         Group group = groups.getGroup("986865420542550016");
         assertTrue(group.getNumber() == 1);
-        assertTrue(group.getStage_id().matches("906330006561030144"));
+        assertTrue(group.getStageID().matches("906330006561030144"));
     }
 }

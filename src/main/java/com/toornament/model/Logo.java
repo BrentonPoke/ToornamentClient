@@ -17,11 +17,11 @@ import java.text.SimpleDateFormat;
 public class Logo {
 
     @JsonAlias({"logo_small","icon_small"})
-    private String logo_small;
+    private String logoSmall;
     @JsonAlias({"logo_medium","icon_medium"})
-    private String logo_medium;
+    private String logoMedium;
     @JsonAlias({"logo_large","icon_large"})
-    private String logo_large;
+    private String logoLarge;
     private String original;
     @Override
     public String toString() {
