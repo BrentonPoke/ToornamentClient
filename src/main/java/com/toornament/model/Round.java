@@ -1,5 +1,8 @@
 package com.toornament.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.EqualsAndHashCode;
@@ -9,10 +12,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode
+@JsonInclude(value = Include.NON_NULL)
 public class Round {
     private String id;
-    private String stage_id;
-    private String group_id;
+    @JsonProperty("stage_id")
+    private String stageID;
+    @JsonProperty("group_id")
+    private String groupID;
     private Integer number;
     private String name;
     private Boolean closed;

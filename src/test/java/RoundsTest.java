@@ -42,7 +42,7 @@ import static org.junit.jupiter.api.Assertions.*;
     @Test
      public void getRoundByIDTest(){
         Round round = rounds.getRoundByID("986947781466259469");
-        assertTrue(round.getStage_id().matches("906330006561030144"));
-        assertTrue(round.getGroup_id().matches("986865420542550016"));
+        assertTrue(round.getStageID().matches("906330006561030144"));
+        assertTrue(round.getGroupID().matches("986865420542550016"));
     }
 }

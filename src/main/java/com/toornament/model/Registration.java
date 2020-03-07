@@ -1,6 +1,7 @@
 package com.toornament.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
@@ -16,8 +17,10 @@ public class Registration {
     private String email;
     private String id;
     private String type;
-    private String tournament_id;
-    private String participant_id;
+    @JsonProperty("tournament_id")
+    private String tournamentID;
+    @JsonProperty("participant_id")
+    private String participantID;
     private String user_id;
     private String status;
     private ArrayList<Participant> lineup;

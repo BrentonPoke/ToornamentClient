@@ -1,5 +1,6 @@
 package com.toornament.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.toornament.model.Custom.CustomFields;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -21,7 +22,8 @@ public class Opponent {
     private Integer score;
     private Boolean forfeit;
     private Integer position;
-    private CustomFields custom_fields;
+    @JsonProperty("custom_fields")
+    private CustomFields customFields;
 
 
     @Override

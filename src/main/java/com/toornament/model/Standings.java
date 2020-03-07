@@ -19,7 +19,7 @@ public class Standings {
     private Integer position;
     private Integer rank;
     @JsonProperty("tournament_id")
-    private String tournamentId;
+    private String tournamentID;
     public String toString() {
         try {
             return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
