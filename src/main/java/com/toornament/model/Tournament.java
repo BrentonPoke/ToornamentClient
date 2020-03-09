@@ -26,8 +26,10 @@ public class Tournament {
     private String name;
     @JsonProperty("full_name")
     private String fullName;
-    private LocalDate scheduled_date_start;
-    private LocalDate scheduled_date_end;
+    @JsonProperty("scheduled_date_start")
+    private LocalDate scheduledDateStart;
+    @JsonProperty("scheduled_date_end")
+    private LocalDate scheduledDateEnd;
     private TournamentStatus status;
     @JsonProperty("date_start")
     private LocalDate dateStart;
@@ -43,10 +45,10 @@ public class Tournament {
     private Logo logo;
     private ArrayList<String> platforms;
     private String registration_enabled;
-    private ZonedDateTime registration_opening_datetime;
-    private ZonedDateTime registration_closing_datetime;
-    @JsonProperty("public")
-    private boolean public_event;
+    @JsonProperty("registration_opening_datetime")
+    private ZonedDateTime registrationOpeningDatetime;
+    @JsonProperty("registration_closing_datetime")
+    private ZonedDateTime registrationClosingDatetime;
     private TimeZone timezone;
 
     public Tournament() {
