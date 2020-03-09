@@ -15,6 +15,7 @@ public class Users extends Concept {
 
     public User getUser(){
         Builder url = new Builder();
+        logger.debug("Scopes: {}",client.getScope().toString());
         if (client.getScope().contains(Scope.USER_INFO)) {
             url.scheme("https")
                 .host("api.toornament.com")
@@ -33,7 +34,7 @@ public class Users extends Concept {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, User.class);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Couldn't get user");
         }
     }

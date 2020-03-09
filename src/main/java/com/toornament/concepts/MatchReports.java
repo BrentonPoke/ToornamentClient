@@ -13,17 +13,19 @@ import okhttp3.HttpUrl.Builder;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import org.slf4j.LoggerFactory;
 
 public class MatchReports extends Concept {
     private String tournamentID;
     public MatchReports(ToornamentClient client, String tournamentID){
         super(client);
         this.tournamentID = tournamentID;
+        logger = LoggerFactory.getLogger(this.getClass());
     }
     public List<com.toornament.model.Reports> getReports(String matchID, Map<String,String> header, Map<String,String> paramsMap){
-        Builder url = new Builder();
+        Builder urlBuilder = new Builder();
         if(client.getScope().contains(Scope.ORGANIZER_RESULT)){
-            url
+            urlBuilder
                 .scheme("https")
                 .host("api.toornament.com")
                 .addEncodedPathSegment("organizer")
@@ -35,12 +37,14 @@ public class MatchReports extends Concept {
                 .addEncodedPathSegment("reports");
         }
         for (Map.Entry<String, String> params : paramsMap.entrySet()) {
-            url.addQueryParameter(params.getKey(), params.getValue());
+            urlBuilder.addQueryParameter(params.getKey(), params.getValue());
         }
+
+        logger.debug("url: {}",urlBuilder.build().toString());
 
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
-            .url(url.build())
+            .url(urlBuilder.build())
             .addHeader("range",header.get("range"))
             .build();
         try {
@@ -48,8 +52,8 @@ public class MatchReports extends Concept {
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructCollectionType(List.class, Reports.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
-            throw new ToornamentException("Got IOExcption getting Reports");
+            logger.error(e.getMessage());
+            throw new ToornamentException("Got IOException getting Reports");
         }
 
     }

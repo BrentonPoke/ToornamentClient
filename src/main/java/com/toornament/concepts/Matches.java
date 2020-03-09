@@ -29,7 +29,7 @@ public class Matches extends Concept {
 
     public List<MatchDetails> getMatches(MatchQuery parameter,String headers) {
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
-        logger.debug("Scopes in client: {}",client.getScope().toString());
+        logger.debug("Scopes: {}",client.getScope().toString());
       if (client.getScope().contains(Scope.ORGANIZER_RESULT)) {
         urlBuilder
             .scheme("https")

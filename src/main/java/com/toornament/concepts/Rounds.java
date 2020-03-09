@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 
 @Getter
 public class Rounds extends Concept {
@@ -20,6 +21,7 @@ public class Rounds extends Concept {
     public Rounds(ToornamentClient client, String tournamentID) {
         super(client);
         this.tournamentID = tournamentID;
+        logger = LoggerFactory.getLogger(this.getClass());
     }
 
     public List<Round> getRounds(RoundsQuery parameter, Map<String,String> header) {

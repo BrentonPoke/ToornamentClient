@@ -22,9 +22,9 @@ public class Streams extends Concept{
         this.tournamentID = tournamentID;
     }
     public Stream getStreams(Map<String,String> range){
-        Builder url = new Builder();
+        Builder urlBuilder = new Builder();
         if(client.getScope().contains(Scope.ORGANIZER_ADMIN)){
-            url
+            urlBuilder
                 .scheme("https")
                 .host("api.toornament.com")
                 .addEncodedPathSegment("organizer")
@@ -35,7 +35,7 @@ public class Streams extends Concept{
         }
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
-            .url(url.build())
+            .url(urlBuilder.build())
             .addHeader("range",range.get("range"))
             .build();
         try {
@@ -50,9 +50,10 @@ public class Streams extends Concept{
     }
 
     public Stream createStream(Video query){
-        Builder url = new Builder();
+        Builder urlBuilder = new Builder();
+        logger.debug("Scopes: {}",client.getScope().toString());
         if(client.getScope().contains(Scope.ORGANIZER_ADMIN)){
-            url
+            urlBuilder
                 .scheme("https")
                 .host("api.toornament.com")
                 .addEncodedPathSegment("organizer")
@@ -64,7 +65,7 @@ public class Streams extends Concept{
         RequestBody body = RequestBody.create(MediaType.parse("application/json"),query.toString());
         Request request = client.getAuthenticatedRequestBuilder()
         .post(body)
-        .url(url.build())
+        .url(urlBuilder.build())
         .build();
 
         try {

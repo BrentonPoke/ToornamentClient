@@ -10,11 +10,13 @@ import java.util.List;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 
 public class FinalStandings extends Concept {
 
     public FinalStandings(ToornamentClient client) {
         super(client);
+        logger = LoggerFactory.getLogger(this.getClass());
     }
 
     public List<Standings> getFinalStandings(String range, StandingsQuery query){
@@ -29,7 +31,7 @@ public class FinalStandings extends Concept {
             urlBuilder.addQueryParameter("participant_ids", StringUtils.join(query.getParticipantIds(),","));
         if(!query.getTournamentIds().isEmpty())
             urlBuilder.addQueryParameter("tournament_ids", StringUtils.join(query.getTournamentIds(),","));
-
+        logger.debug("url: {}",urlBuilder.build().toString());
         Request request = client.getRequestBuilder()
             .get()
             .url(urlBuilder.build())

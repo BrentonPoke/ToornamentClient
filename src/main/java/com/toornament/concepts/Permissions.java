@@ -14,19 +14,21 @@ import okhttp3.HttpUrl.Builder;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import org.slf4j.LoggerFactory;
 
 public class Permissions extends Concept {
     private String tournamentID;
     public Permissions(ToornamentClient client, String tournamentID) {
         super(client);
         this.tournamentID = tournamentID;
+        logger = LoggerFactory.getLogger(this.getClass());
     }
 
 
     List<com.toornament.model.Permissions> getPermissions(){
-        Builder url = new Builder();
+        Builder urlBuilder = new Builder();
         if(client.getScope().contains(Scope.ORGANIZER_PERMISSION)){
-            url
+            urlBuilder
                 .scheme("https")
                 .host("api.toornament.com")
                 .addEncodedPathSegment("organizer")
@@ -35,9 +37,11 @@ public class Permissions extends Concept {
                 .addEncodedPathSegment(tournamentID)
                 .addEncodedPathSegment("permissions");
         }
-        Request request = client.getRequestBuilder()
+
+        logger.debug("url: {}",urlBuilder.build().toString());
+        Request request = client.getAuthenticatedRequestBuilder()
             .get()
-            .url(url.build())
+            .url(urlBuilder.build())
             .build();
         try {
             String responseBody = client.executeRequest(request).body().string();

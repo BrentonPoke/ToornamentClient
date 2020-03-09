@@ -15,12 +15,14 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 import okhttp3.RequestBody;
+import org.slf4j.LoggerFactory;
 
 public class Participants extends Concept {
     private String tournamentID;
     public Participants(ToornamentClient client, String tournamentID) {
         super(client);
         this.tournamentID = tournamentID;
+        logger = LoggerFactory.getLogger(this.getClass());
     }
     public List<TeamParticipant> getTeamParticipants(Map<String,String> header, ParticipantQuery parameters){
         Request request = getRequestHelper(header, parameters);
@@ -40,7 +42,7 @@ public class Participants extends Concept {
     }
 
     public Participant getParticipant(String participantID){
-        HttpUrl.Builder url = new HttpUrl.Builder()
+        HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
             .addEncodedPathSegment("viewer")
@@ -50,19 +52,23 @@ public class Participants extends Concept {
             .addEncodedPathSegment("participants")
             .addEncodedPathSegment(participantID);
 
+        logger.debug("url: {}",urlBuilder.build().toString());
+
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
-            .url(url.build())
+            .url(urlBuilder.build())
             .build();
+
         return TeamParticipanthelper(request, "Got IOException getting Participants");
     }
 
     //Uses the Participant API to get other participants associated with the current user token. Requires participant:manage_participations for the scope
 
     public List<TeamParticipant> getMyTeamParticipants(Map<String,String> header, Map<String,String> paramsMap) {
-        Builder url = new Builder();
+        Builder urlBuilder = new Builder();
+        logger.debug("Scopes: {}",client.getScope().toString());
     if (client.getScope().contains(Scope.MANAGE_PARTICIPANTS)) {
-      url.scheme("https")
+      urlBuilder.scheme("https")
           .host("api.toornament.com")
           .addEncodedPathSegment("participant")
           .addEncodedPathSegment("v2")
@@ -70,12 +76,12 @@ public class Participants extends Concept {
           .addEncodedPathSegment("participants");
             }
         for (Map.Entry<String, String> params : paramsMap.entrySet()) {
-            url.addQueryParameter(params.getKey(), params.getValue());
+            urlBuilder.addQueryParameter(params.getKey(), params.getValue());
         }
 
         Request request = client.getRequestBuilder()
             .get()
-            .url(url.build())
+            .url(urlBuilder.build())
             .addHeader("range",header.get("range"))
             .build();
 
@@ -136,6 +142,7 @@ public class Participants extends Concept {
 
     private Builder participantHelper(String id) {
         Builder url = new Builder();
+        logger.debug("Scopes: {}",client.getScope().toString());
         if (client.getScope().contains(Scope.MANAGE_PARTICIPANTS)) {
             url
                 .scheme("https")

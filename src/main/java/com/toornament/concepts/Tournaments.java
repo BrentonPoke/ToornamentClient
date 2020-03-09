@@ -77,7 +77,7 @@ public class Tournaments extends Concept {
             .addEncodedPathSegment("v2")
             .addEncodedPathSegment("tournaments")
             .addEncodedPathSegment(id);
-        Request request = client.getAuthenticatedRequestBuilder()
+        Request request = client.getRequestBuilder()
             .get()
             .url(url.build())
             .build();
@@ -174,8 +174,8 @@ public class Tournaments extends Concept {
                 return mapper.readValue(responseBody,
                     mapper.getTypeFactory().constructType(Custom.class));
             } catch (IOException | NullPointerException e) {
-                System.out.println(e.getMessage());
-                throw new ToornamentException("Got IOExcption creating custom field");
+                logger.error(e.getMessage());
+                throw new ToornamentException("Got IOException creating custom field");
             }
 
         }
@@ -203,7 +203,7 @@ public class Tournaments extends Concept {
                 return mapper.readValue(responseBody,
                     mapper.getTypeFactory().constructType(Custom.class));
             } catch (IOException | NullPointerException e) {
-                System.out.println(e.getMessage());
+                logger.error(e.getMessage());
                 throw new ToornamentException("Got IOException creating custom field");
             }
         }
@@ -231,7 +231,7 @@ public class Tournaments extends Concept {
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructType(Custom.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException updating custom field");
         }
     }

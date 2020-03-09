@@ -15,6 +15,7 @@ import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 
 public class Registrations extends Concept {
   private String tournamentID;
@@ -22,12 +23,16 @@ public class Registrations extends Concept {
   public Registrations(ToornamentClient client, String tournamentID) {
     super(client);
     this.tournamentID = tournamentID;
+    logger = LoggerFactory.getLogger(this.getClass());
   }
 
   public Registration register(RegistrationQuery registration) {
-    HttpUrl.Builder url = new HttpUrl.Builder();
+    HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
+
+    logger.debug("Scopes {}",client.getScope());
     if (client.getScope().contains(Scope.ORGANIZER_REGISTRATION)) {
-      url.scheme("https")
+
+      urlBuilder.scheme("https")
           .host("api.toornament.com")
           .addEncodedPathSegment("organizer")
           .addEncodedPathSegment("v2")
@@ -35,7 +40,7 @@ public class Registrations extends Concept {
           .addEncodedPathSegment(tournamentID)
           .addEncodedPathSegment("registrations");
     } else if (client.getScope().contains(Scope.MANAGE_REGISTRATIONS)){
-        url.scheme("https")
+        urlBuilder.scheme("https")
             .host("api.toornament.com")
             .addEncodedPathSegment("participant")
             .addEncodedPathSegment("v2")
@@ -44,11 +49,13 @@ public class Registrations extends Concept {
 
     }
 
+      logger.debug("url: {}",urlBuilder.build().toString());
+
     RequestBody body =
         RequestBody.create(MediaType.parse("application/json"), registration.toString());
     Request request = client.getRequestBuilder()
         .post(body)
-        .url(url.build())
+        .url(urlBuilder.build())
         .build();
     try {
       String responseBody = client.executeRequest(request).body().string();

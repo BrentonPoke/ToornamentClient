@@ -13,6 +13,7 @@ import okhttp3.Request;
 
 import java.io.IOException;
 import okhttp3.RequestBody;
+import org.slf4j.LoggerFactory;
 
 public class MatchGames extends Concept {
     private String tournamentID;
@@ -25,6 +26,7 @@ public class MatchGames extends Concept {
         super(client);
         this.matchID = match.getId();
         this.tournamentID = match.getTournamentId();
+        logger = LoggerFactory.getLogger(this.getClass());
     }
 
     public Game getGame(String number){
@@ -47,10 +49,14 @@ public class MatchGames extends Concept {
                 .addEncodedPathSegment(matchID)
                 .addEncodedPathSegment("games");
         }
-        Request request = client.getAuthenticatedRequestBuilder()
+
+        logger.debug("url: {}",urlBuilder.build().toString());
+
+        Request request = client.getRequestBuilder()
             .get()
             .url(urlBuilder.build())
             .build();
+
         try {
             String responseBody = client.executeRequest(request).body().string();
             return mapper

@@ -24,7 +24,7 @@ public class Standings {
         try {
             return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

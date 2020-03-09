@@ -13,10 +13,12 @@ import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import org.slf4j.LoggerFactory;
 
 public class Webhooks extends Concept {
 public Webhooks(ToornamentClient client){
     super(client);
+    logger = LoggerFactory.getLogger(this.getClass());
 }
 
 public List<Webhook> getWebhooks(Map<String,String> range){
