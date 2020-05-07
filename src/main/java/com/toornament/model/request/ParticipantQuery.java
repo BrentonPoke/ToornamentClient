@@ -1,6 +1,7 @@
 package com.toornament.model.request;
 
 import com.toornament.model.Custom.CustomFields;
+import com.toornament.model.Participant;
 import com.toornament.model.enums.Sort;
 import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -23,7 +24,7 @@ public class ParticipantQuery {
     @JsonAlias("custom_user_identifier")
     private String customUserIdentifier;
     @Singular("lineup")
-    private List<ParticipantQuery> lineup;
+    private List<Participant> lineup;
     private CustomFields custom_fields;
 
     @Override

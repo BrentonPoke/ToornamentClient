@@ -3,11 +3,12 @@ package com.toornament.model.Custom;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.toornament.model.Logo;
 import java.util.ArrayList;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomFields extends Custom {
     /*social*/
