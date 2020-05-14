@@ -3,7 +3,6 @@ package com.toornament.concepts;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Participant;
-import com.toornament.model.TeamParticipant;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.request.ParticipantQuery;
 import okhttp3.HttpUrl;
@@ -24,7 +23,7 @@ public class Participants extends Concept {
         this.tournamentID = tournamentID;
         logger = LoggerFactory.getLogger(this.getClass());
     }
-    public List<TeamParticipant> getTeamParticipants(Map<String,String> header, ParticipantQuery parameters){
+    public List<Participant> getTeamParticipants(Map<String,String> header, ParticipantQuery parameters){
         Request request = getRequestHelper(header, parameters);
         return getTeamParticipantsHelper(request);
     }
@@ -64,7 +63,7 @@ public class Participants extends Concept {
 
     //Uses the Participant API to get other participants associated with the current user token. Requires participant:manage_participations for the scope
 
-    public List<TeamParticipant> getMyTeamParticipants(Map<String,String> header, Map<String,String> paramsMap) {
+    public List<Participant> getMyTeamParticipants(Map<String,String> header, Map<String,String> paramsMap) {
         Builder urlBuilder = new Builder();
         logger.debug("Scopes: {}",client.getScope().toString());
     if (client.getScope().contains(Scope.MANAGE_PARTICIPANTS)) {
@@ -87,7 +86,7 @@ public class Participants extends Concept {
 
         return getTeamParticipantsHelper(request);
     }
-    public TeamParticipant getTeamParticipantByID(String id){
+    public Participant getTeamParticipantByID(String id){
 
         Builder url = participantHelper(id);
         Request request = client.getRequestBuilder()
@@ -98,7 +97,7 @@ public class Participants extends Concept {
         return TeamParticipanthelper(request, "Got IOException getting Team Participants");
     }
 
-    public TeamParticipant updateParticipant(String id){
+    public Participant updateParticipant(String id){
         Builder url = participantHelper(id);
         RequestBody body = RequestBody.create(MediaType.parse("application/json"),"{ \"checked_in\": true }");
         Request request = client.getAuthenticatedRequestBuilder()
@@ -110,7 +109,7 @@ public class Participants extends Concept {
 
     }
 
-    public TeamParticipant createParticipant(ParticipantQuery query){
+    public Participant createParticipant(ParticipantQuery query){
         Builder url = new Builder();
         if (client.getScope().contains(Scope.ORGANIZER_PARTICIPANT)) {
             url
@@ -166,22 +165,22 @@ public class Participants extends Concept {
         return url;
     }
 
-    private TeamParticipant TeamParticipanthelper(Request request, String s) {
+    private Participant TeamParticipanthelper(Request request, String s) {
         try {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody,
-                mapper.getTypeFactory().constructType(TeamParticipant.class));
+                mapper.getTypeFactory().constructType(Participant.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
             throw new ToornamentException(s);
         }
     }
 
-    private List<TeamParticipant> getTeamParticipantsHelper(Request request) {
+    private List<Participant> getTeamParticipantsHelper(Request request) {
         try {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody,
-                mapper.getTypeFactory().constructCollectionType(List.class, TeamParticipant.class));
+                mapper.getTypeFactory().constructCollectionType(List.class, Participant.class));
         } catch (IOException | NullPointerException e) {
             System.out.println(e.getMessage());
             throw new ToornamentException("Got IOException getting Participants");

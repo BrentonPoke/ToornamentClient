@@ -1,7 +1,6 @@
 import com.toornament.ToornamentClient;
 import com.toornament.concepts.Participants;
 import com.toornament.model.Participant;
-import com.toornament.model.TeamParticipant;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.enums.Sort;
 import com.toornament.model.request.ParticipantQuery;
@@ -39,7 +38,7 @@ public class ParticipantsTest {
         ParticipantQueryBuilder params = ParticipantQuery.builder();
         params.name("Outlaws");
         System.out.println(params.build());
-        List<TeamParticipant> participantList = participants.getTeamParticipants(header,params.build());
+        List<Participant> participantList = participants.getTeamParticipants(header,params.build());
         System.out.println(participantList);
         Assert.assertNotNull(participantList);
         assertTrue(participantList.get(0).getId().matches("906362615269785600"));
