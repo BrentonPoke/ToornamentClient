@@ -16,6 +16,7 @@ import lombok.Singular;
 @Builder
 public class RegistrationQuery {
     private String name;
+    private String email;
     private RegistrationType type;
     private String tournament_id;
     @JsonProperty("custom_fields")

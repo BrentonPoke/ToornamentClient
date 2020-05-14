@@ -63,7 +63,7 @@ public class MatchGames extends Concept {
                 .readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,Game.class));
         } catch (IOException | NullPointerException e) {
             e.printStackTrace();
-            throw new ToornamentException("Got IOExcption getting games");
+            throw new ToornamentException("Got IOException getting games");
         }
     }
 

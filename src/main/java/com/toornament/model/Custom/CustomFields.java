@@ -23,7 +23,7 @@ public class CustomFields extends Custom {
     private Address address;
     private String birth_date;
     private String country;
-    private String full_name;
+    private FullName full_name;
 
     /*Games*/
     private String battle_net_player_id;
@@ -39,9 +39,9 @@ public class CustomFields extends Custom {
     private String wargaming_player_id;
     private String xbox_live_player_id;
 
-    private boolean checkbox;
+    private Boolean checkbox;
     private String custom;
-    private boolean optin;
+    private Boolean optin;
     private String website;
     private Logo logo;
 

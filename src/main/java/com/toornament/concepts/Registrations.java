@@ -23,7 +23,7 @@ public class Registrations extends Concept {
   public Registrations(ToornamentClient client, String tournamentID) {
     super(client);
     this.tournamentID = tournamentID;
-    logger = LoggerFactory.getLogger(this.getClass());
+   logger = LoggerFactory.getLogger(this.getClass());
   }
 
   public Registration register(RegistrationQuery registration) {
@@ -34,18 +34,18 @@ public class Registrations extends Concept {
 
       urlBuilder.scheme("https")
           .host("api.toornament.com")
-          .addEncodedPathSegment("organizer")
-          .addEncodedPathSegment("v2")
-          .addEncodedPathSegment("tournaments")
-          .addEncodedPathSegment(tournamentID)
-          .addEncodedPathSegment("registrations");
+          .addPathSegment("organizer")
+          .addPathSegment("v2")
+          .addPathSegment("tournaments")
+          .addPathSegment(tournamentID)
+          .addPathSegment("registrations");
     } else if (client.getScope().contains(Scope.MANAGE_REGISTRATIONS)){
         urlBuilder.scheme("https")
             .host("api.toornament.com")
-            .addEncodedPathSegment("participant")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("me")
-            .addEncodedPathSegment("registrations");
+            .addPathSegment("participant")
+            .addPathSegment("v2")
+            .addPathSegment("me")
+            .addPathSegment("registrations");
 
     }
 
