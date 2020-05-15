@@ -101,11 +101,11 @@ public class Registrations extends Concept {
           .addEncodedPathSegment(tournamentID)
           .addEncodedPathSegment("registrations");
 
-        url.addQueryParameter("sort",sort.name());
+        url.addQueryParameter("sort",sort.getScope());
     }
     Request request =
         client
-            .getRequestBuilder()
+            .getAuthenticatedRequestBuilder()
             .get()
             .url(url.build())
             .addHeader("range", header.get("range"))
