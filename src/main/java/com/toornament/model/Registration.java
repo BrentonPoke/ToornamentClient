@@ -46,7 +46,8 @@ public class Registration {
 
     @JsonProperty("created_at")
     private String createdAt;
-    private ArrayList<Participant> lineup;
+    //This RegisteredParticipant is part of a workaround
+    private ArrayList<RegisteredParticipant> lineup;
 
     public String toString() {
         try {

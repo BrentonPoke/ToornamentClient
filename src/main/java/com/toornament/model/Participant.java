@@ -7,18 +7,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toornament.model.Custom.CustomFields;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
-import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
 
 @NoArgsConstructor
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @SuppressWarnings("unused")
 public class Participant {
 
   @JsonProperty("custom_fields")
-  private ArrayList<CustomFields> customFields;
+  private CustomFields customFields;
 
   private String id;
 

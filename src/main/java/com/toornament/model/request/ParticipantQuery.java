@@ -1,5 +1,6 @@
 package com.toornament.model.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.toornament.model.Custom.CustomFields;
 import com.toornament.model.Participant;
 import com.toornament.model.enums.Sort;
@@ -25,7 +26,8 @@ public class ParticipantQuery {
     private String customUserIdentifier;
     @Singular("lineup")
     private List<Participant> lineup;
-    private CustomFields custom_fields;
+    @JsonProperty("custom_fields")
+    private CustomFields customFields;
 
     @Override
     public String toString() {

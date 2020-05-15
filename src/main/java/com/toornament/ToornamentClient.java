@@ -6,6 +6,7 @@ import com.toornament.concepts.Groups;
 import com.toornament.concepts.MatchGames;
 import com.toornament.concepts.MatchReports;
 import com.toornament.concepts.Matches;
+import com.toornament.concepts.Participants;
 import com.toornament.concepts.Permissions;
 import com.toornament.concepts.Registrations;
 import com.toornament.concepts.Rounds;
@@ -67,6 +68,7 @@ public class ToornamentClient {
   public ObjectMapper getMapper() {
     return mapper;
   }
+  public Participants participants(String tournamentId){return new Participants(this, tournamentId);}
 
   public Tournaments tournaments() {
     return new Tournaments(this);

@@ -14,6 +14,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.*;
 
@@ -32,14 +34,15 @@ public class ParticipantsTest {
     }
     @Test
     public void getTeamParticipants() {
-        participants = new Participants(client, "906278647555784704");
+        participants = client.participants("906278647555784704");
         Map<String,String> header = new HashMap<>();
         header.put("range"," participants=0-49");
         ParticipantQueryBuilder params = ParticipantQuery.builder();
         params.name("Outlaws");
-        System.out.println(params.build());
+        //System.out.println(params.build());
         List<Participant> participantList = participants.getTeamParticipants(header,params.build());
-        System.out.println(participantList);
+        Logger logger = LoggerFactory.getLogger(this.getClass());
+        logger.debug("Participant list: {}",participantList);
         Assert.assertNotNull(participantList);
         assertTrue(participantList.get(0).getId().matches("906362615269785600"));
 

@@ -2,6 +2,7 @@ package com.toornament.model.request;
 
 import com.toornament.model.Custom.CustomFields;
 import com.toornament.model.Participant;
+import com.toornament.model.RegisteredParticipant;
 import com.toornament.model.enums.RegistrationType;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -22,7 +23,7 @@ public class RegistrationQuery {
     @JsonProperty("custom_fields")
     CustomFields customFields;
     @Singular("lineup")
-    private List<Participant> lineup;
+    private List<RegisteredParticipant> lineup;
     public String toString() {
         try {
             return new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writerWithDefaultPrettyPrinter().writeValueAsString(this);
