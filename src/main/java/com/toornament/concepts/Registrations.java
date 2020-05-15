@@ -53,7 +53,7 @@ public class Registrations extends Concept {
 
     RequestBody body =
         RequestBody.create(MediaType.parse("application/json"), registration.toString());
-    Request request = client.getRequestBuilder()
+    Request request = client.getAuthenticatedRequestBuilder()
         .post(body)
         .url(urlBuilder.build())
         .build();

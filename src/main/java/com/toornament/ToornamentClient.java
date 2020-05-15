@@ -157,7 +157,7 @@ public class ToornamentClient {
   }
 
   public Request.Builder getRequestBuilder() {
-    return new Request.Builder().addHeader("X-Api-Key", apiKey);
+    return new Request.Builder().addHeader("X-Api-Key", this.apiKey);
   }
 
   public Response executeRequest(Request request) {

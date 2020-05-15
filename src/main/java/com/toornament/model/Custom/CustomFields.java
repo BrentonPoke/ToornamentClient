@@ -1,14 +1,22 @@
 package com.toornament.model.Custom;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.toornament.model.Logo;
 import java.util.ArrayList;
+import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Singular;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomFields extends Custom {
     /*social*/
@@ -29,7 +37,9 @@ public class CustomFields extends Custom {
     /*Games*/
     private String battle_net_player_id;
     private String blood_bowl2_player_id;
-    private ArrayList<String> hs_pick_choice;
+    @Singular("hsPickChoice")
+    @JsonProperty("hs_pick_choice")
+    private ArrayList<String> hsPickChoices;
     private String maniaplanet_player_id;
     private String origin_player_id;
     private String psn_player_id;
@@ -45,6 +55,16 @@ public class CustomFields extends Custom {
     private Boolean optin;
     private String website;
     private Logo logo;
-
+    public String toString() {
+        try {
+            return new ObjectMapper()
+                .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+                .writerWithDefaultPrettyPrinter()
+                .writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
 
 }
