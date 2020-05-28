@@ -1,5 +1,6 @@
 language: java
 dist: trusty
+install: mvn install -DskipTests -Dgpg.skip
 jdk:
  - openjdk8
  - oraclejdk8
