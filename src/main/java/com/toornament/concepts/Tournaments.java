@@ -33,7 +33,7 @@ public class Tournaments extends Concept {
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
                 Tournament.class));
         } catch (IOException e) {
-            e.getMessage();
+            logger.error(e.getMessage());
             throw new ToornamentException("Couldn't retrieve tournaments");
         }
     }
@@ -85,7 +85,7 @@ public class Tournaments extends Concept {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, TournamentDetails.class);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new ToornamentException("Couldn't get tournament with id: " + id);
         }
     }
@@ -147,7 +147,7 @@ public class Tournaments extends Concept {
           responseBody,
           mapper.getTypeFactory().constructCollectionType(List.class, Custom.class));
     } catch (IOException e) {
-      e.getMessage();
+        logger.error(e.getMessage());
       throw new ToornamentException("Couldn't retrieve custom fields");
     }
         }

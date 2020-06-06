@@ -73,7 +73,7 @@ public class Matches extends Concept {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, MatchDetails.class));
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException getting matches");
         }
     }
@@ -121,6 +121,7 @@ public MatchDetails updateMatch(MatchDetails details, String matchId){
             return mapper
                 .readValue(responseBody, mapper.getTypeFactory().constructType(MatchDetails.class));
         } catch (IOException | NullPointerException e) {
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException getting match");
         }
     }
