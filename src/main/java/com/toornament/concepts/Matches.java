@@ -55,9 +55,10 @@ public class Matches extends Concept {
         if(!parameter.getParticipantIds().isEmpty())
         urlBuilder.addQueryParameter(
             "participant_ids", StringUtils.join(parameter.getParticipantIds(), ","));
-        urlBuilder.addQueryParameter("is_scheduled", parameter.isScheduled() ? "1" : "0");
+        if(parameter.getScheduled() != null)
+        urlBuilder.addQueryParameter("is_scheduled", parameter.getScheduled() ? "1" : "0");
         if(parameter.getScheduledBefore() != null)
-        urlBuilder.addEncodedQueryParameter("scheduled_before", parameter.getScheduledBefore().format(RFC_3339));
+        urlBuilder.addQueryParameter("scheduled_before", parameter.getScheduledBefore().format(RFC_3339));
         if(parameter.getScheduledAfter() != null)
         urlBuilder.addQueryParameter("scheduled_after", parameter.getScheduledAfter().format(RFC_3339));
         urlBuilder.addEncodedQueryParameter("custom_user_identifier", parameter.getCustomUserIdentifier());

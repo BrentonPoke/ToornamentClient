@@ -154,7 +154,7 @@ public class ToornamentClient {
     if (this.oAuthToken == null) {
       authorize();
     }
-      logger.debug(oAuthToken);
+      logger.info(oAuthToken);
     return getRequestBuilder().addHeader("Authorization", "Bearer " + oAuthToken);
   }
 

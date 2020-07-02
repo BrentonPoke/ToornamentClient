@@ -29,10 +29,10 @@ public class MatchesTests {
 
     @Test
     public void getMatchesTest(){
-        System.out.println(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")));
+        System.out.println(ZonedDateTime.parse("2020-03-06T05:57:28+05:00").format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX")));
         List<MatchDetails> result = matches.getMatches(MatchQuery.builder()
-            //.scheduledBefore(ZonedDateTime.now())
-            //.scheduledAfter(ZonedDateTime.now()) TODO: I will need to come back to this, because passing time values is unduly difficult as url parameters.
+            .scheduled(true)
+            .scheduledAfter(ZonedDateTime.parse("2020-03-06T05:57:28+05:00"))// TODO: I will need to come back to this, because passing time values is unduly difficult as url parameters.
             .build(),"matches=0-67");
 
         System.out.println(result);

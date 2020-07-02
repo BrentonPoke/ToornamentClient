@@ -30,10 +30,10 @@ public class MatchQuery {
    private MatchSort sort = MatchSort.STRUCTURE;
    @Singular private List<Long> participantIds;
    @JsonProperty("is_scheduled")
-   private boolean scheduled;
-   //@JsonProperty("scheduled_before")
+   private Boolean scheduled;
+   @JsonProperty("scheduled_before")
    private ZonedDateTime scheduledBefore;
-   //@JsonProperty("scheduled_after")
+   @JsonProperty("scheduled_after")
    private ZonedDateTime scheduledAfter;
    @Singular
    private List<MatchStatus> statuses;
