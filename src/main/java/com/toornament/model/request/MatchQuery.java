@@ -19,7 +19,7 @@ import lombok.Singular;
 @Builder
 public class MatchQuery {
 
-    private boolean hasResult = false;
+    private Boolean hasResult = false;
    @Singular
    private List<Long> stageIds;
    @Singular
