@@ -44,7 +44,8 @@ public class Tournament {
     private Integer size;
     private Logo logo;
     private ArrayList<String> platforms;
-    private String registration_enabled;
+@JsonProperty("registration_enabled")
+    private String registrationEnabled;
     @JsonProperty("registration_opening_datetime")
     private ZonedDateTime registrationOpeningDatetime;
     @JsonProperty("registration_closing_datetime")
