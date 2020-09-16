@@ -48,7 +48,7 @@ public class Permissions extends Concept {
               .getTypeFactory()
               .constructCollectionType(List.class, com.toornament.model.Permissions.class));
     } catch (IOException | NullPointerException e) {
-      System.out.println(e.getMessage());
+      logger.error(e.getMessage());
       throw new ToornamentException("Got IOException getting Permissions");
     }
   }
