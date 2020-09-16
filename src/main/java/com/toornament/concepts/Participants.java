@@ -35,7 +35,7 @@ public class Participants extends Concept {
             String responseBody = client.executeRequest(request).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, Participant.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException getting Participants");
         }
     }
@@ -171,7 +171,7 @@ public class Participants extends Concept {
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructType(Participant.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException(s);
         }
     }
@@ -182,7 +182,7 @@ public class Participants extends Concept {
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructCollectionType(List.class, Participant.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException getting Participants");
         }
     }

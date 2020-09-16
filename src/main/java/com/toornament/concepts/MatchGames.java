@@ -62,7 +62,7 @@ public class MatchGames extends Concept {
             return mapper
                 .readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,Game.class));
         } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException getting games");
         }
     }
@@ -77,7 +77,7 @@ public class MatchGames extends Concept {
             return mapper
                 .readValue(responseBody, mapper.getTypeFactory().constructType(Game.class));
         } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOExcption getting game");
         }
     }
@@ -94,8 +94,8 @@ public class MatchGames extends Concept {
             return mapper
                 .readValue(responseBody, mapper.getTypeFactory().constructType(Game.class));
         } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-            throw new ToornamentException("Got IOExcption updating game");
+            logger.error(e.getMessage());
+            throw new ToornamentException("Got IOException updating game");
         }
     }
 

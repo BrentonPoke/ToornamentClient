@@ -73,7 +73,7 @@ public class Permissions extends Concept {
           responseBody,
           mapper.getTypeFactory().constructType(com.toornament.model.Permissions.class));
     } catch (IOException | NullPointerException e) {
-      System.out.println(e.getMessage());
+      logger.error(e.getMessage());
       throw new ToornamentException("Got IOException getting Permission.");
     }
   }
@@ -98,7 +98,7 @@ public class Permissions extends Concept {
           responseBody,
           mapper.getTypeFactory().constructType(com.toornament.model.Permissions.class));
     } catch (IOException | NullPointerException e) {
-      System.out.println(e.getMessage());
+      logger.error(e.getMessage());
       throw new ToornamentException("Error creating new permission");
     }
   }
@@ -137,7 +137,7 @@ public class Permissions extends Concept {
           responseBody,
           mapper.getTypeFactory().constructType(com.toornament.model.Permissions.class));
     } catch (IOException | NullPointerException e) {
-      System.out.println(e.getMessage());
+      logger.error(e.getMessage());
       throw new ToornamentException("Error updating new permission");
     }
   }

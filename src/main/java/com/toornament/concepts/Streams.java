@@ -44,7 +44,7 @@ public class Streams extends Concept{
                 List.class,
                 Stream.class));
         } catch (IOException e) {
-            e.getMessage();
+            logger.error(e.getMessage());
             throw new ToornamentException("Couldn't retrieve streams");
         }
     }
@@ -73,7 +73,7 @@ public class Streams extends Concept{
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructType(Stream.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException creating stream");
         }
     }
@@ -101,7 +101,7 @@ public class Streams extends Concept{
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructType(Stream.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException getting stream");
         }
     }
@@ -130,7 +130,7 @@ public class Streams extends Concept{
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructType(Stream.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException creating stream");
         }
     }
@@ -180,7 +180,7 @@ public class Streams extends Concept{
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructCollectionType(List.class,String.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException getting match streams");
         }
     }
@@ -209,7 +209,7 @@ public class Streams extends Concept{
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructCollectionType(List.class,String.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException updating match streams");
         }
     }

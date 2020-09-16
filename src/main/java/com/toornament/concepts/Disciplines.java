@@ -40,7 +40,7 @@ public class Disciplines extends Concept {
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
                 Discipline.class));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new ToornamentException("Couldn't retrieve disciplines");
         }
     }
@@ -63,7 +63,7 @@ public class Disciplines extends Concept {
             mapper.configure(DeserializationFeature.ACCEPT_EMPTY_ARRAY_AS_NULL_OBJECT, true);
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(DisciplineDetails.class));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new ToornamentException("Couldn't retrieve discipline with id: " + id);
         }
     }

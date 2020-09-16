@@ -75,7 +75,7 @@ public class Groups extends Concept {
       String responseBody = client.executeRequest(request).body().string();
       return mapper.readValue(responseBody, mapper.getTypeFactory().constructType(Group.class));
     } catch (IOException e) {
-      System.out.println(e.getMessage());
+      logger.error(e.getMessage());
     }
     return null;
   }

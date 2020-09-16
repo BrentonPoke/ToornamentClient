@@ -83,7 +83,7 @@ public class MatchReports extends Concept {
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructType(Reports.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOExcption getting Report");
         }
     }
@@ -113,7 +113,7 @@ public class MatchReports extends Concept {
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructType(Reports.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOExcption creating Report");
         }
     }
@@ -143,7 +143,7 @@ public class MatchReports extends Concept {
             return mapper.readValue(responseBody,
                 mapper.getTypeFactory().constructType(Reports.class));
         } catch (IOException | NullPointerException e) {
-            System.out.println(e.getMessage());
+            logger.error(e.getMessage());
             throw new ToornamentException("Got IOException updating Report");
         }
     }
