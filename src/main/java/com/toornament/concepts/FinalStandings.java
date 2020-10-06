@@ -23,28 +23,25 @@ public class FinalStandings extends Concept {
     public List<Standings> getFinalStandings(String range, StandingsQuery query){
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
         Request.Builder requestBuilder;
+        String scope = "viewer";
 
-    if (client.getScope().contains(Scope.ORGANIZER_RESULT)) {
+    if (client.getScope().contains(Scope.ORGANIZER_RESULT))
+        scope = "organizer";
+
       urlBuilder
           .scheme("https")
           .host("api.toornament.com")
-          .addEncodedPathSegment("organizer")
+          .addEncodedPathSegment(scope)
           .addEncodedPathSegment("v2")
           .addEncodedPathSegment("standings");
 
-        logger.debug("url: {}",urlBuilder.build().toString());
-        requestBuilder = client.getAuthenticatedRequestBuilder();
-            }
-    else {
-        urlBuilder
-            .scheme("https")
-            .host("api.toornament.com")
-            .addEncodedPathSegment("viewer")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("standings");
+    if(scope.equals("viewer")){
 
         logger.debug("url: {}",urlBuilder.build().toString());
         requestBuilder = client.getRequestBuilder();
+    } else {
+        logger.debug("url: {}",urlBuilder.build().toString());
+        requestBuilder = client.getAuthenticatedRequestBuilder();
     }
 
         if(!query.getParticipantIds().isEmpty())
