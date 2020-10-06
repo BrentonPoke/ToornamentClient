@@ -31,10 +31,7 @@ public class FinalStandings extends Concept {
           .addEncodedPathSegment("organizer")
           .addEncodedPathSegment("v2")
           .addEncodedPathSegment("standings");
-        if(!query.getParticipantIds().isEmpty())
-            urlBuilder.addQueryParameter("participant_ids", StringUtils.join(query.getParticipantIds(),","));
-        if(!query.getTournamentIds().isEmpty())
-            urlBuilder.addQueryParameter("tournament_ids", StringUtils.join(query.getTournamentIds(),","));
+
         logger.debug("url: {}",urlBuilder.build().toString());
         requestBuilder = client.getAuthenticatedRequestBuilder();
             }
@@ -45,13 +42,15 @@ public class FinalStandings extends Concept {
             .addEncodedPathSegment("viewer")
             .addEncodedPathSegment("v2")
             .addEncodedPathSegment("standings");
+
+        logger.debug("url: {}",urlBuilder.build().toString());
+        requestBuilder = client.getRequestBuilder();
+    }
+
         if(!query.getParticipantIds().isEmpty())
             urlBuilder.addQueryParameter("participant_ids", StringUtils.join(query.getParticipantIds(),","));
         if(!query.getTournamentIds().isEmpty())
             urlBuilder.addQueryParameter("tournament_ids", StringUtils.join(query.getTournamentIds(),","));
-        logger.debug("url: {}",urlBuilder.build().toString());
-        requestBuilder = client.getRequestBuilder();
-    }
 
         Request request = requestBuilder
             .get()
