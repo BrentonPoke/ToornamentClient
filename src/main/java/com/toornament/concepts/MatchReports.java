@@ -114,7 +114,7 @@ public class MatchReports extends Concept {
                 mapper.getTypeFactory().constructType(Reports.class));
         } catch (IOException | NullPointerException e) {
             logger.error(e.getMessage());
-            throw new ToornamentException("Got IOExcption creating Report");
+            throw new ToornamentException("Got IOException creating Report");
         }
     }
 

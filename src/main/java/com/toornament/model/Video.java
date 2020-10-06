@@ -7,7 +7,10 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+
 @Data
+@Slf4j
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Video {
@@ -21,7 +24,7 @@ public class Video {
         try {
             return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
         } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
+            log.error(e.getMessage());
         }
         return null;
     }

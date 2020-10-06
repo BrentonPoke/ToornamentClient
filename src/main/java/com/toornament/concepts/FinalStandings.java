@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Standings;
+import com.toornament.model.enums.Scope;
 import com.toornament.model.request.StandingsQuery;
 import java.io.IOException;
 import java.util.List;
@@ -20,19 +21,39 @@ public class FinalStandings extends Concept {
     }
 
     public List<Standings> getFinalStandings(String range, StandingsQuery query){
-        HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
-            .scheme("https")
-            .host("api.toornament.com")
-            .addEncodedPathSegment("viewer")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("standings");
+        HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
+        Request.Builder requestBuilder;
 
+    if (client.getScope().contains(Scope.ORGANIZER_RESULT)) {
+      urlBuilder
+          .scheme("https")
+          .host("api.toornament.com")
+          .addEncodedPathSegment("organizer")
+          .addEncodedPathSegment("v2")
+          .addEncodedPathSegment("standings");
         if(!query.getParticipantIds().isEmpty())
             urlBuilder.addQueryParameter("participant_ids", StringUtils.join(query.getParticipantIds(),","));
         if(!query.getTournamentIds().isEmpty())
             urlBuilder.addQueryParameter("tournament_ids", StringUtils.join(query.getTournamentIds(),","));
         logger.debug("url: {}",urlBuilder.build().toString());
-        Request request = client.getRequestBuilder()
+        requestBuilder = client.getAuthenticatedRequestBuilder();
+            }
+    else {
+        urlBuilder
+            .scheme("https")
+            .host("api.toornament.com")
+            .addEncodedPathSegment("viewer")
+            .addEncodedPathSegment("v2")
+            .addEncodedPathSegment("standings");
+        if(!query.getParticipantIds().isEmpty())
+            urlBuilder.addQueryParameter("participant_ids", StringUtils.join(query.getParticipantIds(),","));
+        if(!query.getTournamentIds().isEmpty())
+            urlBuilder.addQueryParameter("tournament_ids", StringUtils.join(query.getTournamentIds(),","));
+        logger.debug("url: {}",urlBuilder.build().toString());
+        requestBuilder = client.getRequestBuilder();
+    }
+
+        Request request = requestBuilder
             .get()
             .url(urlBuilder.build())
             .addHeader("range",range)

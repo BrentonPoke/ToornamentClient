@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Singular;
+import lombok.extern.slf4j.Slf4j;
 
 @NoArgsConstructor
 @Data
+@Slf4j
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @SuppressWarnings("unused")
 public class Participant {
@@ -49,7 +51,7 @@ public class Participant {
           .writerWithDefaultPrettyPrinter()
           .writeValueAsString(this);
     } catch (JsonProcessingException e) {
-      System.out.println(e.getMessage());
+      log.error(e.getMessage());
     }
     return null;
   }
