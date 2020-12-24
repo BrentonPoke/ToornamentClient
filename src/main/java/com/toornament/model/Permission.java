@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Data
 @NoArgsConstructor
 @Slf4j
-public class Permissions {
+public class Permission {
     private List<Attribute> attributes;
     private String email;
     private String id;

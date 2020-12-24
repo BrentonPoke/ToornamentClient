@@ -2,9 +2,9 @@ package com.toornament.concepts;
 
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
-import com.toornament.model.Custom.Custom;
+
 import com.toornament.model.Stream;
-import com.toornament.model.Tournament;
+
 import com.toornament.model.Video;
 import com.toornament.model.enums.Scope;
 import java.io.IOException;

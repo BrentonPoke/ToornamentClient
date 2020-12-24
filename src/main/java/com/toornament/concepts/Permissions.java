@@ -2,6 +2,7 @@ package com.toornament.concepts;
 
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
+import com.toornament.model.Permission;
 import com.toornament.model.enums.Attribute;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.request.PermissionsQuery;
@@ -25,7 +26,7 @@ public class Permissions extends Concept {
     logger = LoggerFactory.getLogger(this.getClass());
   }
 
-  List<com.toornament.model.Permissions> getPermissions() {
+  List<Permission> getPermissions() {
     Builder urlBuilder = new Builder();
     if (client.getScope().contains(Scope.ORGANIZER_PERMISSION)) {
       urlBuilder
@@ -46,14 +47,14 @@ public class Permissions extends Concept {
           responseBody,
           mapper
               .getTypeFactory()
-              .constructCollectionType(List.class, com.toornament.model.Permissions.class));
+              .constructCollectionType(List.class, Permission.class));
     } catch (IOException | NullPointerException e) {
       logger.error(e.getMessage());
       throw new ToornamentException("Got IOException getting Permissions");
     }
   }
 
-  com.toornament.model.Permissions getPermission(String permissionID) {
+  Permission getPermission(String permissionID) {
     Builder url = new Builder();
     if (client.getScope().contains(Scope.ORGANIZER_PERMISSION)) {
       url.scheme("https")
@@ -71,14 +72,14 @@ public class Permissions extends Concept {
       String responseBody = client.executeRequest(request).body().string();
       return mapper.readValue(
           responseBody,
-          mapper.getTypeFactory().constructType(com.toornament.model.Permissions.class));
+          mapper.getTypeFactory().constructType(com.toornament.model.Permission.class));
     } catch (IOException | NullPointerException e) {
       logger.error(e.getMessage());
       throw new ToornamentException("Got IOException getting Permission.");
     }
   }
 
-  com.toornament.model.Permissions createPermission(PermissionsQuery query) {
+  Permission createPermission(PermissionsQuery query) {
     Builder url = new Builder();
     if (client.getScope().contains(Scope.ORGANIZER_PERMISSION)) {
       url.scheme("https")
@@ -96,14 +97,14 @@ public class Permissions extends Concept {
       String responseBody = client.executeRequest(request).body().string();
       return mapper.readValue(
           responseBody,
-          mapper.getTypeFactory().constructType(com.toornament.model.Permissions.class));
+          mapper.getTypeFactory().constructType(Permission.class));
     } catch (IOException | NullPointerException e) {
       logger.error(e.getMessage());
       throw new ToornamentException("Error creating new permission");
     }
   }
 
-  com.toornament.model.Permissions updatePermissions(
+  Permission updatePermissions(
       List<Attribute> attributes, String permissionID) {
     Builder url = new Builder();
     if (client.getScope().contains(Scope.ORGANIZER_PERMISSION)) {
@@ -135,7 +136,7 @@ public class Permissions extends Concept {
       String responseBody = client.executeRequest(request).body().string();
       return mapper.readValue(
           responseBody,
-          mapper.getTypeFactory().constructType(com.toornament.model.Permissions.class));
+          mapper.getTypeFactory().constructType(Permission.class));
     } catch (IOException | NullPointerException e) {
       logger.error(e.getMessage());
       throw new ToornamentException("Error updating new permission");
