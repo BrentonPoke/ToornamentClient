@@ -39,24 +39,24 @@ public class TournamentsTests {
         .scheduledBefore(LocalDate.parse("2019-04-05"))
         .platform(Platforms.PC);
 
-        tournamentDetails.setParticipantType(ParticipantType.TEAM);
-        tournamentDetails.setName("OWL Season 1 TEST");
-        tournamentDetails.setSize(144);
-        tournamentDetails.setDiscipline("overwatch");
-
-        tournamentRequest.setName("OWL Season 1 TEST");
-        tournamentRequest.setDiscipline("overwatch");
-        tournamentRequest.setOrganization("Blizzard Entertainment");
-        tournamentRequest.setWebsite("http://www.overwatchleague.com");
-        tournamentRequest.setMatchFormat(MatchFormat.BO3);
-        tournamentRequest.setIsPublic(false);
-        tournamentRequest.setPrize("1 - $10,000 \n 2 - $5,000");
-        tournamentRequest.setSize(144);
-        tournamentRequest.setParticipantType(ParticipantType.TEAM);
-        tournamentRequest.setTimezone("America/Los_Angeles");
-        tournamentRequest.setCountry("US");
-        tournamentRequest.setDateStart(LocalDate.parse("2018-09-05",DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        tournamentRequest.setDateEnd(LocalDate.parse("2019-04-05",DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//        tournamentDetails.setParticipantType(ParticipantType.TEAM);
+//        tournamentDetails.setName("OWL Season 1 TEST");
+//        tournamentDetails.setSize(144);
+//        tournamentDetails.setDiscipline("overwatch");
+//
+//        tournamentRequest.setName("OWL Season 1 TEST");
+//        tournamentRequest.setDiscipline("overwatch");
+//        tournamentRequest.setOrganization("Blizzard Entertainment");
+//        tournamentRequest.setWebsite("http://www.overwatchleague.com");
+//        tournamentRequest.setMatchFormat(MatchFormat.BO3);
+//        tournamentRequest.setIsPublic(false);
+//        tournamentRequest.setPrize("1 - $10,000 \n 2 - $5,000");
+//        tournamentRequest.setSize(144);
+//        tournamentRequest.setParticipantType(ParticipantType.TEAM);
+//        tournamentRequest.setTimezone("America/Los_Angeles");
+//        tournamentRequest.setCountry("US");
+//        tournamentRequest.setDateStart(LocalDate.parse("2018-09-05",DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+//        tournamentRequest.setDateEnd(LocalDate.parse("2019-04-05",DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
 
     }

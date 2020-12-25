@@ -5,8 +5,10 @@ import com.toornament.model.enums.ParticipantType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.text.SimpleDateFormat;
@@ -14,6 +16,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 public class TournamentRequest {
 
@@ -58,9 +62,6 @@ public class TournamentRequest {
     private Boolean check_in_participant_enabled;
     private LocalDateTime check_in_participant_start_datetime;
     private LocalDateTime check_in_participant_end_datetime;
-
-    public TournamentRequest() {
-    }
 
     public TournamentRequest(String discipline, String name, Integer size, ParticipantType participantType) {
         this(discipline, name, size, participantType, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
