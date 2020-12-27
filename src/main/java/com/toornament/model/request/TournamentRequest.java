@@ -1,5 +1,6 @@
 package com.toornament.model.request;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.toornament.model.enums.MatchFormat;
 import com.toornament.model.enums.ParticipantType;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -50,18 +51,30 @@ public class TournamentRequest {
     @JsonProperty("match_format")
     private MatchFormat matchFormat;
     private Boolean archived;
-    private Boolean match_report_enabled;
-    private Boolean registration_enabled;
-    private LocalDateTime registration_opening_datetime;
-    private LocalDateTime registration_closing_datetime;
-    private Boolean registration_notification_enabled;
-    private String registration_request_message;
-    private String registration_accept_message;
-    private String registration_refuse_message;
-    private Boolean check_in_enabled;
-    private Boolean check_in_participant_enabled;
-    private LocalDateTime check_in_participant_start_datetime;
-    private LocalDateTime check_in_participant_end_datetime;
+    @JsonAlias("match_report_enabled")
+    private Boolean matchReportEnabled;
+    @JsonAlias("registration_enabled")
+    private Boolean registrationEnabled;
+    @JsonAlias("registration_opening_datetime")
+    private LocalDateTime registrationOpeningDatetime;
+    @JsonAlias("registration_closing_datetime")
+    private LocalDateTime registrationClosingDatetime;
+    @JsonAlias("registration_notification_enabled")
+    private Boolean registrationNotificationEnabled;
+    @JsonAlias("registration_request_message")
+    private String registrationRequestMessage;
+    @JsonAlias("registration_accept_message")
+    private String registrationAcceptMessage;
+    @JsonAlias("registration_refuse_message")
+    private String registrationRefuseMessage;
+    @JsonAlias("check_in_enabled")
+    private Boolean checkInEnabled;
+    @JsonAlias("check_in_participant_enabled")
+    private Boolean checkInParticipantEnabled;
+    @JsonAlias("check_in_participant_start_datetime")
+    private LocalDateTime checkInParticipantStartDatetime;
+    @JsonAlias("check_in_participant_end_datetime")
+    private LocalDateTime checkInParticipantEndDatetime;
 
     public TournamentRequest(String discipline, String name, Integer size, ParticipantType participantType) {
         this(discipline, name, size, participantType, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
