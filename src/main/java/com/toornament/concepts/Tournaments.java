@@ -54,9 +54,13 @@ public class Tournaments extends Concept {
             url.addQueryParameter("name",StringUtils.join(parameters.getCountries(),","));
         if(!parameters.getPlatforms().isEmpty())
             url.addQueryParameter("platforms",StringUtils.join(parameters.getPlatforms(),","));
+        if(!parameters.getIsOnline().toString().isEmpty())
         url.addQueryParameter("is_online",parameters.getIsOnline() ? "1":"0");
+        if(parameters.getScheduledAfter() != null)
         url.addQueryParameter("scheduled_after",parameters.getScheduledAfter().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        if(parameters.getScheduledBefore() != null)
         url.addQueryParameter("scheduled_before",parameters.getScheduledBefore().format(DateTimeFormatter.ISO_LOCAL_DATE));
+        if(!parameters.getSort().toString().isEmpty())
         url.addQueryParameter("sort",parameters.getSort().getName());
 
         Request request = client.getRequestBuilder()

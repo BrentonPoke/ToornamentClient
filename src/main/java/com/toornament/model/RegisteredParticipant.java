@@ -23,7 +23,7 @@ import lombok.Singular;
 public class RegisteredParticipant {
 
     @JsonProperty("custom_fields")
-    private ArrayList<CustomFields> customFields;
+    private CustomFields customFields;
 
     private String id;
 

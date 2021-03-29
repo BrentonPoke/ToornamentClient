@@ -8,14 +8,17 @@ import com.toornament.model.enums.MatchFormat;
 import com.toornament.model.enums.ParticipantType;
 import com.toornament.model.enums.Platforms;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.enums.TournamentStatus;
 import com.toornament.model.request.TournamentQuery;
 import com.toornament.model.request.TournamentRequest;
+import java.time.Month;
 import org.junit.Before;
 import org.junit.Test;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import org.junit.jupiter.api.BeforeEach;
 
 public class TournamentsTests {
     private ToornamentClient client;
@@ -33,11 +36,8 @@ public class TournamentsTests {
 
         headers = new HashMap<>();
     params
-        .discipline("overwatch")
-        .isOnline(false)
-        .scheduledAfter(LocalDate.parse("2018-09-04"))
-        .scheduledBefore(LocalDate.parse("2019-04-05"))
-        .platform(Platforms.PC);
+        .discipline("apex_legends")
+        .isOnline(false);
 
 //        tournamentDetails.setParticipantType(ParticipantType.TEAM);
 //        tournamentDetails.setName("OWL Season 1 TEST");
@@ -64,6 +64,9 @@ public class TournamentsTests {
     @Test
     public void getFeaturedTournamentsTest() {
             headers.put("range","tournaments=0-49");
+    System.out.println(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1));
+    System.out.println(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(),
+        LocalDate.now().getMonth().length(false)));
             List<Tournament> details = client.tournaments().getFeaturedTournaments(params.build(),headers);
 
             ArrayList<Tournament> list = new ArrayList<>(details);

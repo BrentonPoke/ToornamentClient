@@ -23,7 +23,7 @@ public class MatchesTests {
         scopes.add(Scope.ORGANIZER_RESULT);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), scopes);
         client.authorize();
-        details.setId("3348419359666446336");
+        details.setId("4488852705655373824");
         matches = new Matches(client,details);
     }
 

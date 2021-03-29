@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import lombok.SneakyThrows;
-import org.json.JSONArray;
+import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,7 +38,7 @@ public class RegistrationsTest {
         }
     @Test
     public void Registration(){
-            Registrations registration = client.registrations("3563800755903569920");
+            Registrations registration = client.registrations("4488596999271456768");
             RegistrationQueryBuilder query = RegistrationQuery.builder();
             CustomFields fields = new CustomFields();
             fields.setInstagram("brenton_poke");
@@ -47,15 +47,16 @@ public class RegistrationsTest {
             RegisteredParticipant participant = new RegisteredParticipant();
             participant.setName("Terry");
             participant.setCustomUserIdentifier("Batsuit");
+            participant.setEmail("McGinnis@gotham.gov");
             query.type(RegistrationType.TEAM)
                 .name("Batman")
-                .email("McGinnis@gotham.gov")
+                .email("batman@gotham.gov")
                 .customFields(fields)
 //                .customField("discord","Nightwing#1564")
 //                .customField("slack","batman@gotham.gov")
 //                .customField("instagram","McGinnis")
                 .lineup(participant)
-                .tournamentID("3563800755903569920");
+                .tournamentID("4488596999271456768");
 
             registration.register(query.build());
 
@@ -64,23 +65,24 @@ public class RegistrationsTest {
     @SneakyThrows
     @Test
     public void getRegistrationsTest(){
-            Registrations registrations = client.registrations("3563800755903569920");
-            HashMap headers = new HashMap();
+            Registrations registrations = client.registrations("4488596999271456768");
+            HashMap<String, String> headers = new HashMap<>();
             headers.put("range","registrations=0-49");
         List<Registration> participants = registrations.getRegistrations(headers);
             logger.debug("participants: {}",participants);
             logger.debug(participants.get(0).getId());
 
 
-        Assert.assertEquals("McGinnis@gotham.gov", participants.get(0).getEmail());
-
-        JSONArray jsonArray = new JSONArray("[{\"name\":\"Terry\",\"custom_fields\":[],\"custom_user_identifier\":\"Batsuit\"}]");
-        JSONAssert.assertEquals(jsonArray.toString(),participants.get(0).getLineup().toString(),false);
+        Assert.assertEquals("batman@gotham.gov", participants.get(0).getEmail());
+    JSONObject jsonArray =
+        new JSONObject(
+            "{\"name\":\"Terry\",\"custom_fields\":{},\"custom_user_identifier\":\"Batsuit\"}");
+        JSONAssert.assertEquals(jsonArray.toString(),participants.get(0).getLineup().get(0).toString(),false);
         }
     @Test
     public void deleteRegistrationsTest(){
-    Registrations registrations = client.registrations("3563800755903569920");
-        HashMap headers = new HashMap();
+    Registrations registrations = client.registrations("4488596999271456768");
+        HashMap<String, String> headers = new HashMap<>();
         headers.put("range","registrations=0-49");
         List<Registration> participants = registrations.getRegistrations(headers);
         this.registrationID = participants.get(0).getId();
