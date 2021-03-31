@@ -72,7 +72,6 @@ public class TournamentsTests {
 
     // ArrayList<Tournament> list = new ArrayList<>(details);
     System.out.println(details);
-    ;
         assertFalse(details.isEmpty());
     }
 
