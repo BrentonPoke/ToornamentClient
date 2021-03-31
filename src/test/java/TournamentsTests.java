@@ -70,7 +70,7 @@ public class TournamentsTests {
             List<Tournament> details = client.tournaments().getFeaturedTournaments(params.build(),headers);
 
     // ArrayList<Tournament> list = new ArrayList<>(details);
-    details.stream().forEach(a-> System.out.println(a.getScheduledDateStart()));
+    details.forEach(System.out::println);
         assertFalse(details.isEmpty());
     }
 

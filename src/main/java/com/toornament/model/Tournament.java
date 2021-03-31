@@ -14,9 +14,11 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.TimeZone;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode
 public class Tournament {
@@ -53,12 +55,13 @@ public class Tournament {
 
     @Override
     public String toString() {
-        try {
-            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-MM-dd")).withDefaultPrettyPrinter().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
+        return new com.google.gson.Gson().toJson(this);
+//        try {
+//            return new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writer(new SimpleDateFormat("yyyy-MM-dd")).withDefaultPrettyPrinter().writeValueAsString(this);
+//        } catch (JsonProcessingException e) {
+//            System.out.println(e.getMessage());
+//        }
+//        return null;
     }
 
 }
