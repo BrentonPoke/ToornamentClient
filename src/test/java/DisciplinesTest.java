@@ -20,7 +20,6 @@ public class DisciplinesTest {
     public void Setup() throws IOException {
         scopes.add(Scope.ORGANIZER_VIEW);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),scopes);
-        client.authorize();
         disciplines = client.disciplines();
     }
 

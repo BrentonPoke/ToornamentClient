@@ -16,7 +16,7 @@ import java.util.Map;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class TournamentDetails extends Tournament {
 
     @JsonProperty("participant_type")
@@ -55,7 +55,7 @@ public class TournamentDetails extends Tournament {
     @Override
     public String toString() {
         try {
-            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-mm-dd")).writeValueAsString(this);
+            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-MM-dd")).writeValueAsString(this);
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
         }

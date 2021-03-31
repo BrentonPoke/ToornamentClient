@@ -1,5 +1,6 @@
 package com.toornament.concepts;
 
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Custom.Custom;
@@ -29,8 +30,10 @@ public class Tournaments extends Concept {
     private List<Tournament> requestHelper(Request request){
         try {
             String responseBody = client.executeRequest(request).body().string();
-            return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
-                Tournament.class));
+      return mapper
+          .readValue(
+              responseBody,
+              mapper.getTypeFactory().constructCollectionType(List.class, Tournament.class));
         } catch (IOException e) {
             logger.error(e.getMessage());
             throw new ToornamentException("Couldn't retrieve tournaments");

@@ -30,7 +30,6 @@ public class ParticipantsTest {
         scopes.add(Scope.USER_INFO);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
             scopes);
-        client.authorize();
     }
     @Test
     public void getTeamParticipants() {

@@ -26,7 +26,6 @@ public class GroupsTests {
         scopes.add(Scope.ORGANIZER_ADMIN);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
             scopes);
-        client.authorize();
         groups = new Groups(client,"906278647555784704");
         header.put("range","groups=0-49");
         params.stageId(906330006561030144L).stageId(987313089934254080L).stageNumber(1);

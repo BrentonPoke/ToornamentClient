@@ -1,5 +1,7 @@
 package com.toornament;
 
+import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import com.fasterxml.jackson.module.paramnames.ParameterNamesModule;
 import com.toornament.concepts.Disciplines;
 import com.toornament.concepts.FinalStandings;
 import com.toornament.concepts.Groups;
@@ -22,14 +24,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.HashSet;
-import lombok.Getter;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,7 +51,7 @@ public class ToornamentClient {
     this.scope = scope;
     this.httpClient = new OkHttpClient();
     mapper = new ObjectMapper();
-    mapper.registerModule(new JavaTimeModule());
+    mapper.registerModule(new JavaTimeModule()).registerModule(new Jdk8Module()).registerModule(new ParameterNamesModule());
     mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     authorize();
   }
@@ -122,7 +122,7 @@ public class ToornamentClient {
     return new Webhooks(this);
   }
 
-  public void authorize() {
+  private void authorize() {
     ApiTokenRequest tokenRequest =
         new ApiTokenRequest("client_credentials", clientId, clientSecret, scope);
     Request.Builder requestBuilder = new Request.Builder();

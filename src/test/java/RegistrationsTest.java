@@ -33,7 +33,6 @@ public class RegistrationsTest {
     client =
         new ToornamentClient(
             System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), scopes);
-    client.authorize();
 
         }
     @Test

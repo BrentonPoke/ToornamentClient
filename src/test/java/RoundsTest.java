@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
         scopes.add(Scope.ORGANIZER_ADMIN);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
             scopes);
-        client.authorize();
+
         rounds = new Rounds(client,"906278647555784704");
 
     }

@@ -31,10 +31,6 @@ public class Tournament {
     @JsonProperty("scheduled_date_end")
     private LocalDate scheduledDateEnd;
     private TournamentStatus status;
-    @JsonProperty("date_start")
-    private LocalDate dateStart;
-    @JsonProperty("date_end")
-    private LocalDate dateEnd;
     private Boolean online;
     @JsonProperty("public")
     private Boolean isPublic;
@@ -58,7 +54,7 @@ public class Tournament {
     @Override
     public String toString() {
         try {
-            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-mm-dd")).withDefaultPrettyPrinter().writeValueAsString(this);
+            return new ObjectMapper().writer(new SimpleDateFormat("yyyy-MM-dd")).withDefaultPrettyPrinter().writeValueAsString(this);
         } catch (JsonProcessingException e) {
             System.out.println(e.getMessage());
         }

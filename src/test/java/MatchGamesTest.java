@@ -16,7 +16,7 @@ public class MatchGamesTest {
     public void setUp() {
         scopes.add(Scope.ORGANIZER_VIEW);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), scopes);
-        client.authorize();
+
         mapper = new ObjectMapper();
         match = new Match();
         match.setId("989807940598333454");

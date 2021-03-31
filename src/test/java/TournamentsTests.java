@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.toornament.ToornamentClient;
 import com.toornament.model.Stream;
 import com.toornament.model.Tournament;
@@ -32,11 +33,10 @@ public class TournamentsTests {
         scopes.add(Scope.USER_INFO);
         client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"),
             scopes);
-        client.authorize();
 
         headers = new HashMap<>();
     params
-        .discipline("apex_legends")
+        .discipline("leagueoflegends")
         .isOnline(false);
 
 //        tournamentDetails.setParticipantType(ParticipantType.TEAM);
@@ -64,14 +64,14 @@ public class TournamentsTests {
     @Test
     public void getFeaturedTournamentsTest() {
             headers.put("range","tournaments=0-49");
-    System.out.println(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1));
-    System.out.println(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(),
-        LocalDate.now().getMonth().length(false)));
+//    System.out.println(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1));
+//    System.out.println(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(),
+//        LocalDate.now().getMonth().length(false)));
             List<Tournament> details = client.tournaments().getFeaturedTournaments(params.build(),headers);
 
-            ArrayList<Tournament> list = new ArrayList<>(details);
-    System.out.println(list);
-        assertFalse(list.isEmpty());
+    // ArrayList<Tournament> list = new ArrayList<>(details);
+    details.stream().forEach(a-> System.out.println(a.getScheduledDateStart()));
+        assertFalse(details.isEmpty());
     }
 
 //    @Test
