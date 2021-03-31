@@ -1,10 +1,22 @@
 package com.toornament.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.toornament.model.enums.TournamentStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.lang.reflect.Type;
+import java.time.format.DateTimeFormatter;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +30,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @EqualsAndHashCode
 public class Tournament {
@@ -28,8 +39,12 @@ public class Tournament {
     private String name;
     @JsonProperty("full_name")
     private String fullName;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     @JsonProperty("scheduled_date_start")
     private LocalDate scheduledDateStart;
+    @JsonDeserialize(using = LocalDateDeserializer.class)
+    @JsonSerialize(using = LocalDateSerializer.class)
     @JsonProperty("scheduled_date_end")
     private LocalDate scheduledDateEnd;
     private TournamentStatus status;
@@ -55,13 +70,12 @@ public class Tournament {
 
     @Override
     public String toString() {
-        return new com.google.gson.Gson().toJson(this);
-//        try {
-//            return new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writer(new SimpleDateFormat("yyyy-MM-dd")).withDefaultPrettyPrinter().writeValueAsString(this);
-//        } catch (JsonProcessingException e) {
-//            System.out.println(e.getMessage());
-//        }
-//        return null;
+        try {
+            return new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL).writer(new SimpleDateFormat("yyyy-MM-dd")).withDefaultPrettyPrinter().writeValueAsString(this);
+        } catch (JsonProcessingException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
     }
 
 }

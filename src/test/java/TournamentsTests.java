@@ -12,6 +12,7 @@ import com.toornament.model.enums.Scope;
 import com.toornament.model.enums.TournamentStatus;
 import com.toornament.model.request.TournamentQuery;
 import com.toornament.model.request.TournamentRequest;
+import java.sql.SQLOutput;
 import java.time.Month;
 import org.junit.Before;
 import org.junit.Test;
@@ -70,7 +71,8 @@ public class TournamentsTests {
             List<Tournament> details = client.tournaments().getFeaturedTournaments(params.build(),headers);
 
     // ArrayList<Tournament> list = new ArrayList<>(details);
-    details.forEach(System.out::println);
+    System.out.println(details);
+    ;
         assertFalse(details.isEmpty());
     }
 
