@@ -30,11 +30,15 @@ public class Matches extends Concept {
     public List<MatchDetails> getMatches(MatchQuery parameter,String headers) {
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
         logger.debug("Scopes: {}",client.getScope().toString());
-      if (client.getScope().contains(Scope.ORGANIZER_RESULT)) {
+        String scope = "viewer";
+
+      if (client.getScope().contains(Scope.ORGANIZER_RESULT))
+          scope = "organizer";
+
         urlBuilder
             .scheme("https")
             .host("api.toornament.com")
-            .addPathSegment("organizer")
+            .addPathSegment(scope)
             .addPathSegment("v2")
             .addPathSegment("tournaments")
             .addPathSegment(tournament.getId())
@@ -63,7 +67,7 @@ public class Matches extends Concept {
         urlBuilder.addQueryParameter("scheduled_after", parameter.getScheduledAfter().format(RFC_3339));
         urlBuilder.addEncodedQueryParameter("custom_user_identifier", parameter.getCustomUserIdentifier());
         urlBuilder.addQueryParameter("sort", parameter.getSort().getName());
-            }
+
         logger.debug("url: {}",urlBuilder.build().toString());
             Request request = client.getAuthenticatedRequestBuilder()
                 .get()

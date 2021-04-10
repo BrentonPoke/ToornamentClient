@@ -1,6 +1,5 @@
 package com.toornament.concepts;
 
-import com.fasterxml.jackson.databind.MapperFeature;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Custom.Custom;
