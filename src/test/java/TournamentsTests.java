@@ -10,6 +10,7 @@ import com.toornament.model.enums.ParticipantType;
 import com.toornament.model.enums.Platforms;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.enums.TournamentStatus;
+import com.toornament.model.header.TournamentsHeader;
 import com.toornament.model.request.TournamentQuery;
 import com.toornament.model.request.TournamentRequest;
 import java.sql.SQLOutput;
@@ -25,7 +26,7 @@ import org.junit.jupiter.api.BeforeEach;
 public class TournamentsTests {
     private ToornamentClient client;
     private TournamentQuery.TournamentQueryBuilder params = TournamentQuery.builder();
-    private HashMap<String,String> headers;
+    private TournamentsHeader headers;
     private HashSet<Scope> scopes = new HashSet<>();
     private TournamentRequest tournamentRequest = new TournamentRequest();
     private TournamentDetails tournamentDetails = new TournamentDetails();
@@ -35,7 +36,7 @@ public class TournamentsTests {
         client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"),
             scopes);
 
-        headers = new HashMap<>();
+        headers = new TournamentsHeader();
     params
         .discipline("leagueoflegends")
         .isOnline(false);
@@ -64,7 +65,7 @@ public class TournamentsTests {
 
     @Test
     public void getFeaturedTournamentsTest() {
-            headers.put("range","tournaments=0-49");
+            headers.build(0,49);
 //    System.out.println(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(), 1));
 //    System.out.println(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonthValue(),
 //        LocalDate.now().getMonth().length(false)));

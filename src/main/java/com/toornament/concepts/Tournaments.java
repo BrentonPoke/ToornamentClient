@@ -7,6 +7,7 @@ import com.toornament.model.Stream;
 import com.toornament.model.Tournament;
 import com.toornament.model.TournamentDetails;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.header.TournamentsHeader;
 import com.toornament.model.request.TournamentQuery;
 import java.time.format.DateTimeFormatter;
 import okhttp3.HttpUrl;
@@ -39,7 +40,7 @@ public class Tournaments extends Concept {
         }
     }
 
-    public List<Tournament> getFeaturedTournaments(TournamentQuery parameters, Map<String,String> header) {
+    public List<Tournament> getFeaturedTournaments(TournamentQuery parameters, TournamentsHeader header) {
         HttpUrl.Builder url = new HttpUrl.Builder();
         url.scheme("https")
             .host("api.toornament.com")
@@ -68,7 +69,7 @@ public class Tournaments extends Concept {
         Request request = client.getRequestBuilder()
             .get()
             .url(url.build())
-            .addHeader("range",header.get("range"))
+            .addHeader("range",header.get())
             .build();
         return requestHelper(request);
 

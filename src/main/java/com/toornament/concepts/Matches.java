@@ -6,6 +6,7 @@ import com.toornament.model.MatchDetails;
 import com.toornament.model.TournamentDetails;
 import com.toornament.model.enums.MatchStatus;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.header.MatchesHeader;
 import com.toornament.model.request.MatchQuery;
 import java.time.format.DateTimeFormatter;
 import okhttp3.HttpUrl;
@@ -27,7 +28,7 @@ public class Matches extends Concept {
         logger = LoggerFactory.getLogger(this.getClass());
     }
 
-    public List<MatchDetails> getMatches(MatchQuery parameter,String headers) {
+    public List<MatchDetails> getMatches(MatchQuery parameter, MatchesHeader header) {
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
         logger.debug("Scopes: {}",client.getScope().toString());
         String scope = "viewer";
@@ -78,7 +79,7 @@ public class Matches extends Concept {
         request
             .get()
             .url(urlBuilder.build())
-            .addHeader("Range",headers);
+            .addHeader("Range",header.get());
       try{
             String responseBody = client.executeRequest(request.build()).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, MatchDetails.class));

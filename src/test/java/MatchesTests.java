@@ -5,6 +5,7 @@ import com.toornament.concepts.Matches;
 import com.toornament.model.MatchDetails;
 import com.toornament.model.TournamentDetails;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.header.MatchesHeader;
 import com.toornament.model.request.MatchQuery;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +19,7 @@ public class MatchesTests {
     private Matches matches;
     private TournamentDetails details = new TournamentDetails();
     private HashSet<Scope> scopes = new HashSet<>();
+    private MatchesHeader header = new MatchesHeader();
     @Before
     public void Setup() {
         scopes.add(Scope.ORGANIZER_RESULT);
@@ -25,15 +27,18 @@ public class MatchesTests {
 
         details.setId("4488852705655373824");
         matches = new Matches(client,details);
+
     }
 
     @Test
     public void getMatchesTest(){
+        header.build(0,67);
+    System.out.println(header.get());
         System.out.println(ZonedDateTime.parse("2020-03-06T05:57:28+05:00").format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX")));
         List<MatchDetails> result = matches.getMatches(MatchQuery.builder()
             .scheduled(true)
             .scheduledAfter(ZonedDateTime.parse("2020-03-06T05:57:28+05:00"))// TODO: I will need to come back to this, because passing time values is unduly difficult as url parameters.
-            .build(),"matches=0-67");
+            .build(),header);
 
         System.out.println(result);
 
