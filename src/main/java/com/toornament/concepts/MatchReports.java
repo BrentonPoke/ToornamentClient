@@ -5,6 +5,7 @@ import com.toornament.exception.ToornamentException;
 import com.toornament.model.Reports;
 import com.toornament.model.Reports.Report;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.header.ReportsHeader;
 import com.toornament.model.request.ReportsQuery;
 import java.io.IOException;
 import java.util.List;
@@ -22,7 +23,7 @@ public class MatchReports extends Concept {
         this.tournamentID = tournamentID;
         logger = LoggerFactory.getLogger(this.getClass());
     }
-    public List<com.toornament.model.Reports> getReports(String matchID, Map<String,String> header, Map<String,String> paramsMap){
+    public List<com.toornament.model.Reports> getReports(String matchID, ReportsHeader header, Map<String,String> paramsMap){
         Builder urlBuilder = new Builder();
         if(client.getScope().contains(Scope.ORGANIZER_RESULT)){
             urlBuilder
@@ -45,7 +46,7 @@ public class MatchReports extends Concept {
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
             .url(urlBuilder.build())
-            .addHeader("range",header.get("range"))
+            .addHeader("range",header.get())
             .build();
         try {
             String responseBody = client.executeRequest(request).body().string();
