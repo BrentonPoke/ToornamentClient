@@ -5,6 +5,7 @@ import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Standings;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.header.StandingsHeader;
 import com.toornament.model.request.StandingsQuery;
 import java.io.IOException;
 import java.util.List;
@@ -20,7 +21,7 @@ public class FinalStandings extends Concept {
         logger = LoggerFactory.getLogger(this.getClass());
     }
 
-    public List<Standings> getFinalStandings(String range, StandingsQuery query){
+    public List<Standings> getFinalStandings(StandingsQuery query, StandingsHeader header){
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
         Request.Builder requestBuilder;
         String scope = "viewer";
@@ -52,7 +53,7 @@ public class FinalStandings extends Concept {
         Request request = requestBuilder
             .get()
             .url(urlBuilder.build())
-            .addHeader("range",range)
+            .addHeader("range",header.get())
             .build();
         String responseBody = null;
         try {
