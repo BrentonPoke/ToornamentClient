@@ -69,13 +69,18 @@ public class Matches extends Concept {
         urlBuilder.addQueryParameter("sort", parameter.getSort().getName());
 
         logger.debug("url: {}",urlBuilder.build().toString());
-            Request request = client.getAuthenticatedRequestBuilder()
-                .get()
-                .url(urlBuilder.build())
-                .addHeader("Range",headers)
-                .build();
+        Request.Builder request;
+        if(scope.equals("organizer"))
+            request = client.getAuthenticatedRequestBuilder();
+        else
+            request = client.getRequestBuilder();
+
+        request
+            .get()
+            .url(urlBuilder.build())
+            .addHeader("Range",headers);
       try{
-            String responseBody = client.executeRequest(request).body().string();
+            String responseBody = client.executeRequest(request.build()).body().string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, MatchDetails.class));
         } catch (IOException e) {
             logger.error(e.getMessage());
