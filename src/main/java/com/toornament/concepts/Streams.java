@@ -7,6 +7,7 @@ import com.toornament.model.Stream;
 
 import com.toornament.model.Video;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.header.StreamsHeader;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class Streams extends Concept{
         super(client);
         this.tournamentID = tournamentID;
     }
-    public Stream getStreams(Map<String,String> range){
+    public Stream getStreams(StreamsHeader header){
         Builder urlBuilder = new Builder();
         if(client.getScope().contains(Scope.ORGANIZER_ADMIN)){
             urlBuilder
@@ -36,7 +37,7 @@ public class Streams extends Concept{
         Request request = client.getAuthenticatedRequestBuilder()
             .get()
             .url(urlBuilder.build())
-            .addHeader("range",range.get("range"))
+            .addHeader("range",header.get())
             .build();
         try {
             String responseBody = client.executeRequest(request).body().string();

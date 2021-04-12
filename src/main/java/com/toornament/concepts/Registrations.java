@@ -5,6 +5,7 @@ import com.toornament.exception.ToornamentException;
 import com.toornament.model.Registration;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.enums.Sort;
+import com.toornament.model.header.RegistrationsHeader;
 import com.toornament.model.request.RegistrationQuery;
 import java.io.IOException;
 import java.util.List;
@@ -85,12 +86,12 @@ public class Registrations extends Concept {
       }
   }
   public List<Registration> getRegistrations(
-        Map<String, String> header){
+        RegistrationsHeader header){
       return getRegistrations(header, Sort.ASCENDING);
     }
 
   public List<Registration> getRegistrations(
-      Map<String, String> header, Sort sort) {
+      RegistrationsHeader header, Sort sort) {
     HttpUrl.Builder url = new HttpUrl.Builder();
     if (client.getScope().contains(Scope.ORGANIZER_REGISTRATION)) {
       url.scheme("https")
@@ -108,7 +109,7 @@ public class Registrations extends Concept {
             .getAuthenticatedRequestBuilder()
             .get()
             .url(url.build())
-            .addHeader("range", header.get("range"))
+            .addHeader("range", header.get())
             .build();
     return getRegistrationsHelper(request);
   }
@@ -174,7 +175,7 @@ public class Registrations extends Concept {
           .build();
       return client.executeRequest(request).code();
   }
-  public List<Registration> getMyRegistrations(Map<String, String> header, List<Long> tournamentIDs, List<Long> playlistIDs){
+  public List<Registration> getMyRegistrations(RegistrationsHeader header, List<Long> tournamentIDs, List<Long> playlistIDs){
       HttpUrl.Builder url = new HttpUrl.Builder();
       if (client.getScope().contains(Scope.MANAGE_REGISTRATIONS)) {
           url.scheme("https")
@@ -193,7 +194,7 @@ public class Registrations extends Concept {
               .getAuthenticatedRequestBuilder()
               .get()
               .url(url.build())
-              .addHeader("range", header.get("range"))
+              .addHeader("range", header.get())
               .build();
         return getRegistrationsHelper(request);
   }

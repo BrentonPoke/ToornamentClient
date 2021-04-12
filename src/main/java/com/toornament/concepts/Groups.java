@@ -3,6 +3,7 @@ package com.toornament.concepts;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Group;
+import com.toornament.model.header.GroupHeader;
 import com.toornament.model.request.GroupsQuery;
 import java.util.logging.Level;
 import okhttp3.HttpUrl;
@@ -23,7 +24,7 @@ public class Groups extends Concept {
     logger = LoggerFactory.getLogger(this.getClass());
   }
 
-  public List<Group> getGroups(GroupsQuery parameters, Map<String, String> header) {
+  public List<Group> getGroups(GroupsQuery parameters, GroupHeader header) {
     HttpUrl.Builder url =
         new HttpUrl.Builder()
             .scheme("https")
@@ -46,7 +47,7 @@ public class Groups extends Concept {
             .getRequestBuilder()
             .get()
             .url(url.build())
-            .addHeader("range", header.get("range"))
+            .addHeader("range", header.get())
             .build();
     try {
       String responseBody = client.executeRequest(request).body().string();

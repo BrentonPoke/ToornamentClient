@@ -6,9 +6,9 @@ import com.toornament.model.Registration;
 import com.toornament.model.TournamentDetails;
 import com.toornament.model.enums.RegistrationType;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.header.RegistrationsHeader;
 import com.toornament.model.request.RegistrationQuery;
 import com.toornament.model.request.RegistrationQuery.RegistrationQueryBuilder;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import lombok.SneakyThrows;
@@ -25,6 +25,7 @@ public class RegistrationsTest {
     private TournamentDetails details = new TournamentDetails();
     private HashSet<Scope> scopes = new HashSet<>();
     private Logger logger = LoggerFactory.getLogger(this.getClass());
+    RegistrationsHeader headers = new RegistrationsHeader().build(0,49);
     String registrationID = "";
   @Before
   public void Setup() {
@@ -65,8 +66,7 @@ public class RegistrationsTest {
     @Test
     public void getRegistrationsTest(){
             Registrations registrations = client.registrations("4488596999271456768");
-            HashMap<String, String> headers = new HashMap<>();
-            headers.put("range","registrations=0-49");
+
         List<Registration> participants = registrations.getRegistrations(headers);
             logger.debug("participants: {}",participants);
             logger.debug(participants.get(0).getId());
@@ -81,8 +81,6 @@ public class RegistrationsTest {
     @Test
     public void deleteRegistrationsTest(){
     Registrations registrations = client.registrations("4488596999271456768");
-        HashMap<String, String> headers = new HashMap<>();
-        headers.put("range","registrations=0-49");
         List<Registration> participants = registrations.getRegistrations(headers);
         this.registrationID = participants.get(0).getId();
         Assert.assertEquals(204, registrations.deleteRegistration(registrationID));

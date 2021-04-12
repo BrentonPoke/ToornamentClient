@@ -15,7 +15,7 @@ public enum Scope {
     MANAGE_REGISTRATIONS("participant:manage_registrations"),
     ORGANIZER_REGISTRATION("organizer:registration"),
     ORGANIZER_PERMISSION("organizer:permission");
-    private String scope;
+    private final String scope;
     @JsonValue
     public String getScope() {
         return scope;

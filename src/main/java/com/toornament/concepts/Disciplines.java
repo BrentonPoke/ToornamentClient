@@ -5,6 +5,7 @@ import com.toornament.exception.ToornamentException;
 import com.toornament.model.Discipline;
 import com.toornament.model.DisciplineDetails;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.toornament.model.header.DisciplinesHeader;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 
@@ -19,7 +20,7 @@ public class Disciplines extends Concept {
         this.logger = LoggerFactory.getLogger(this.getClass());
     }
 
-    public List<Discipline> getDisciplines(String header) {
+    public List<Discipline> getDisciplines(DisciplinesHeader header) {
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
@@ -30,7 +31,7 @@ public class Disciplines extends Concept {
         Request request = client.getRequestBuilder()
             .get()
             .url(urlBuilder.build())
-            .addHeader("range",header)
+            .addHeader("range",header.get())
 
             .build();
         String responseBody = null;

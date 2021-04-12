@@ -3,6 +3,7 @@ import com.toornament.concepts.Participants;
 import com.toornament.model.Participant;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.enums.Sort;
+import com.toornament.model.header.ParticipantsHeader;
 import com.toornament.model.request.ParticipantQuery;
 import com.toornament.model.request.ParticipantQuery.ParticipantQueryBuilder;
 import java.util.HashSet;
@@ -24,18 +25,20 @@ public class ParticipantsTest {
     private Participants participants;
     private Participant participant;
     private HashSet<Scope> scopes = new HashSet<>();
+    ParticipantsHeader header = new ParticipantsHeader();
     @Before
     public void Setup() throws IOException {
         scopes.add(Scope.MANAGE_PARTICIPANTS);
         scopes.add(Scope.USER_INFO);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
             scopes);
+
+        header.build(0,49);
     }
     @Test
     public void getTeamParticipants() {
         participants = client.participants("906278647555784704");
-        Map<String,String> header = new HashMap<>();
-        header.put("range"," participants=0-49");
+
         ParticipantQueryBuilder params = ParticipantQuery.builder();
         params.name("Outlaws");
         //System.out.println(params.build());
@@ -49,8 +52,7 @@ public class ParticipantsTest {
     @Test
     public void getParticipants() {
         participants = new Participants(client,"1065246192351223808");
-        Map<String,String> header = new HashMap<>();
-        header.put("range"," participants=0-49");
+
         ParticipantQueryBuilder params = ParticipantQuery.builder();
         params.name("Ant").sort(Sort.ALPHABETIC);
 
