@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WebhookSubscription {
     @JsonProperty("event_name")
-    String eventName;
+    Webhook eventName;
     @JsonProperty("scope_id")
     String scopeID;
     String id;
