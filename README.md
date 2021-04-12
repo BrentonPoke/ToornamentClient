@@ -21,7 +21,7 @@ To use the current master branch in your project, add this to your pom.xml
             <version>2.0.5</version>
         </dependency>
 ```
-Finally released to v1.0 and is ready for commentary.
+Finally released to v2.1.0 and is ready for commentary.
 
 ## Terms and Guidelines
 
