@@ -84,7 +84,7 @@ public class MatchGames extends Concept {
 
     public Game updateGame(String number, Game game){
         getURL(number);
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),game.toString());
+        RequestBody requestBody = RequestBody.create(ToornamentClient.JSON,game.toString());
         Request request = client.getAuthenticatedRequestBuilder()
             .patch(requestBody)
             .url(urlBuilder.build())

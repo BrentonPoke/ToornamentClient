@@ -90,7 +90,7 @@ public class Permissions extends Concept {
           .addEncodedPathSegment(tournamentID)
           .addEncodedPathSegment("permissions");
     }
-    RequestBody body = RequestBody.create(MediaType.parse("application/json"), query.toString());
+    RequestBody body = RequestBody.create(ToornamentClient.JSON, query.toString());
     Request request = client.getRequestBuilder().post(body).url(url.build()).build();
 
     try {
@@ -129,7 +129,7 @@ public class Permissions extends Concept {
           "Couldn't create string from List of Attributes: " + e.getMessage());
     }
 
-    RequestBody body = RequestBody.create(MediaType.parse("application/json"), attributeString);
+    RequestBody body = RequestBody.create(ToornamentClient.JSON, attributeString);
     Request request = client.getRequestBuilder().patch(body).url(url.build()).build();
 
     try {

@@ -4,6 +4,7 @@ import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Participant;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.header.ParticipantsHeader;
 import com.toornament.model.request.ParticipantQuery;
 import okhttp3.HttpUrl;
 import okhttp3.HttpUrl.Builder;
@@ -23,13 +24,13 @@ public class Participants extends Concept {
         this.tournamentID = tournamentID;
         logger = LoggerFactory.getLogger(this.getClass());
     }
-    public List<Participant> getTeamParticipants(Map<String,String> header, ParticipantQuery parameters){
+    public List<Participant> getTeamParticipants(ParticipantsHeader header, ParticipantQuery parameters){
         Request request = getRequestHelper(header, parameters);
         return getTeamParticipantsHelper(request);
     }
 
     //Intended for getting participants of non-team games like Hearthstone or Mortal Kombat.
-    public List<Participant> getParticipants(Map<String,String> header, ParticipantQuery parameters){
+    public List<Participant> getParticipants(ParticipantsHeader header, ParticipantQuery parameters){
         Request request = getRequestHelper(header, parameters);
         try {
             String responseBody = client.executeRequest(request).body().string();
@@ -63,7 +64,7 @@ public class Participants extends Concept {
 
     //Uses the Participant API to get other participants associated with the current user token. Requires participant:manage_participations for the scope
 
-    public List<Participant> getMyTeamParticipants(Map<String,String> header, Map<String,String> paramsMap) {
+    public List<Participant> getMyTeamParticipants(ParticipantsHeader header, Map<String,String> paramsMap) {
         Builder urlBuilder = new Builder();
         logger.debug("Scopes: {}",client.getScope().toString());
     if (client.getScope().contains(Scope.MANAGE_PARTICIPANTS)) {
@@ -81,7 +82,7 @@ public class Participants extends Concept {
         Request request = client.getRequestBuilder()
             .get()
             .url(urlBuilder.build())
-            .addHeader("range",header.get("range"))
+            .addHeader("range",header.get())
             .build();
 
         return getTeamParticipantsHelper(request);
@@ -187,7 +188,7 @@ public class Participants extends Concept {
         }
     }
 
-    private Request getRequestHelper(Map<String, String> header, ParticipantQuery parameters) {
+    private Request getRequestHelper(ParticipantsHeader header, ParticipantQuery parameters) {
         HttpUrl.Builder url = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
@@ -203,7 +204,7 @@ public class Participants extends Concept {
         return client.getRequestBuilder()
             .get()
             .url(url.build())
-            .addHeader("range", header.get("range"))
+            .addHeader("range", header.get())
             .build();
     }
 }

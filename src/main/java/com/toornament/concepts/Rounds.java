@@ -4,6 +4,7 @@ import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Round;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.header.RoundsHeader;
 import com.toornament.model.request.RoundsQuery;
 import lombok.Getter;
 import okhttp3.HttpUrl;
@@ -24,7 +25,7 @@ public class Rounds extends Concept {
         logger = LoggerFactory.getLogger(this.getClass());
     }
 
-    public List<Round> getRounds(RoundsQuery parameter, Map<String,String> header) {
+    public List<Round> getRounds(RoundsQuery parameter, RoundsHeader header) {
 
         HttpUrl.Builder url = new HttpUrl.Builder();
         String scope = "viewer";
@@ -53,13 +54,13 @@ public class Rounds extends Concept {
             request = client.getAuthenticatedRequestBuilder()
             .get()
             .url(url.build())
-            .addHeader("range",header.get("range"))
+            .addHeader("range",header.get())
             .build();
         else
             request = client.getRequestBuilder()
                 .get()
                 .url(url.build())
-                .addHeader("range",header.get("range"))
+                .addHeader("range",header.get())
                 .build();
         try {
         String responseBody = client.executeRequest(request).body().string();
