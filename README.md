@@ -18,7 +18,7 @@ To use the current master branch in your project, add this to your pom.xml
 	<dependency>
             <groupId>com.github.BrentonPoke</groupId>
             <artifactId>ToornamentClient</artifactId>
-            <version>2.0.5</version>
+            <version>2.1.0</version>
         </dependency>
 ```
 Finally released to v2.1.0 and is ready for commentary.
