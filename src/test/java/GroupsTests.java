@@ -2,7 +2,7 @@ import com.toornament.ToornamentClient;
 import com.toornament.concepts.Groups;
 import com.toornament.model.Group;
 import com.toornament.model.enums.Scope;
-import com.toornament.model.header.GroupHeader;
+import com.toornament.model.header.GroupsHeader;
 import com.toornament.model.request.GroupsQuery;
 import com.toornament.model.request.GroupsQuery.GroupsQueryBuilder;
 import java.util.HashSet;
@@ -20,7 +20,7 @@ public class GroupsTests {
     private ToornamentClient client;
     private Groups groups;
     private GroupsQueryBuilder params = GroupsQuery.builder();
-    private GroupHeader header = new GroupHeader();
+    private GroupsHeader header = new GroupsHeader();
     private HashSet<Scope> scopes = new HashSet<>();
     @Before
     public void Setup() throws IOException {

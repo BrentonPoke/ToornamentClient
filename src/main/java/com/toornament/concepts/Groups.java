@@ -3,15 +3,15 @@ package com.toornament.concepts;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Group;
-import com.toornament.model.header.GroupHeader;
+import com.toornament.model.header.GroupsHeader;
 import com.toornament.model.request.GroupsQuery;
-import java.util.logging.Level;
+
 import okhttp3.HttpUrl;
 import okhttp3.Request;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 
@@ -24,7 +24,7 @@ public class Groups extends Concept {
     logger = LoggerFactory.getLogger(this.getClass());
   }
 
-  public List<Group> getGroups(GroupsQuery parameters, GroupHeader header) {
+  public List<Group> getGroups(GroupsQuery parameters, GroupsHeader header) {
     HttpUrl.Builder url =
         new HttpUrl.Builder()
             .scheme("https")
