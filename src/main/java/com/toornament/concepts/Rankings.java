@@ -4,6 +4,7 @@ import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.RankingItem;
 import com.toornament.model.enums.Scope;
+import com.toornament.model.header.RankingsHeader;
 import com.toornament.model.request.RankingItemQuery;
 import java.io.IOException;
 import java.util.List;
@@ -21,7 +22,7 @@ public class Rankings extends Concept {
       logger = LoggerFactory.getLogger(this.getClass());
   }
 
-  List<RankingItem> getRankingItems(RankingItemQuery query, Map<String,String> header, String stageID) {
+  List<RankingItem> getRankingItems(RankingItemQuery query, RankingsHeader header, String stageID) {
     Builder urlBuilder = new Builder();
     if (client.getScope().contains(Scope.ORGANIZER_RESULT)) {
       urlBuilder
@@ -44,7 +45,7 @@ public class Rankings extends Concept {
       Request request = client.getRequestBuilder()
           .get()
           .url(urlBuilder.build())
-          .addHeader("range",header.get("range"))
+          .addHeader("range",header.get())
           .build();
       try {
           String responseBody = client.executeRequest(request).body().string();

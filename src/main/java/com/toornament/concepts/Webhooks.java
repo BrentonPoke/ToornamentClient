@@ -4,6 +4,7 @@ import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Webhook;
 import com.toornament.model.WebhookSubscription;
+import com.toornament.model.header.WebhooksHeader;
 import com.toornament.model.request.WebhookQuery;
 import com.toornament.model.request.WebhookSubscriptionQuery;
 import java.io.IOException;
@@ -21,7 +22,7 @@ public Webhooks(ToornamentClient client){
     logger = LoggerFactory.getLogger(this.getClass());
 }
 
-public List<Webhook> getWebhooks(Map<String,String> range){
+public List<Webhook> getWebhooks(WebhooksHeader range){
     HttpUrl.Builder url = new HttpUrl.Builder();
         url.scheme("https")
             .host("api.toornament.com")
@@ -31,7 +32,7 @@ public List<Webhook> getWebhooks(Map<String,String> range){
     Request request = client.getAuthenticatedRequestBuilder()
         .get()
         .url(url.build())
-        .addHeader("range",range.get("range"))
+        .addHeader("range",range.get())
         .build();
     try {
         String responseBody = client.executeRequest(request).body().string();
