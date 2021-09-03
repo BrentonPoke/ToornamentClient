@@ -24,7 +24,7 @@ public class Disciplines extends Concept {
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
-            .addPathSegment("viewer")
+            .addPathSegment("organizer")
             .addPathSegment("v2")
             .addPathSegment("disciplines");
 
@@ -32,7 +32,6 @@ public class Disciplines extends Concept {
             .get()
             .url(urlBuilder.build())
             .addHeader("range",header.get())
-
             .build();
         String responseBody = null;
         try {
@@ -51,10 +50,10 @@ public class Disciplines extends Concept {
             HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
                 .scheme("https")
                 .host("api.toornament.com")
-                .addEncodedPathSegment("viewer")
-                .addEncodedPathSegment("v2")
-                .addEncodedPathSegment("disciplines")
-                .addEncodedPathSegment(id);
+                .addPathSegment("organizer")
+                .addPathSegment("v2")
+                .addPathSegment("disciplines")
+                .addPathSegment(id);
             Request request = client.getRequestBuilder()
                 .get()
                 .url(urlBuilder.build())
