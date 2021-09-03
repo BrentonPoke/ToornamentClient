@@ -24,26 +24,22 @@ public class FinalStandings extends Concept {
     public List<Standings> getFinalStandings(StandingsQuery query, StandingsHeader header){
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
         Request.Builder requestBuilder;
-        String scope = "viewer";
+        String scope = "";
 
     if (client.getScope().contains(Scope.ORGANIZER_RESULT))
         scope = "organizer";
+    else throw new ToornamentException("Wrong scope, expecting "+Scope.ORGANIZER_RESULT + " for call");
 
       urlBuilder
           .scheme("https")
           .host("api.toornament.com")
           .addEncodedPathSegment(scope)
           .addEncodedPathSegment("v2")
-          .addEncodedPathSegment("standings");
+          .addEncodedPathSegment("standing-items");
 
-    if(scope.equals("viewer")){
 
-        logger.debug("url: {}",urlBuilder.build().toString());
-        requestBuilder = client.getRequestBuilder();
-    } else {
-        logger.debug("url: {}",urlBuilder.build().toString());
+        logger.debug("url: {}",urlBuilder.build());
         requestBuilder = client.getAuthenticatedRequestBuilder();
-    }
 
         if(!query.getParticipantIds().isEmpty())
             urlBuilder.addQueryParameter("participant_ids", StringUtils.join(query.getParticipantIds(),","));
@@ -62,7 +58,7 @@ public class FinalStandings extends Concept {
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
                 Standings.class));
         } catch (IOException e) {
-            ToornamentException exception =new ToornamentException("Couldn't retrieve standings");
+            ToornamentException exception = new ToornamentException("Couldn't retrieve standings");
             exception.setError(e.getMessage());
             throw exception;
         }
