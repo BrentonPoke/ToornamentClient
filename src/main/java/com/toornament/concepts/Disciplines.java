@@ -5,6 +5,7 @@ import com.toornament.exception.ToornamentException;
 import com.toornament.model.Discipline;
 import com.toornament.model.DisciplineDetails;
 import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.toornament.model.enums.Scope;
 import com.toornament.model.header.DisciplinesHeader;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -21,6 +22,7 @@ public class Disciplines extends Concept {
     }
 
     public List<Discipline> getDisciplines(DisciplinesHeader header) {
+        checkScope(Scope.ORGANIZER_RESULT);
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
@@ -47,6 +49,7 @@ public class Disciplines extends Concept {
 
     public DisciplineDetails getDiscipline(String id) {
 
+            checkScope(Scope.ORGANIZER_RESULT);
             HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
                 .scheme("https")
                 .host("api.toornament.com")

@@ -14,6 +14,9 @@ public class GroupsQuery {
     @JsonProperty("stage_ids")
     List<Long> stageIds;
     @Singular
+    @JsonProperty("tournament_ids")
+    List<Long> tournamentIDs;
+    @Singular
     @JsonProperty("stage_numbers")
     List<Integer> stageNumbers;
 }

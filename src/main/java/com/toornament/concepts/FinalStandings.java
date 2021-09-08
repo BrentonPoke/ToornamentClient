@@ -24,16 +24,13 @@ public class FinalStandings extends Concept {
     public List<Standings> getFinalStandings(StandingsQuery query, StandingsHeader header){
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
         Request.Builder requestBuilder;
-        String scope = "";
 
-    if (client.getScope().contains(Scope.ORGANIZER_RESULT))
-        scope = "organizer";
-    else throw new ToornamentException("Wrong scope, expecting "+Scope.ORGANIZER_RESULT + " for call");
+        checkScope(Scope.ORGANIZER_RESULT);
 
       urlBuilder
           .scheme("https")
           .host("api.toornament.com")
-          .addEncodedPathSegment(scope)
+          .addEncodedPathSegment("organizer")
           .addEncodedPathSegment("v2")
           .addEncodedPathSegment("standing-items");
 

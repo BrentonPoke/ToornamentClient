@@ -3,6 +3,7 @@ package com.toornament.concepts;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.Group;
+import com.toornament.model.enums.Scope;
 import com.toornament.model.header.GroupsHeader;
 import com.toornament.model.request.GroupsQuery;
 
@@ -25,22 +26,24 @@ public class Groups extends Concept {
   }
 
   public List<Group> getGroups(GroupsQuery parameters, GroupsHeader header) {
+
+    checkScope(Scope.ORGANIZER_RESULT);
     HttpUrl.Builder url =
         new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
-            .addEncodedPathSegment("viewer")
-            .addEncodedPathSegment("v2")
-            .addEncodedPathSegment("tournaments")
-            .addEncodedPathSegment(tournamentID)
-            .addEncodedPathSegment("groups");
+            .addPathSegment("organizer")
+            .addPathSegment("v2")
+            .addPathSegment("groups");
 
     if (!parameters.getStageIds().isEmpty())
       url.addQueryParameter("stage_ids", StringUtils.join(parameters.getStageIds(), ","));
     if (!parameters.getStageNumbers().isEmpty())
       url.addQueryParameter("stage_numbers", StringUtils.join(parameters.getStageNumbers(), ","));
+    if (!parameters.getStageNumbers().isEmpty())
+      url.addQueryParameter("tournament_ids", StringUtils.join(parameters.getStageNumbers(), ","));
 
-    logger.debug("url: {}",url.build().toString());
+    logger.debug("url: {}",url.build());
 
     Request request =
         client
@@ -60,14 +63,13 @@ public class Groups extends Concept {
   }
 
   public Group getGroup(String groupID) {
+    checkScope(Scope.ORGANIZER_RESULT);
     HttpUrl.Builder urlBuilder =
         new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
-            .addPathSegment("viewer")
+            .addPathSegment("organizer")
             .addPathSegment("v2")
-            .addPathSegment("tournaments")
-            .addPathSegment(tournamentID)
             .addPathSegment("groups")
             .addPathSegment(groupID);
     Request request = client.getRequestBuilder().get().url(urlBuilder.build()).build();
