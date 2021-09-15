@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.Singular;
+@Getter
 @Builder
 public class BracketQuery {
     @Singular

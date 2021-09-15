@@ -40,7 +40,7 @@ public class Groups extends Concept {
       url.addQueryParameter("stage_ids", StringUtils.join(parameters.getStageIds(), ","));
     if (!parameters.getStageNumbers().isEmpty())
       url.addQueryParameter("stage_numbers", StringUtils.join(parameters.getStageNumbers(), ","));
-    if (!parameters.getStageNumbers().isEmpty())
+    if (!parameters.getTournamentIDs().isEmpty())
       url.addQueryParameter("tournament_ids", StringUtils.join(parameters.getStageNumbers(), ","));
 
     logger.debug("url: {}",url.build());
