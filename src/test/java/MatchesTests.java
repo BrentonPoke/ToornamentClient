@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MatchesTests {
     private ToornamentClient client;
@@ -40,7 +42,8 @@ public class MatchesTests {
             .scheduledAfter(ZonedDateTime.parse("2020-03-06T05:57:28+05:00"))// TODO: I will need to come back to this, because passing time values is unduly difficult as url parameters.
             .build(),header);
 
-        System.out.println(result);
+        Logger logger = LoggerFactory.getLogger(this.getClass().getName());
+        logger.info(String.valueOf(result));
 
         assertFalse(result.isEmpty());
 

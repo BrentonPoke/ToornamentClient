@@ -9,6 +9,7 @@ import com.toornament.model.enums.Scope;
 import com.toornament.model.header.MatchesHeader;
 import com.toornament.model.request.MatchQuery;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import okhttp3.HttpUrl;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -31,18 +32,15 @@ public class Matches extends Concept {
     public List<MatchDetails> getMatches(MatchQuery parameter, MatchesHeader header) {
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
         logger.debug("Scopes: {}",client.getScope().toString());
-        String scope = "viewer";
-
-      if (client.getScope().contains(Scope.ORGANIZER_RESULT))
-          scope = "organizer";
+        //These calls check to see if the current object contains the specified scope.
+      checkScope(Scope.ORGANIZER_RESULT);
 
         urlBuilder
             .scheme("https")
             .host("api.toornament.com")
-            .addPathSegment(scope)
+            .addPathSegment("organizer")
             .addPathSegment("v2")
             .addPathSegment("tournaments")
-            .addPathSegment(tournament.getId())
             .addPathSegment("matches");
         if(!parameter.getStageIds().isEmpty())
         urlBuilder.addQueryParameter("stage_ids", StringUtils.join(parameter.getStageIds(), ","));
@@ -70,18 +68,15 @@ public class Matches extends Concept {
         urlBuilder.addQueryParameter("sort", parameter.getSort().getName());
 
         logger.debug("url: {}",urlBuilder.build().toString());
-        Request.Builder request;
-        if(scope.equals("organizer"))
-            request = client.getAuthenticatedRequestBuilder();
-        else
-            request = client.getRequestBuilder();
+        Request.Builder request = client.getAuthenticatedRequestBuilder();
 
         request
             .get()
             .url(urlBuilder.build())
             .addHeader("Range",header.get());
       try{
-            String responseBody = client.executeRequest(request.build()).body().string();
+            String responseBody = Objects.requireNonNull(
+                client.executeRequest(request.build()).body()).string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class, MatchDetails.class));
         } catch (IOException e) {
             logger.error(e.getMessage());
@@ -91,44 +86,40 @@ public class Matches extends Concept {
 
 public MatchDetails updateMatch(MatchDetails details, String matchId){
     HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
-    if(client.getScope().contains(Scope.ORGANIZER_RESULT)){
+    checkScope(Scope.ORGANIZER_RESULT);
         urlBuilder
             .scheme("https")
             .host("api.toornament.com")
             .addPathSegment("organizer")
             .addPathSegment("v2")
-            .addPathSegment("tournaments")
-            .addPathSegment(tournament.getId())
             .addPathSegment("matches")
             .addPathSegment(matchId);
 
-    }
+
     logger.debug("url: {}",urlBuilder.build().toString());
     RequestBody body = RequestBody.create(MediaType.parse("Application/Json"),details.toString());
-    Request request = client.getRequestBuilder().patch(body).build();
+    Request request = client.getAuthenticatedRequestBuilder().patch(body).build();
     return matchDetailsHelper(request);
 }
 
     public MatchDetails getMatch(String matchId){
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
-
+        checkScope(Scope.ORGANIZER_RESULT);
         urlBuilder
             .scheme("https")
             .host("api.toornament.com")
-            .addPathSegment("viewer")
+            .addPathSegment("organizer")
             .addPathSegment("v2")
-            .addPathSegment("tournaments")
-            .addPathSegment(tournament.getId())
             .addPathSegment("matches")
             .addPathSegment(matchId);
-        Request request = client.getRequestBuilder().get().url(urlBuilder.toString()).build();
+        Request request = client.getAuthenticatedRequestBuilder().get().url(urlBuilder.toString()).build();
         return matchDetailsHelper(request);
 
     }
     private MatchDetails matchDetailsHelper(Request request) {
         try {
 
-            String responseBody = client.executeRequest(request).body().string();
+            String responseBody = Objects.requireNonNull(client.executeRequest(request).body()).string();
             return mapper
                 .readValue(responseBody, mapper.getTypeFactory().constructType(MatchDetails.class));
         } catch (IOException | NullPointerException e) {
