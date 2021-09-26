@@ -10,6 +10,7 @@ import com.toornament.model.enums.Scope;
 import com.toornament.model.header.TournamentsHeader;
 import com.toornament.model.request.TournamentQuery;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 import okhttp3.HttpUrl;
 import okhttp3.HttpUrl.Builder;
 import okhttp3.MediaType;
@@ -29,7 +30,7 @@ public class Tournaments extends Concept {
 
     private List<Tournament> requestHelper(Request request){
         try {
-            String responseBody = client.executeRequest(request).body().string();
+            String responseBody = Objects.requireNonNull(client.executeRequest(request).body()).string();
       return mapper
           .readValue(
               responseBody,
@@ -111,7 +112,7 @@ public class Tournaments extends Concept {
             .addHeader("range",range.get("range"))
             .build();
         try {
-            String responseBody = client.executeRequest(request).body().string();
+            String responseBody = Objects.requireNonNull(client.executeRequest(request).body()).string();
             return mapper.readValue(responseBody, mapper.getTypeFactory().constructCollectionType(List.class,
                 Stream.class));
         } catch (IOException | NullPointerException e) {
