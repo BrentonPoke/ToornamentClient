@@ -4,11 +4,13 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-
+//This will double as a query object as well as a response. That's partly why it's in its own package
 @Data
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Custom {
 
@@ -23,9 +25,9 @@ public class Custom {
     @JsonProperty("default_value")
     public String defaultValue;
     @JsonProperty("required")
-    public String required;
+    public Boolean required;
     @JsonProperty("public")
-    public String _public;
+    public Boolean _public;
     @JsonProperty("position")
     public Integer position;
     public String id;
