@@ -17,11 +17,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 
 public class Groups extends Concept {
-  private String tournamentID;
 
-  public Groups(ToornamentClient client, String tournamentID) {
+  public Groups(ToornamentClient client) {
     super(client);
-    this.tournamentID = tournamentID;
     logger = LoggerFactory.getLogger(this.getClass());
   }
 

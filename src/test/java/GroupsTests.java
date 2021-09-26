@@ -27,7 +27,7 @@ public class GroupsTests {
         scopes.add(Scope.ORGANIZER_ADMIN);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
             scopes);
-        groups = new Groups(client,"906278647555784704");
+        groups = new Groups(client);
         header.build(0,49);
         params.stageId(906330006561030144L).stageId(987313089934254080L).stageNumber(1);
 
@@ -35,13 +35,13 @@ public class GroupsTests {
     @Test
     public void getGroupsV2Test(){
         List<Group> groupList = groups.getGroups(params.build(),header);
-        assertTrue(groupList.get(0).getNumber() == 1);
+        assertEquals(1, (int) groupList.get(0).getNumber());
     }
 
     @Test
     public void getGroupTest(){
         Group group = groups.getGroup("986865420542550016");
-        assertTrue(group.getNumber() == 1);
+        assertEquals(1, (int) group.getNumber());
         assertTrue(group.getStageID().matches("906330006561030144"));
     }
 }

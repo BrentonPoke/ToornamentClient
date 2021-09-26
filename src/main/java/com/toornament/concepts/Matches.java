@@ -3,7 +3,6 @@ package com.toornament.concepts;
 import com.toornament.ToornamentClient;
 import com.toornament.exception.ToornamentException;
 import com.toornament.model.MatchDetails;
-import com.toornament.model.TournamentDetails;
 import com.toornament.model.enums.MatchStatus;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.header.MatchesHeader;
@@ -21,11 +20,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 
 public class Matches extends Concept {
-    private TournamentDetails tournament;
     private static final DateTimeFormatter RFC_3339 = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
-    public Matches(ToornamentClient client, TournamentDetails tournament) {
+    public Matches(ToornamentClient client) {
         super(client);
-        this.tournament = tournament;
         logger = LoggerFactory.getLogger(this.getClass());
     }
 

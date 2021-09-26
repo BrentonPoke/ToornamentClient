@@ -16,7 +16,6 @@ import com.toornament.concepts.Streams;
 import com.toornament.concepts.Tournaments;
 import com.toornament.concepts.Users;
 import com.toornament.concepts.Webhooks;
-import com.toornament.model.TournamentDetails;
 import com.toornament.model.enums.Scope;
 import com.toornament.model.request.ApiTokenRequest;
 import com.toornament.model.response.ApiTokenResponse;
@@ -78,12 +77,12 @@ public class ToornamentClient {
     return new Disciplines(this);
   }
 
-  public Matches matches(TournamentDetails tournament) {
-    return new Matches(this, tournament);
+  public Matches matches() {
+    return new Matches(this);
   }
 
-  public Groups groups(String tournamentId) {
-    return new Groups(this, tournamentId);
+  public Groups groups() {
+    return new Groups(this);
   }
 
   public FinalStandings finalStandings() {
