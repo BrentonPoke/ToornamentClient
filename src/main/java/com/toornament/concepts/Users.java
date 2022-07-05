@@ -16,7 +16,7 @@ public class Users extends Concept {
     public User getUser(){
         Builder url = new Builder();
         logger.debug("Scopes: {}",client.getScope().toString());
-        if (client.getScope().contains(Scope.USER_INFO)) {
+        if (client.getScope().contains(Scope.ORGANIZER_PARTICIPANT)) {
             url.scheme("https")
                 .host("api.toornament.com")
                 .addEncodedPathSegment("account")

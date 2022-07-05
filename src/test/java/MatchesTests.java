@@ -28,7 +28,7 @@ public class MatchesTests {
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"), scopes);
 
         details.setId("4488852705655373824");
-        matches = new Matches(client,details);
+        matches = new Matches(client);
 
     }
 

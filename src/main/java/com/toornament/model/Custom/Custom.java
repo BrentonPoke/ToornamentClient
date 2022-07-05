@@ -4,18 +4,22 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 //This will double as a query object as well as a response. That's partly why it's in its own package
-@Data
+
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Custom {
 
     @JsonProperty("machine_name")
-    private String machineName;
+    public String machineName;
     @JsonProperty("label")
     public String label;
     @JsonProperty("target_type")

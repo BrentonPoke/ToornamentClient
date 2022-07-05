@@ -20,7 +20,7 @@ public class DisciplinesTest {
     private HashSet<Scope> scopes = new HashSet<>();
     @Before
     public void Setup() throws IOException {
-        scopes.add(Scope.ORGANIZER_VIEW);
+        scopes.add(Scope.ORGANIZER_RESULT);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),scopes);
         disciplines = client.disciplines();
         disciplineHeader = new DisciplinesHeader();
@@ -31,7 +31,7 @@ public class DisciplinesTest {
         List<Discipline> list = disciplines.getDisciplines(disciplineHeader.build(200,249));
     System.out.println(list);
 
-        assertTrue(!list.isEmpty());
+        assertFalse(list.isEmpty());
 
     }
 

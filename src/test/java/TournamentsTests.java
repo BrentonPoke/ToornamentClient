@@ -32,7 +32,7 @@ public class TournamentsTests {
     private TournamentDetails tournamentDetails = new TournamentDetails();
     @Before
     public void Setup() throws IOException {
-        scopes.add(Scope.USER_INFO);
+        scopes.add(Scope.ORGANIZER_RESULT);
         client = new ToornamentClient(System.getenv("KEY"),System.getenv("CLIENT"),System.getenv("SECRET"),
             scopes);
 

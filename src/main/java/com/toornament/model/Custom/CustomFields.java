@@ -23,8 +23,8 @@ import lombok.Singular;
  * that may be optional and not filled in.
  */
 @EqualsAndHashCode(callSuper = true)
-@Data
-@NoArgsConstructor
+@Getter
+@Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomFields extends Custom {
@@ -80,6 +80,17 @@ public class CustomFields extends Custom {
     private Boolean optin;
     private String website;
     private Logo logo;
+
+    public CustomFields(String machineName, String label, String targetType, String type,
+        String defaultValue,
+        Boolean required, Boolean _public, Integer position, String id) {
+        super(machineName, label, targetType, type, defaultValue, required, _public, position, id);
+    }
+
+    public CustomFields() {
+        super();
+    }
+
     public String toString() {
         try {
             return new ObjectMapper()

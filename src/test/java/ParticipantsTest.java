@@ -28,8 +28,8 @@ public class ParticipantsTest {
     ParticipantsHeader header = new ParticipantsHeader();
     @Before
     public void Setup() throws IOException {
-        scopes.add(Scope.MANAGE_PARTICIPANTS);
-        scopes.add(Scope.USER_INFO);
+        scopes.add(Scope.ORGANIZER_PARTICIPANT);
+        scopes.add(Scope.ORGANIZER_RESULT);
         client = new ToornamentClient(System.getenv("KEY"), System.getenv("CLIENT"), System.getenv("SECRET"),
             scopes);
 

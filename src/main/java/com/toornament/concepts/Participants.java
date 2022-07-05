@@ -67,7 +67,7 @@ public class Participants extends Concept {
     public List<Participant> getMyTeamParticipants(ParticipantsHeader header, Map<String,String> paramsMap) {
         Builder urlBuilder = new Builder();
         logger.debug("Scopes: {}",client.getScope().toString());
-    if (client.getScope().contains(Scope.MANAGE_PARTICIPANTS)) {
+    if (client.getScope().contains(Scope.ORGANIZER_PARTICIPANT)) {
       urlBuilder.scheme("https")
           .host("api.toornament.com")
           .addEncodedPathSegment("participant")
@@ -143,16 +143,7 @@ public class Participants extends Concept {
     private Builder participantHelper(String id) {
         Builder url = new Builder();
         logger.debug("Scopes: {}",client.getScope().toString());
-        if (client.getScope().contains(Scope.MANAGE_PARTICIPANTS)) {
-            url
-                .scheme("https")
-                .host("api.toornament.com")
-                .addEncodedPathSegment("participant")
-                .addEncodedPathSegment("v2")
-                .addEncodedPathSegment("me")
-                .addEncodedPathSegment("participants")
-                .addEncodedPathSegment(id);
-        } else if (client.getScope().contains(Scope.ORGANIZER_PARTICIPANT)) {
+        if (client.getScope().contains(Scope.ORGANIZER_PARTICIPANT)) {
             url
                 .scheme("https")
                 .host("api.toornament.com")

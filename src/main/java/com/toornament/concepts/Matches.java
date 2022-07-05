@@ -53,14 +53,14 @@ public class Matches extends Concept {
         urlBuilder.addQueryParameter("statuses", s.deleteCharAt(s.length()-1).toString());
         }
         if(!parameter.getParticipantIds().isEmpty())
-        urlBuilder.addQueryParameter(
+            urlBuilder.addQueryParameter(
             "participant_ids", StringUtils.join(parameter.getParticipantIds(), ","));
         if(parameter.getScheduled() != null)
-        urlBuilder.addQueryParameter("is_scheduled", parameter.getScheduled() ? "1" : "0");
+            urlBuilder.addQueryParameter("is_scheduled", parameter.getScheduled() ? "1" : "0");
         if(parameter.getScheduledBefore() != null)
-        urlBuilder.addQueryParameter("scheduled_before", parameter.getScheduledBefore().format(RFC_3339));
+            urlBuilder.addQueryParameter("scheduled_before", parameter.getScheduledBefore().format(RFC_3339));
         if(parameter.getScheduledAfter() != null)
-        urlBuilder.addQueryParameter("scheduled_after", parameter.getScheduledAfter().format(RFC_3339));
+            urlBuilder.addQueryParameter("scheduled_after", parameter.getScheduledAfter().format(RFC_3339));
         urlBuilder.addEncodedQueryParameter("custom_user_identifier", parameter.getCustomUserIdentifier());
         urlBuilder.addQueryParameter("sort", parameter.getSort().getName());
 

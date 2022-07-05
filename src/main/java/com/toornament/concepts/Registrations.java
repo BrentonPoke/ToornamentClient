@@ -38,16 +38,7 @@ public class Registrations extends Concept {
           .addPathSegment("organizer")
           .addPathSegment("v2")
           .addPathSegment("tournaments")
-          .addPathSegment(tournamentID)
           .addPathSegment("registrations");
-    } else if (client.getScope().contains(Scope.MANAGE_REGISTRATIONS)){
-        urlBuilder.scheme("https")
-            .host("api.toornament.com")
-            .addPathSegment("participant")
-            .addPathSegment("v2")
-            .addPathSegment("me")
-            .addPathSegment("registrations");
-
     }
 
       logger.debug("url: {}",urlBuilder.build().toString());
@@ -139,18 +130,8 @@ public class Registrations extends Concept {
                 .addEncodedPathSegment("organizer")
                 .addEncodedPathSegment("v2")
                 .addEncodedPathSegment("tournaments")
-                .addEncodedPathSegment(tournamentID)
                 .addEncodedPathSegment("registrations")
                 .addEncodedPathSegment(id);
-        } else if (client.getScope().contains(Scope.MANAGE_REGISTRATIONS)) {
-            url.scheme("https")
-                .host("api.toornament.com")
-                .addEncodedPathSegment("participant")
-                .addEncodedPathSegment("v2")
-                .addEncodedPathSegment("me")
-                .addEncodedPathSegment("registrations")
-                .addEncodedPathSegment(id);
-
         }
         return url;
     }
@@ -175,29 +156,29 @@ public class Registrations extends Concept {
           .build();
       return client.executeRequest(request).code();
   }
-  public List<Registration> getMyRegistrations(RegistrationsHeader header, List<Long> tournamentIDs, List<Long> playlistIDs){
-      HttpUrl.Builder url = new HttpUrl.Builder();
-      if (client.getScope().contains(Scope.MANAGE_REGISTRATIONS)) {
-          url.scheme("https")
-              .host("api.toornament.com")
-              .addEncodedPathSegment("participant")
-              .addEncodedPathSegment("v2")
-              .addEncodedPathSegment("me")
-              .addEncodedPathSegment("registrations");
-
-          url.addQueryParameter("tournament_ids", StringUtils.join(tournamentIDs,","))
-              .addQueryParameter("playlist_ids",StringUtils.join(playlistIDs,","));
-      }
-
-      Request request =
-          client
-              .getAuthenticatedRequestBuilder()
-              .get()
-              .url(url.build())
-              .addHeader("range", header.get())
-              .build();
-        return getRegistrationsHelper(request);
-  }
+//  public List<Registration> getMyRegistrations(RegistrationsHeader header, List<Long> tournamentIDs, List<Long> playlistIDs){
+//      HttpUrl.Builder url = new HttpUrl.Builder();
+//      if (client.getScope().contains(Scope.MANAGE_REGISTRATIONS)) {
+//          url.scheme("https")
+//              .host("api.toornament.com")
+//              .addEncodedPathSegment("participant")
+//              .addEncodedPathSegment("v2")
+//              .addEncodedPathSegment("me")
+//              .addEncodedPathSegment("registrations");
+//
+//          url.addQueryParameter("tournament_ids", StringUtils.join(tournamentIDs,","))
+//              .addQueryParameter("playlist_ids",StringUtils.join(playlistIDs,","));
+//      }
+//
+//      Request request =
+//          client
+//              .getAuthenticatedRequestBuilder()
+//              .get()
+//              .url(url.build())
+//              .addHeader("range", header.get())
+//              .build();
+//        return getRegistrationsHelper(request);
+//  }
   private List<Registration> getRegistrationsHelper(Request request) {
     try {
       String responseBody = client.executeRequest(request).body().string();

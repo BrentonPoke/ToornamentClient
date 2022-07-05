@@ -136,8 +136,7 @@ public class ToornamentClient {
               + "&"
               + "client_secret="
               + tokenRequest.getClientSecret()
-              + "&"
-              + "scope="
+              + "&scope="
               + tokenRequest.getScope());
       Request request = requestBuilder.build();
       Response response = executeRequest(request);
@@ -166,7 +165,7 @@ public class ToornamentClient {
       try {
           return this.httpClient.newCall(request).execute();
       } catch (IOException e) {
-          e.printStackTrace();
+          logger.error(e.getMessage());
       }
 return null;
   }

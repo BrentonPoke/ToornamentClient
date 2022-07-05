@@ -22,7 +22,7 @@ public class Disciplines extends Concept {
     }
 
     public List<Discipline> getDisciplines(DisciplinesHeader header) {
-        this.checkScope(Scope.ORGANIZER_RESULT);
+        //this.checkScope(Scope.ORGANIZER_RESULT);
         HttpUrl.Builder urlBuilder = new HttpUrl.Builder()
             .scheme("https")
             .host("api.toornament.com")
